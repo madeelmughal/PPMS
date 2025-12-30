@@ -1,0 +1,114 @@
+2025-12-29 23:05:47 - src.main - ERROR - Firebase initialization failed: Firebase credentials file not found at: serviceAccountKey.json
+Please download serviceAccountKey.json from Firebase Console and place it in project root.
+2025-12-29 23:08:40 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:09:43 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:09:44 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:09:55 - src.services.auth_service - ERROR - Authentication error: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:09:55 - src.main - WARNING - Login failed: Authentication failed: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:10:08 - src.services.auth_service - ERROR - Authentication error: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:10:08 - src.main - WARNING - Login failed: Authentication failed: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:10:11 - src.services.auth_service - ERROR - Authentication error: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:10:11 - src.main - WARNING - Login failed: Authentication failed: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:10:19 - src.main - INFO - Application closing
+2025-12-29 23:10:32 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:10:34 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:10:41 - src.services.auth_service - ERROR - Authentication error: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:10:41 - src.main - WARNING - Login failed: Authentication failed: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:11:03 - src.services.auth_service - ERROR - Authentication error: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:11:03 - src.main - WARNING - Login failed: Authentication failed: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:12:00 - src.services.auth_service - ERROR - Authentication error: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:12:00 - src.main - WARNING - Login failed: Authentication failed: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:12:15 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:12:16 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:12:39 - src.services.auth_service - WARNING - Login attempt with non-existent email: admin
+2025-12-29 23:12:39 - src.main - WARNING - Login failed: Invalid email or password
+2025-12-29 23:12:42 - src.services.auth_service - WARNING - Login attempt with non-existent email: admin
+2025-12-29 23:12:42 - src.main - WARNING - Login failed: Invalid email or password
+2025-12-29 23:12:44 - src.main - INFO - Application closing
+2025-12-29 23:13:15 - src.services.auth_service - ERROR - Authentication error: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:13:15 - src.main - WARNING - Login failed: Authentication failed: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:13:32 - src.services.auth_service - ERROR - Authentication error: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:13:32 - src.main - WARNING - Login failed: Authentication failed: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:14:10 - src.services.auth_service - ERROR - Authentication error: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:14:10 - src.main - WARNING - Login failed: Authentication failed: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:14:52 - src.services.auth_service - ERROR - Authentication error: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:14:52 - src.main - WARNING - Login failed: Authentication failed: The default Firebase app does not exist. Make sure to initialize the SDK by calling initialize_app().
+2025-12-29 23:16:05 - src.main - INFO - Application closing
+2025-12-29 23:16:10 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:16:11 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:16:44 - src.services.auth_service - INFO - User logged in successfully: admin@ppms.com
+2025-12-29 23:16:44 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:17:32 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:17:33 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:17:43 - src.services.auth_service - INFO - User logged in successfully: admin@ppms.com
+2025-12-29 23:17:43 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:18:14 - src.main - INFO - User logged out
+2025-12-29 23:19:03 - src.services.auth_service - INFO - User logged in successfully: admin@ppms.com
+2025-12-29 23:19:03 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:19:28 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:19:29 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:19:41 - src.main - INFO - User logged out
+2025-12-29 23:20:10 - src.main - INFO - Application closing
+2025-12-29 23:20:13 - src.main - INFO - Application closing
+2025-12-29 23:20:16 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:20:16 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:20:37 - src.services.auth_service - INFO - User logged in successfully: admin@ppms.com
+2025-12-29 23:20:37 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:20:40 - src.main - INFO - User logged out
+2025-12-29 23:22:08 - src.main - INFO - Application closing
+2025-12-29 23:22:13 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:22:14 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:22:30 - src.services.auth_service - INFO - User logged in successfully: admin@ppms.com
+2025-12-29 23:22:30 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:23:37 - src.main - INFO - User logged out
+2025-12-29 23:23:38 - src.main - INFO - Application closing
+2025-12-29 23:24:04 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:24:05 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:24:22 - src.services.auth_service - INFO - User logged in successfully: admin@ppms.com
+2025-12-29 23:24:22 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:24:24 - src.main - INFO - User logged out
+2025-12-29 23:25:06 - src.main - INFO - Application closing
+2025-12-29 23:25:24 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:25:25 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:26:59 - src.main - INFO - Application closing
+2025-12-29 23:27:18 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:27:20 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:27:35 - src.services.auth_service - INFO - User logged in successfully: admin@ppms.com
+2025-12-29 23:27:35 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:27:37 - src.main - INFO - User logged out
+2025-12-29 23:28:07 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-29 23:28:07 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:29:05 - src.main - INFO - User logged out
+2025-12-29 23:29:17 - src.services.auth_service - INFO - User logged in successfully: admin@ppms.com
+2025-12-29 23:29:17 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:29:19 - src.main - INFO - Application closing
+2025-12-29 23:29:35 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:29:36 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:29:44 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-29 23:29:44 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:31:27 - src.main - INFO - Application closing
+2025-12-29 23:31:53 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:31:54 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:31:58 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-29 23:31:58 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:33:13 - src.main - INFO - Application closing
+2025-12-29 23:33:17 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:33:18 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:33:23 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-29 23:33:23 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:38:30 - src.main - INFO - Application closing
+2025-12-29 23:52:46 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:52:47 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:52:54 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-29 23:52:54 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:55:00 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:55:02 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:55:08 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-29 23:55:08 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-29 23:55:20 - src.main - INFO - Application closing
+2025-12-29 23:55:25 - src.main - INFO - Application closing
+2025-12-29 23:57:54 - src.main - INFO - Firebase initialized successfully
+2025-12-29 23:57:55 - src.main - INFO - PPMS Application initialized
+2025-12-29 23:58:00 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-29 23:58:00 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:01:38 - src.main - INFO - Application closing

@@ -1,0 +1,95 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".write": "auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".validate": "newData.hasChildren(['email', 'name', 'role'])"
+      }
+    },
+    "fuel_types": {
+      ".read": "auth != null",
+      ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'manager'",
+      "$fuelId": {
+        ".validate": "newData.hasChildren(['id', 'name', 'unit_price'])"
+      }
+    },
+    "tanks": {
+      ".read": "auth != null",
+      ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'manager'",
+      "$tankId": {
+        ".validate": "newData.hasChildren(['id', 'name', 'fuel_type_id', 'capacity'])"
+      }
+    },
+    "nozzles": {
+      ".read": "auth != null",
+      ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'manager'",
+      "$nozzleId": {
+        ".validate": "newData.hasChildren(['id', 'machine_id', 'nozzle_number'])"
+      }
+    },
+    "readings": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$readingId": {
+        ".validate": "newData.hasChildren(['id', 'nozzle_id', 'date', 'opening_reading', 'closing_reading'])"
+      }
+    },
+    "sales": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$saleId": {
+        ".validate": "newData.hasChildren(['id', 'date', 'nozzle_id', 'fuel_type_id', 'quantity', 'total_amount'])"
+      }
+    },
+    "purchases": {
+      ".read": "auth != null",
+      ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'manager'",
+      "$purchaseId": {
+        ".validate": "newData.hasChildren(['id', 'date', 'supplier_name', 'invoice_number'])"
+      }
+    },
+    "customers": {
+      ".read": "auth != null",
+      ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'manager' || root.child('users').child(auth.uid).child('role').val() === 'accountant'",
+      "$customerId": {
+        ".validate": "newData.hasChildren(['id', 'name', 'phone'])"
+      }
+    },
+    "expenses": {
+      ".read": "auth != null",
+      ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'manager' || root.child('users').child(auth.uid).child('role').val() === 'accountant'",
+      "$expenseId": {
+        ".validate": "newData.hasChildren(['id', 'date', 'category', 'amount'])"
+      }
+    },
+    "shifts": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$shiftId": {
+        ".validate": "newData.hasChildren(['id', 'date', 'opening_time', 'operator_id'])"
+      }
+    },
+    "payments": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$paymentId": {
+        ".validate": "newData.hasChildren(['id', 'date', 'customer_id', 'amount'])"
+      }
+    },
+    "reports": {
+      ".read": "auth != null",
+      ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'manager' || root.child('users').child(auth.uid).child('role').val() === 'accountant'",
+      "$reportId": {
+        ".validate": "newData.hasChildren(['id', 'type', 'generated_by'])"
+      }
+    },
+    "audit_logs": {
+      ".read": "root.child('users').child(auth.uid).child('role').val() === 'admin'",
+      ".write": "auth != null",
+      "$logId": {
+        ".validate": "newData.hasChildren(['id', 'action', 'entity_type', 'timestamp'])"
+      }
+    }
+  }
+}

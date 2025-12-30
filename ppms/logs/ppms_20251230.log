@@ -1,0 +1,351 @@
+2025-12-30 00:01:41 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:01:42 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:01:49 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:01:49 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:02:16 - src.services.database_service - ERROR - Error creating fuel type: MockCollection.document() missing 1 required positional argument: 'doc_id'
+2025-12-30 00:02:24 - src.services.database_service - ERROR - Error creating fuel type: MockCollection.document() missing 1 required positional argument: 'doc_id'
+2025-12-30 00:03:05 - src.services.database_service - ERROR - Error creating fuel type: MockCollection.document() missing 1 required positional argument: 'doc_id'
+2025-12-30 00:03:17 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:03:18 - src.main - INFO - Application closing
+2025-12-30 00:03:18 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:03:24 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:03:24 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:03:38 - src.services.database_service - INFO - Document created: fuel_types/1935401a-63a6-49a8-b8ae-bdcd39aca81a
+2025-12-30 00:04:30 - src.services.database_service - INFO - Document created: tanks/ec7b5234-2333-4193-b12f-383d1245ffc7
+2025-12-30 00:05:01 - src.services.database_service - INFO - Document created: fuel_types/f79900ae-3417-4582-9058-0b5f88c39a33
+2025-12-30 00:05:17 - src.services.database_service - INFO - Document created: nozzles/ab78f1ad-8900-48a0-a56e-98b12a857a21
+2025-12-30 00:06:28 - src.services.database_service - INFO - Document created: fuel_types/68b4732b-360e-4d18-bed9-ebca4a691e22
+2025-12-30 00:08:58 - src.main - INFO - Application closing
+2025-12-30 00:09:08 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:09:10 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:09:57 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:09:57 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:11:42 - src.main - INFO - Application closing
+2025-12-30 00:11:49 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:11:50 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:11:55 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:11:55 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:15:03 - src.main - INFO - Application closing
+2025-12-30 00:15:13 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:15:14 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:15:28 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:15:28 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:15:55 - src.services.database_service - INFO - Document created: fuel_types/7281fb96-a8e9-47f3-9a3b-9ec4ef65567b
+2025-12-30 00:16:25 - src.services.database_service - INFO - Document created: tanks/db89aafd-4b48-409d-b21f-d736b2aa17fc
+2025-12-30 00:16:45 - src.services.database_service - INFO - Document created: nozzles/35c0680c-5333-4f8e-abaa-c0c4af995ef5
+2025-12-30 00:17:17 - src.services.database_service - INFO - Document created: fuel_types/84819fe5-30d7-46c5-8803-29c66f7ae450
+2025-12-30 00:17:38 - src.services.database_service - INFO - Document created: tanks/f6b4ec37-9b4b-4995-a9a1-204fe7cd77ba
+2025-12-30 00:17:55 - src.services.database_service - INFO - Document created: nozzles/a82eff50-6427-4776-888f-7c982e2a9f1f
+2025-12-30 00:18:28 - src.services.database_service - INFO - Document created: nozzles/1499a7cb-1ecf-4548-b2a3-aa34bbeadf2f
+2025-12-30 00:19:32 - src.services.database_service - INFO - Document created: sales/1cf93858-8b3b-480c-a185-ab6012274585
+2025-12-30 00:21:00 - src.main - INFO - Application closing
+2025-12-30 00:21:06 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:21:07 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:21:32 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:21:32 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:21:45 - src.services.database_service - INFO - Document created: fuel_types/d115069e-e131-4f2f-96d9-d0f37591edc6
+2025-12-30 00:22:03 - src.main - INFO - Application closing
+2025-12-30 00:22:06 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:22:07 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:22:12 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:22:12 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:23:02 - src.main - INFO - Application closing
+2025-12-30 00:23:08 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:23:09 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:23:16 - src.services.auth_service - WARNING - Login attempt with non-existent email: aadmin
+2025-12-30 00:23:16 - src.main - WARNING - Login failed: Invalid email or password
+2025-12-30 00:23:24 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:23:24 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:24:25 - src.main - INFO - Application closing
+2025-12-30 00:24:31 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:24:32 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:24:36 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:24:36 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:24:52 - src.services.database_service - INFO - Document created: fuel_types/cf50ca27-67d8-4fdf-bc52-0c0a0457e966
+2025-12-30 00:27:34 - src.services.database_service - INFO - Document created: customers/d98ecba7-a92a-4682-b3e0-be9f25ea194b
+2025-12-30 00:28:19 - src.main - INFO - Application closing
+2025-12-30 00:29:20 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:29:21 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:29:25 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:29:25 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:31:37 - src.main - INFO - Application closing
+2025-12-30 00:32:40 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:32:41 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:32:48 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:32:48 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:33:06 - src.services.database_service - INFO - Document created: fuel_types/68823d8a-f27d-4b34-8786-21ebc126610a
+2025-12-30 00:34:23 - src.main - INFO - Application closing
+2025-12-30 00:36:19 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:36:20 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:36:24 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:36:24 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:37:21 - src.services.database_service - INFO - Document created: fuel_types/cbd2e0e6-038d-4f40-81cf-e6cd8ea8fb5a
+2025-12-30 00:39:00 - src.main - INFO - Application closing
+2025-12-30 00:40:12 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:40:14 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:40:18 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:40:18 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:40:42 - src.main - INFO - Application closing
+2025-12-30 00:42:04 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:42:05 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:42:11 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:42:11 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:42:34 - src.services.database_service - INFO - Document created: fuel_types/4f5c00ca-d6ea-4ba8-a148-a77b863abce5
+2025-12-30 00:43:28 - src.main - INFO - Application closing
+2025-12-30 00:43:48 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:43:49 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:44:06 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:44:06 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:44:26 - src.services.database_service - INFO - Document created: fuel_types/b5f4b5d1-f1a8-41bb-b584-4fa7fa1bce69
+2025-12-30 00:44:54 - src.services.database_service - INFO - Document created: nozzles/4ed6e9b3-1a76-4786-beb3-7befd5c075c6
+2025-12-30 00:45:06 - src.services.database_service - INFO - Document created: sales/b1796190-ef9d-4549-8995-00299cd00839
+2025-12-30 00:45:39 - src.services.database_service - INFO - Document created: sales/5855e030-82f3-4cb9-a638-c4199e9ded4e
+2025-12-30 00:45:50 - src.services.database_service - INFO - Document created: sales/c70cb814-6569-42dc-b77f-f23170e68c4e
+2025-12-30 00:48:34 - src.main - INFO - Application closing
+2025-12-30 00:50:01 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:50:02 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:50:33 - src.main - INFO - Application closing
+2025-12-30 00:51:12 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:51:13 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:52:17 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:52:18 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:53:10 - src.main - INFO - Application closing
+2025-12-30 00:53:16 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:53:16 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:53:18 - src.main - INFO - Application closing
+2025-12-30 00:53:42 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:53:43 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:55:16 - src.main - INFO - Application closing
+2025-12-30 00:55:22 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:55:23 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:55:53 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:55:53 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:55:58 - src.main - INFO - User logged out
+2025-12-30 00:57:37 - src.main - INFO - Application closing
+2025-12-30 00:57:43 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:57:44 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:57:50 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:57:50 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:58:16 - src.main - INFO - Application closing
+2025-12-30 00:58:19 - src.main - INFO - Firebase initialized successfully
+2025-12-30 00:58:20 - src.main - INFO - PPMS Application initialized
+2025-12-30 00:58:24 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:58:24 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 00:58:42 - src.main - INFO - User logged out
+2025-12-30 00:59:18 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 00:59:18 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:01:13 - src.main - INFO - Application closing
+2025-12-30 01:01:26 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:01:27 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:01:35 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:01:35 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:01:56 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:01:56 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:02:02 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:02:02 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:02:23 - src.main - INFO - User logged out
+2025-12-30 01:02:28 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:02:28 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:02:42 - src.main - INFO - Application closing
+2025-12-30 01:02:45 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:02:46 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:02:55 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:02:55 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:05:34 - src.services.database_service - INFO - Document created: fuel_types/0099a1df-747c-478e-a4a6-220cd008e983
+2025-12-30 01:06:03 - src.services.database_service - INFO - Document created: tanks/d9e02abf-b666-4bf3-acd9-a695dc6dc9d0
+2025-12-30 01:06:18 - src.services.database_service - INFO - Document created: nozzles/51e683d6-324d-44ab-94d4-41bf1f4fd173
+2025-12-30 01:06:32 - src.services.database_service - INFO - Document created: sales/c0cbb729-ff45-4d7c-94ea-c375625721ec
+2025-12-30 01:07:49 - src.main - INFO - Application closing
+2025-12-30 01:08:40 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:08:40 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:08:50 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:08:50 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:11:02 - src.main - INFO - Application closing
+2025-12-30 01:11:12 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:11:13 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:11:50 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:11:50 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:14:40 - src.main - INFO - Application closing
+2025-12-30 01:14:47 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:14:48 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:14:55 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:14:55 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:15:53 - src.main - INFO - Application closing
+2025-12-30 01:15:59 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:16:00 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:16:05 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:16:05 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:17:07 - src.main - INFO - Application closing
+2025-12-30 01:17:14 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:17:15 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:17:19 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:17:19 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:17:47 - src.main - INFO - Application closing
+2025-12-30 01:18:15 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:18:16 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:18:20 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:18:20 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:22:18 - src.main - INFO - Application closing
+2025-12-30 01:22:25 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:22:26 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:22:32 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:22:32 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:23:38 - src.main - INFO - Application closing
+2025-12-30 01:23:45 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:23:47 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:24:01 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:24:01 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:25:15 - src.main - INFO - Application closing
+2025-12-30 01:26:23 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:26:24 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:26:28 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:26:28 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:27:37 - src.main - INFO - Application closing
+2025-12-30 01:28:00 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:28:00 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:28:06 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:28:06 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:29:00 - src.main - INFO - Application closing
+2025-12-30 01:29:27 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:29:28 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:29:33 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:29:33 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:31:21 - src.main - INFO - Application closing
+2025-12-30 01:31:31 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:31:32 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:31:36 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:31:36 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:32:59 - src.main - INFO - Application closing
+2025-12-30 01:33:32 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:33:33 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:33:39 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:33:39 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:34:52 - src.main - INFO - Application closing
+2025-12-30 01:36:29 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:36:30 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:36:37 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:36:37 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:39:53 - src.main - INFO - Application closing
+2025-12-30 01:40:49 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:40:50 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:40:56 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:40:56 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:43:21 - src.services.database_service - INFO - Document created: fuel_types/11f23b2d-9a10-41f7-85bf-3b25ea9aa6c1
+2025-12-30 01:47:55 - src.main - INFO - Application closing
+2025-12-30 01:48:06 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:48:06 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:48:12 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:48:12 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:48:29 - src.services.database_service - INFO - Document created: fuel_types/f625f86d-0406-47dd-8173-9e720fb9888a
+2025-12-30 01:49:59 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:49:59 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:50:26 - src.main - INFO - Application closing
+2025-12-30 01:50:32 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:50:32 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:50:44 - src.services.database_service - INFO - Document created: fuel_types/ebe9b81f-957d-4698-9141-1603214a52aa
+2025-12-30 01:51:39 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:51:40 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:53:42 - src.main - INFO - Application closing
+2025-12-30 01:53:47 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:53:47 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:54:43 - src.main - INFO - Application closing
+2025-12-30 01:54:50 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:54:51 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:54:55 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:54:55 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:55:31 - src.services.database_service - INFO - Document created: fuel_types/136c9e9c-de36-4f84-bf45-f261b6da15c3
+2025-12-30 01:57:48 - src.main - INFO - Application closing
+2025-12-30 01:58:21 - src.main - INFO - Firebase initialized successfully
+2025-12-30 01:58:22 - src.main - INFO - PPMS Application initialized
+2025-12-30 01:58:26 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 01:58:26 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 01:58:49 - src.services.database_service - INFO - Document created: fuel_types/9567b657-21e6-4212-9dc6-010ecd899f2e
+2025-12-30 01:58:58 - src.services.database_service - INFO - Document created: fuel_types/8399a3f4-6f56-4464-bf16-ed12e4ca070c
+2025-12-30 01:59:02 - src.services.database_service - INFO - Document created: fuel_types/ecbfcb11-5b60-4d8a-b468-4aaa4a0e50b7
+2025-12-30 01:59:05 - src.services.database_service - INFO - Document created: fuel_types/fc990206-1465-4546-a3bb-58992f770f88
+2025-12-30 01:59:53 - src.services.database_service - INFO - Document created: tanks/416e7407-85b9-456f-a376-462954486e99
+2025-12-30 02:01:09 - src.main - INFO - Application closing
+2025-12-30 02:02:16 - src.main - INFO - Firebase initialized successfully
+2025-12-30 02:02:16 - src.main - INFO - PPMS Application initialized
+2025-12-30 02:02:21 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 02:02:21 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 02:04:12 - src.main - INFO - Application closing
+2025-12-30 02:04:23 - src.main - INFO - Firebase initialized successfully
+2025-12-30 02:04:24 - src.main - INFO - PPMS Application initialized
+2025-12-30 02:04:29 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 02:04:29 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 02:05:14 - src.main - INFO - Firebase initialized successfully
+2025-12-30 02:05:15 - src.main - INFO - PPMS Application initialized
+2025-12-30 02:05:19 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 02:05:19 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 02:06:39 - src.services.database_service - INFO - Document created: fuel_types/bd615516-2fc2-4d6f-b73f-5363ad2552e3
+2025-12-30 02:06:39 - src.services.database_service - INFO - Document created: fuel_types/9a93cbd0-a444-4c92-b033-5d80137ce8dd
+2025-12-30 02:06:39 - src.services.database_service - INFO - Document created: fuel_types/8e93a73f-218c-4a88-91ab-b422c735149e
+2025-12-30 02:16:07 - src.main - INFO - Application closing
+2025-12-30 02:17:43 - src.main - INFO - Firebase initialized successfully
+2025-12-30 02:17:44 - src.main - INFO - PPMS Application initialized
+2025-12-30 02:17:50 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 02:17:50 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 02:18:40 - src.services.database_service - INFO - Document created: fuel_types/c9b28e4d-9c6f-425e-8848-dbc6abd732c2
+2025-12-30 02:18:40 - src.services.database_service - INFO - Document created: fuel_types/bb5c19e4-a4a9-4e0a-9978-a61c34feb1d1
+2025-12-30 02:18:40 - src.services.database_service - INFO - Document created: fuel_types/da6f37e2-af62-45d5-ba86-9ad1db9585d6
+2025-12-30 02:19:39 - src.services.database_service - INFO - Document created: tanks/d434cea8-b364-464a-8068-1fa83eba15e6
+2025-12-30 02:19:39 - src.services.database_service - INFO - Document created: tanks/d4dedc3d-1285-4dee-9cbe-facfe3e52205
+2025-12-30 02:21:33 - src.services.database_service - INFO - Document created: nozzles/7c4f93a8-8ad1-4036-a59d-944d4c015bbe
+2025-12-30 02:21:33 - src.services.database_service - INFO - Document created: nozzles/18e88b56-5fe0-4c0a-a14c-52963e5277eb
+2025-12-30 02:25:14 - src.services.database_service - INFO - Document created: sales/22f2120b-073c-4144-9b38-b92f4f8e212d
+2025-12-30 02:25:14 - src.services.database_service - INFO - Document created: sales/e59c7e2e-e837-4579-acef-01e7a38d3d80
+2025-12-30 02:26:18 - src.services.database_service - INFO - Document created: purchases/24809a15-fb2d-4c90-a631-988330c78406
+2025-12-30 02:26:18 - src.services.database_service - INFO - Document created: purchases/aa4517a7-e147-4fcd-b12e-9ae5b45014e1
+2025-12-30 02:27:11 - src.services.database_service - INFO - Document created: expenses/8588e917-1013-423b-ae37-c9e1b16bfeec
+2025-12-30 02:29:51 - src.main - INFO - Application closing
+2025-12-30 02:29:58 - src.main - INFO - Firebase initialized successfully
+2025-12-30 02:29:59 - src.main - INFO - PPMS Application initialized
+2025-12-30 02:30:03 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 02:30:03 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 02:30:30 - src.services.database_service - INFO - Document created: fuel_types/9e1f522b-2d0b-4488-b88f-69709e4569e1
+2025-12-30 02:30:47 - src.services.database_service - INFO - Document created: tanks/20dcc7a3-fb5b-4fc2-84ad-2507caa67ea9
+2025-12-30 02:31:04 - src.services.database_service - INFO - Document created: nozzles/f6fadba8-a906-4655-9d6f-6cc75f90e0b1
+2025-12-30 02:31:23 - src.services.database_service - INFO - Document created: sales/89fc2f6a-69ba-44da-9caa-f5dacc9c0491
+2025-12-30 02:32:16 - src.services.database_service - INFO - Document created: sales/9bd77dbf-954a-4878-9c11-3cf38d94d906
+2025-12-30 02:33:05 - src.services.database_service - INFO - Document created: purchases/946cdf05-f3ec-476f-83f4-9920e1336660
+2025-12-30 02:34:21 - src.services.database_service - INFO - Document created: customers/5e6bb2d3-268d-4524-95d7-ae51726efd80
+2025-12-30 02:38:55 - src.main - INFO - Application closing
+2025-12-30 02:39:05 - src.main - INFO - Firebase initialized successfully
+2025-12-30 02:39:06 - src.main - INFO - PPMS Application initialized
+2025-12-30 02:39:11 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 02:39:11 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 02:39:27 - src.services.database_service - INFO - Document created: fuel_types/cfa64b26-b1b7-49f9-94a0-1d6438ef6aa2
+2025-12-30 02:39:51 - src.services.database_service - INFO - Document created: tanks/33945538-906d-482c-9a8d-8d6a5b6ef810
+2025-12-30 02:40:04 - src.services.database_service - INFO - Document created: nozzles/eb4ad5ec-29e0-4a8a-b5ca-3ec9e434e8ce
+2025-12-30 02:40:26 - src.services.database_service - INFO - Document created: sales/9b193db8-e301-4ee1-af11-b5991ac0b555
+2025-12-30 02:41:12 - src.services.database_service - INFO - Document created: purchases/98809398-fe72-4b46-8c34-13c33e5dc89e
+2025-12-30 10:48:30 - src.main - INFO - User logged out
+2025-12-30 10:52:48 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 10:52:48 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 10:53:00 - src.main - INFO - Application closing
+2025-12-30 11:00:23 - src.main - INFO - Firebase initialized successfully
+2025-12-30 11:00:25 - src.main - INFO - PPMS Application initialized
+2025-12-30 11:00:42 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 11:00:42 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 11:10:51 - src.services.database_service - INFO - Document created: fuel_types/57b9cc13-545e-4411-ae86-d54449204d60
+2025-12-30 11:11:07 - src.services.database_service - INFO - Document created: tanks/176551a8-fec4-44d5-8c02-70c14be39a2e
+2025-12-30 11:11:22 - src.services.database_service - INFO - Document created: nozzles/831650af-cd97-4a5e-86d9-92371d9366c2
+2025-12-30 11:11:43 - src.services.database_service - INFO - Document created: sales/7b5efbc8-514c-4b02-887e-924bbb0508be
+2025-12-30 11:13:10 - src.services.database_service - INFO - Document created: customers/6695457d-d430-43b4-bb7e-d5bdf5e30fea
+2025-12-30 11:13:32 - src.services.database_service - INFO - Document created: purchases/2faa2888-10a2-4ffb-ad73-80b4fadaa7f4
+2025-12-30 11:14:42 - src.main - INFO - Application closing
+2025-12-30 11:22:28 - src.main - INFO - Firebase initialized successfully
+2025-12-30 11:22:29 - src.main - INFO - PPMS Application initialized
+2025-12-30 11:25:41 - src.main - INFO - Firebase initialized successfully
+2025-12-30 11:25:42 - src.main - INFO - PPMS Application initialized
+2025-12-30 11:25:57 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 11:25:57 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 11:26:13 - src.services.database_service - INFO - Document created: fuel_types/ffdf66e2-4a8c-41b1-8b96-9958963bca1f
+2025-12-30 11:26:23 - src.main - INFO - Application closing
+2025-12-30 11:27:03 - src.main - INFO - Firebase initialized successfully
+2025-12-30 11:27:03 - src.main - INFO - PPMS Application initialized
+2025-12-30 11:27:09 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 11:27:09 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 11:30:35 - src.main - INFO - User logged out
+2025-12-30 11:30:46 - src.main - INFO - Application closing

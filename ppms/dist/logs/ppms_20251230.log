@@ -1,0 +1,5 @@
+2025-12-30 13:32:30 - src.main - INFO - Firebase initialized successfully
+2025-12-30 13:32:30 - src.main - INFO - PPMS Application initialized
+2025-12-30 13:32:48 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 13:32:48 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 13:32:52 - src.main - INFO - Application closing

@@ -1,0 +1,45 @@
+{
+  "users": {
+    "admin123": {
+      "id": "admin123",
+      "email": "admin@ppms.com",
+      "name": "Admin User",
+      "role": "admin",
+      "status": "active",
+      "department": "Management",
+      "created_at": "2024-01-01T00:00:00"
+    },
+    "operator123": {
+      "id": "operator123",
+      "email": "operator@ppms.com",
+      "name": "Operator User",
+      "role": "operator",
+      "status": "active",
+      "department": "Operations",
+      "created_at": "2024-01-01T00:00:00"
+    },
+    "manager123": {
+      "id": "manager123",
+      "email": "manager@ppms.com",
+      "name": "Manager User",
+      "role": "manager",
+      "status": "active",
+      "department": "Management",
+      "created_at": "2024-01-01T00:00:00"
+    }
+  },
+  "sales": {},
+  "purchases": {},
+  "customers": {},
+  "tanks": {},
+  "fuel_types": {
+    "ffdf66e2-4a8c-41b1-8b96-9958963bca1f": {
+      "id": "ffdf66e2-4a8c-41b1-8b96-9958963bca1f",
+      "name": "pp",
+      "unit_price": 1000.0,
+      "tax_percentage": 0.0,
+      "status": "active",
+      "created_at": "2025-12-30T11:26:13.489420"
+    }
+  }
+}

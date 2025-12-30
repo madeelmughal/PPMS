@@ -1,0 +1,219 @@
+{
+  "sample_fuel_types": [
+    {
+      "id": "fuel_001",
+      "name": "Petrol",
+      "unit_price": 289.50,
+      "tax_percentage": 17.0,
+      "status": "active"
+    },
+    {
+      "id": "fuel_002",
+      "name": "Diesel",
+      "unit_price": 279.25,
+      "tax_percentage": 17.0,
+      "status": "active"
+    },
+    {
+      "id": "fuel_003",
+      "name": "CNG",
+      "unit_price": 140.00,
+      "tax_percentage": 17.0,
+      "status": "active"
+    }
+  ],
+  "sample_tanks": [
+    {
+      "id": "tank_001",
+      "name": "Tank A - Petrol",
+      "fuel_type_id": "fuel_001",
+      "capacity": 50000.0,
+      "current_stock": 35000.0,
+      "minimum_stock": 10000.0,
+      "location": "West Side"
+    },
+    {
+      "id": "tank_002",
+      "name": "Tank B - Diesel",
+      "fuel_type_id": "fuel_002",
+      "capacity": 45000.0,
+      "current_stock": 28500.0,
+      "minimum_stock": 9000.0,
+      "location": "East Side"
+    },
+    {
+      "id": "tank_003",
+      "name": "Tank C - CNG",
+      "fuel_type_id": "fuel_003",
+      "capacity": 30000.0,
+      "current_stock": 22500.0,
+      "minimum_stock": 6000.0,
+      "location": "North Side"
+    }
+  ],
+  "sample_users": [
+    {
+      "uid": "admin_001",
+      "email": "admin@ppms.com",
+      "name": "Administrator",
+      "role": "admin",
+      "status": "active",
+      "department": "Management",
+      "phone": "+92300XXXXX01"
+    },
+    {
+      "uid": "manager_001",
+      "email": "manager@ppms.com",
+      "name": "Muhammad Hassan",
+      "role": "manager",
+      "status": "active",
+      "department": "Operations",
+      "phone": "+92300XXXXX02"
+    },
+    {
+      "uid": "operator_001",
+      "email": "operator1@ppms.com",
+      "name": "Ali Khan",
+      "role": "operator",
+      "status": "active",
+      "department": "Retail",
+      "phone": "+92300XXXXX03"
+    },
+    {
+      "uid": "operator_002",
+      "email": "operator2@ppms.com",
+      "name": "Hassan Raza",
+      "role": "operator",
+      "status": "active",
+      "department": "Retail",
+      "phone": "+92300XXXXX04"
+    },
+    {
+      "uid": "accountant_001",
+      "email": "accountant@ppms.com",
+      "name": "Fatima Ahmed",
+      "role": "accountant",
+      "status": "active",
+      "department": "Finance",
+      "phone": "+92300XXXXX05"
+    }
+  ],
+  "sample_nozzles": [
+    {
+      "id": "nozzle_001",
+      "machine_id": "pump_001",
+      "nozzle_number": 1,
+      "fuel_type_id": "fuel_001",
+      "opening_reading": 15000.0,
+      "closing_reading": 15000.0,
+      "assigned_operator_id": "operator_001",
+      "status": "active"
+    },
+    {
+      "id": "nozzle_002",
+      "machine_id": "pump_001",
+      "nozzle_number": 2,
+      "fuel_type_id": "fuel_002",
+      "opening_reading": 12000.0,
+      "closing_reading": 12000.0,
+      "assigned_operator_id": "operator_002",
+      "status": "active"
+    },
+    {
+      "id": "nozzle_003",
+      "machine_id": "pump_002",
+      "nozzle_number": 1,
+      "fuel_type_id": "fuel_001",
+      "opening_reading": 18000.0,
+      "closing_reading": 18000.0,
+      "assigned_operator_id": "operator_001",
+      "status": "active"
+    },
+    {
+      "id": "nozzle_004",
+      "machine_id": "pump_002",
+      "nozzle_number": 2,
+      "fuel_type_id": "fuel_003",
+      "opening_reading": 9500.0,
+      "closing_reading": 9500.0,
+      "assigned_operator_id": "operator_002",
+      "status": "active"
+    }
+  ],
+  "sample_customers": [
+    {
+      "id": "cust_001",
+      "name": "Ali's Transport",
+      "phone": "+92300XXXXX10",
+      "email": "contact@alistransport.com",
+      "address": "123 Main St, Karachi",
+      "credit_limit": 500000.0,
+      "outstanding_balance": 125000.0,
+      "status": "active",
+      "customer_type": "corporate"
+    },
+    {
+      "id": "cust_002",
+      "name": "Hassan Fleet Services",
+      "phone": "+92300XXXXX11",
+      "email": "fleet@hasanservices.com",
+      "address": "456 Trade St, Lahore",
+      "credit_limit": 750000.0,
+      "outstanding_balance": 250000.0,
+      "status": "active",
+      "customer_type": "corporate"
+    },
+    {
+      "id": "cust_003",
+      "name": "Quick Logistics",
+      "phone": "+92300XXXXX12",
+      "email": "quick@logistics.com",
+      "address": "789 Commerce Ave, Islamabad",
+      "credit_limit": 300000.0,
+      "outstanding_balance": 0.0,
+      "status": "active",
+      "customer_type": "retail"
+    }
+  ],
+  "sample_expenses": [
+    {
+      "id": "exp_001",
+      "date": "2024-12-29T08:00:00Z",
+      "category": "Electricity",
+      "amount": 25000.0,
+      "description": "Monthly electricity bill"
+    },
+    {
+      "id": "exp_002",
+      "date": "2024-12-25T09:00:00Z",
+      "category": "Salaries",
+      "amount": 150000.0,
+      "description": "Monthly salaries for staff"
+    },
+    {
+      "id": "exp_003",
+      "date": "2024-12-20T10:00:00Z",
+      "category": "Maintenance",
+      "amount": 35000.0,
+      "description": "Pump maintenance and repairs"
+    },
+    {
+      "id": "exp_004",
+      "date": "2024-12-15T11:00:00Z",
+      "category": "Miscellaneous",
+      "amount": 8500.0,
+      "description": "Office supplies and cleaning"
+    }
+  ],
+  "import_instructions": "To load this sample data into Firebase:",
+  "steps": [
+    "1. Open Firebase Console",
+    "2. Go to Firestore Database",
+    "3. For each collection, click 'Start collection'",
+    "4. Add documents matching the sample data above",
+    "5. Or use Firebase CLI: firebase firestore:import ./sample-data.json",
+    "6. For users, first create them via Firebase Auth, then add to users collection",
+    "7. Verify all documents are created successfully",
+    "8. Check that indexes are auto-created for queries"
+  ]
+}
