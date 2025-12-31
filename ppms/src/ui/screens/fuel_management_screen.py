@@ -316,18 +316,24 @@ class FuelManagementScreen(QWidget):
 
         for row, fuel in enumerate(self.fuel_types):
             # Fuel name
-            self.fuel_table.setItem(row, 0, QTableWidgetItem(fuel.name))
+            name_item = QTableWidgetItem(fuel.name)
+            name_item.setFlags(name_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.fuel_table.setItem(row, 0, name_item)
 
             # Current rate
-            self.fuel_table.setItem(row, 1, QTableWidgetItem(f"Rs. {fuel.current_rate}"))
+            rate_item = QTableWidgetItem(f"Rs. {fuel.current_rate}")
+            rate_item.setFlags(rate_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.fuel_table.setItem(row, 1, rate_item)
 
             # Tax
-            self.fuel_table.setItem(row, 2, QTableWidgetItem(f"{fuel.tax_percentage}%"))
+            tax_item = QTableWidgetItem(f"{fuel.tax_percentage}%")
+            tax_item.setFlags(tax_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.fuel_table.setItem(row, 2, tax_item)
 
             # Description
-            self.fuel_table.setItem(row, 3, QTableWidgetItem(
-                fuel.description or "---"
-            ))
+            desc_item = QTableWidgetItem(fuel.description or "---")
+            desc_item.setFlags(desc_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.fuel_table.setItem(row, 3, desc_item)
 
             # Actions
             action_layout = QHBoxLayout()
@@ -354,32 +360,44 @@ class FuelManagementScreen(QWidget):
 
         for row, tank in enumerate(self.tanks):
             # Tank ID
-            self.tank_table.setItem(row, 0, QTableWidgetItem(tank.tank_id))
+            tank_id_item = QTableWidgetItem(tank.tank_id)
+            tank_id_item.setFlags(tank_id_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.tank_table.setItem(row, 0, tank_id_item)
 
             # Fuel type
             fuel_name = next(
                 (f.name for f in self.fuel_types if f.id == tank.fuel_type_id),
                 "Unknown"
             )
-            self.tank_table.setItem(row, 1, QTableWidgetItem(fuel_name))
+            fuel_item = QTableWidgetItem(fuel_name)
+            fuel_item.setFlags(fuel_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.tank_table.setItem(row, 1, fuel_item)
 
             # Capacity
-            self.tank_table.setItem(row, 2, QTableWidgetItem(f"{tank.capacity} L"))
+            capacity_item = QTableWidgetItem(f"{tank.capacity} L")
+            capacity_item.setFlags(capacity_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.tank_table.setItem(row, 2, capacity_item)
 
             # Current stock
-            self.tank_table.setItem(row, 3, QTableWidgetItem(f"{tank.current_stock} L"))
+            stock_item = QTableWidgetItem(f"{tank.current_stock} L")
+            stock_item.setFlags(stock_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.tank_table.setItem(row, 3, stock_item)
 
             # Minimum level
-            self.tank_table.setItem(row, 4, QTableWidgetItem(f"{tank.minimum_level} L"))
+            min_item = QTableWidgetItem(f"{tank.minimum_level} L")
+            min_item.setFlags(min_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.tank_table.setItem(row, 4, min_item)
 
             # Status
             current = float(tank.current_stock)
             minimum = float(tank.minimum_level)
             if current < minimum:
                 status_item = QTableWidgetItem("⚠ LOW STOCK")
+                status_item.setFlags(status_item.flags() & ~0x2)  # Qt.ItemIsEditable
                 status_item.setForeground(QColor("red"))
             else:
                 status_item = QTableWidgetItem("✓ OK")
+                status_item.setFlags(status_item.flags() & ~0x2)  # Qt.ItemIsEditable
                 status_item.setForeground(QColor("green"))
             self.tank_table.setItem(row, 5, status_item)
 

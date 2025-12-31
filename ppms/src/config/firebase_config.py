@@ -126,7 +126,11 @@ class MockCollection:
         if name not in data:
             data[name] = {}
     
-    def document(self, doc_id):
+    def document(self, doc_id=None):
+        # If no doc_id provided, generate one
+        if doc_id is None:
+            import uuid
+            doc_id = str(uuid.uuid4())
         return MockDocument(self.data[self.name], doc_id, self.save_callback)
     
     def where(self, field, op, value):

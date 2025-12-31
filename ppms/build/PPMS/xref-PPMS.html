@@ -170,7 +170,14 @@ imported by:
   <a target="code" href="///D:/prog/ppms/run.py" type="text/plain"><tt>run.py</tt></a>
 <span class="moduletype">Script</span>  <div class="import">
 imports:
-    <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL._tkinter_finder">PIL._tkinter_finder</a>
+ &#8226;   <a href="#PyQt5">PyQt5</a>
+ &#8226;   <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+ &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+ &#8226;   <a href="#PyQt5.QtPrintSupport">PyQt5.QtPrintSupport</a>
+ &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
+ &#8226;   <a href="#PyQt5.sip">PyQt5.sip</a>
  &#8226;   <a href="#_collections_abc">_collections_abc</a>
  &#8226;   <a href="#_weakrefset">_weakrefset</a>
  &#8226;   <a href="#abc">abc</a>
@@ -178,6 +185,9 @@ imports:
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#collections.abc">collections.abc</a>
  &#8226;   <a href="#copyreg">copyreg</a>
+ &#8226;   <a href="#cryptography">cryptography</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#dotenv">dotenv</a>
  &#8226;   <a href="#encodings">encodings</a>
  &#8226;   <a href="#encodings.aliases">encodings.aliases</a>
  &#8226;   <a href="#encodings.ascii">encodings.ascii</a>
@@ -301,16 +311,40 @@ imports:
  &#8226;   <a href="#encodings.uu_codec">encodings.uu_codec</a>
  &#8226;   <a href="#encodings.zlib_codec">encodings.zlib_codec</a>
  &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#firebase_admin">firebase_admin</a>
+ &#8226;   <a href="#firebase_admin.auth">firebase_admin.auth</a>
+ &#8226;   <a href="#firebase_admin.credentials">firebase_admin.credentials</a>
+ &#8226;   <a href="#firebase_admin.db">firebase_admin.db</a>
+ &#8226;   <a href="#firebase_admin.firestore">firebase_admin.firestore</a>
  &#8226;   <a href="#functools">functools</a>
  &#8226;   <a href="#genericpath">genericpath</a>
+ &#8226;   <a href="#google.auth">google.auth</a>
+ &#8226;   <a href="#google.auth.transport.requests">google.auth.transport.requests</a>
+ &#8226;   <a href="#google.cloud.firestore">google.cloud.firestore</a>
+ &#8226;   <a href="#google.cloud.firestore_v1">google.cloud.firestore_v1</a>
+ &#8226;   <a href="#google.oauth2.credentials">google.oauth2.credentials</a>
+ &#8226;   <a href="#grpc">grpc</a>
+ &#8226;   <a href="#grpc._cython">grpc._cython</a>
  &#8226;   <a href="#heapq">heapq</a>
  &#8226;   <a href="#io">io</a>
+ &#8226;   <a href="#json">json</a>
  &#8226;   <a href="#keyword">keyword</a>
  &#8226;   <a href="#linecache">linecache</a>
  &#8226;   <a href="#locale">locale</a>
+ &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#matplotlib">matplotlib</a>
+ &#8226;   <a href="#matplotlib.backends.backend_agg">matplotlib.backends.backend_agg</a>
+ &#8226;   <a href="#matplotlib.backends.backend_qt5agg">matplotlib.backends.backend_qt5agg</a>
+ &#8226;   <a href="#matplotlib.figure">matplotlib.figure</a>
+ &#8226;   <a href="#matplotlib.pyplot">matplotlib.pyplot</a>
  &#8226;   <a href="#ntpath">ntpath</a>
+ &#8226;   <a href="#numpy">numpy</a>
+ &#8226;   <a href="#openpyxl">openpyxl</a>
  &#8226;   <a href="#operator">operator</a>
  &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#pandas">pandas</a>
+ &#8226;   <a href="#pandas._libs">pandas._libs</a>
+ &#8226;   <a href="#pandas._libs.tslibs.base">pandas._libs.tslibs.base</a>
  &#8226;   <a href="#posixpath">posixpath</a>
  &#8226;   <a href="#pyi_rth_cryptography_openssl.py">pyi_rth_cryptography_openssl.py</a>
  &#8226;   <a href="#pyi_rth_inspect.py">pyi_rth_inspect.py</a>
@@ -321,6 +355,11 @@ imports:
  &#8226;   <a href="#pyi_rth_pyqt5.py">pyi_rth_pyqt5.py</a>
  &#8226;   <a href="#pyi_rth_setuptools.py">pyi_rth_setuptools.py</a>
  &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#reportlab">reportlab</a>
+ &#8226;   <a href="#reportlab.graphics">reportlab.graphics</a>
+ &#8226;   <a href="#reportlab.lib">reportlab.lib</a>
+ &#8226;   <a href="#reportlab.pdfgen">reportlab.pdfgen</a>
+ &#8226;   <a href="#reportlab.platypus">reportlab.platypus</a>
  &#8226;   <a href="#reprlib">reprlib</a>
  &#8226;   <a href="#src.main">src.main</a>
  &#8226;   <a href="#sre_compile">sre_compile</a>
@@ -1068,10 +1107,9 @@ imported by:
 <div class="node">
   <a name="IPython"></a>
   <a target="code" href="" type="text/plain"><tt>IPython</tt></a>
-<span class="moduletype">MissingModule</span>  <div class="import">
+<span class="moduletype">ExcludedModule</span>  <div class="import">
 imported by:
-    <a href="#dotenv.ipython">dotenv.ipython</a>
- &#8226;   <a href="#matplotlib.backend_bases">matplotlib.backend_bases</a>
+    <a href="#matplotlib.backend_bases">matplotlib.backend_bases</a>
  &#8226;   <a href="#matplotlib.pyplot">matplotlib.pyplot</a>
  &#8226;   <a href="#pandas.io.formats.printing">pandas.io.formats.printing</a>
 
@@ -1222,6 +1260,7 @@ imported by:
  &#8226;   <a href="#PIL._imaging">PIL._imaging</a>
  &#8226;   <a href="#PIL._imagingcms">PIL._imagingcms</a>
  &#8226;   <a href="#PIL._imagingtk">PIL._imagingtk</a>
+ &#8226;   <a href="#PIL._tkinter_finder">PIL._tkinter_finder</a>
  &#8226;   <a href="#PIL._util">PIL._util</a>
  &#8226;   <a href="#PIL._version">PIL._version</a>
  &#8226;   <a href="#PIL._webp">PIL._webp</a>
@@ -1231,6 +1270,7 @@ imported by:
  &#8226;   <a href="#openpyxl.drawing.image">openpyxl.drawing.image</a>
  &#8226;   <a href="#reportlab.graphics.renderPM">reportlab.graphics.renderPM</a>
  &#8226;   <a href="#reportlab.lib.utils">reportlab.lib.utils</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -3013,6 +3053,23 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="PIL._tkinter_finder"></a>
+  <a target="code" href="///D:/prog/.venv/lib/site-packages/PIL/_tkinter_finder.py" type="text/plain"><tt>PIL._tkinter_finder</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#sys">sys</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#run.py">run.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="PIL._util"></a>
   <a target="code" href="///D:/prog/.venv/lib/site-packages/PIL/_util.py" type="text/plain"><tt>PIL._util</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -3116,10 +3173,12 @@ imports:
 imported by:
     <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
  &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+ &#8226;   <a href="#PyQt5.QtPrintSupport">PyQt5.QtPrintSupport</a>
  &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#PyQt5.sip">PyQt5.sip</a>
  &#8226;   <a href="#matplotlib.backends.qt_compat">matplotlib.backends.qt_compat</a>
  &#8226;   <a href="#pandas.io.clipboard">pandas.io.clipboard</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -3135,8 +3194,10 @@ imports:
   <div class="import">
 imported by:
     <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+ &#8226;   <a href="#PyQt5.QtPrintSupport">PyQt5.QtPrintSupport</a>
  &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#matplotlib.backends.qt_compat">matplotlib.backends.qt_compat</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.main">src.main</a>
  &#8226;   <a href="#src.ui.screens.customer_management_screen">src.ui.screens.customer_management_screen</a>
  &#8226;   <a href="#src.ui.screens.dashboard_screen">src.ui.screens.dashboard_screen</a>
@@ -3163,8 +3224,10 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
+    <a href="#PyQt5.QtPrintSupport">PyQt5.QtPrintSupport</a>
+ &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#matplotlib.backends.qt_compat">matplotlib.backends.qt_compat</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.ui.screens.customer_management_screen">src.ui.screens.customer_management_screen</a>
  &#8226;   <a href="#src.ui.screens.dashboard_screen">src.ui.screens.dashboard_screen</a>
  &#8226;   <a href="#src.ui.screens.expense_management_screen">src.ui.screens.expense_management_screen</a>
@@ -3181,6 +3244,24 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="PyQt5.QtPrintSupport"></a>
+  <tt>PyQt5.QtPrintSupport</tt> <span class="moduletype"><tt>D:\prog\.venv\lib\site-packages\PyQt5\QtPrintSupport.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#PyQt5">PyQt5</a>
+ &#8226;   <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
+ &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
+ &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#run.py">run.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="PyQt5.QtWidgets"></a>
   <tt>PyQt5.QtWidgets</tt> <span class="moduletype"><tt>D:\prog\.venv\lib\site-packages\PyQt5\QtWidgets.pyd</tt></span>  <div class="import">
 imports:
@@ -3191,7 +3272,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#matplotlib.backends.qt_compat">matplotlib.backends.qt_compat</a>
+    <a href="#PyQt5.QtPrintSupport">PyQt5.QtPrintSupport</a>
+ &#8226;   <a href="#matplotlib.backends.qt_compat">matplotlib.backends.qt_compat</a>
  &#8226;   <a href="#pandas.io.clipboard">pandas.io.clipboard</a>
  &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.main">src.main</a>
@@ -3220,6 +3302,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#PyQt5">PyQt5</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -8846,6 +8929,7 @@ imported by:
  &#8226;   <a href="#cryptography.x509.name">cryptography.x509.name</a>
  &#8226;   <a href="#google.auth._agent_identity_utils">google.auth._agent_identity_utils</a>
  &#8226;   <a href="#requests">requests</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#urllib3.contrib.pyopenssl">urllib3.contrib.pyopenssl</a>
 
   </div>
@@ -10877,6 +10961,7 @@ imported by:
  &#8226;   <a href="#reportlab.lib.utils">reportlab.lib.utils</a>
  &#8226;   <a href="#requests.models">requests.models</a>
  &#8226;   <a href="#requests.sessions">requests.sessions</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#setuptools._vendor.pyparsing.common">setuptools._vendor.pyparsing.common</a>
  &#8226;   <a href="#setuptools._vendor.tomli._re">setuptools._vendor.tomli._re</a>
  &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
@@ -12526,6 +12611,7 @@ imported by:
  &#8226;   <a href="#dotenv.main">dotenv.main</a>
  &#8226;   <a href="#dotenv.parser">dotenv.parser</a>
  &#8226;   <a href="#dotenv.variables">dotenv.variables</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.config.firebase_config">src.config.firebase_config</a>
 
   </div>
@@ -12538,7 +12624,6 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#'IPython.core'">'IPython.core'</a>
- &#8226;   <a href="#IPython">IPython</a>
  &#8226;   <a href="#dotenv">dotenv</a>
  &#8226;   <a href="#dotenv.main">dotenv.main</a>
 
@@ -15907,6 +15992,7 @@ imported by:
  &#8226;   <a href="#firebase_admin.db">firebase_admin.db</a>
  &#8226;   <a href="#firebase_admin.exceptions">firebase_admin.exceptions</a>
  &#8226;   <a href="#firebase_admin.firestore">firebase_admin.firestore</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.config.firebase_config">src.config.firebase_config</a>
 
   </div>
@@ -16221,6 +16307,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#firebase_admin">firebase_admin</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.config.firebase_config">src.config.firebase_config</a>
 
   </div>
@@ -16247,6 +16334,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#firebase_admin">firebase_admin</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.config.firebase_config">src.config.firebase_config</a>
 
   </div>
@@ -16276,6 +16364,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#firebase_admin">firebase_admin</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.config.firebase_config">src.config.firebase_config</a>
 
   </div>
@@ -16316,6 +16405,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#firebase_admin">firebase_admin</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.config.firebase_config">src.config.firebase_config</a>
 
   </div>
@@ -18062,6 +18152,7 @@ imported by:
  &#8226;   <a href="#google.oauth2.utils">google.oauth2.utils</a>
  &#8226;   <a href="#google.oauth2.webauthn_handler">google.oauth2.webauthn_handler</a>
  &#8226;   <a href="#google.oauth2.webauthn_types">google.oauth2.webauthn_types</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -19304,6 +19395,7 @@ imported by:
  &#8226;   <a href="#google.cloud.firestore_v1.services.firestore.transports.rest">google.cloud.firestore_v1.services.firestore.transports.rest</a>
  &#8226;   <a href="#google.oauth2.gdch_credentials">google.oauth2.gdch_credentials</a>
  &#8226;   <a href="#google.oauth2.id_token">google.oauth2.id_token</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -19458,6 +19550,7 @@ imports:
 imported by:
     <a href="#firebase_admin.firestore">firebase_admin.firestore</a>
  &#8226;   <a href="#google.cloud">google.cloud</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -19688,6 +19781,7 @@ imported by:
  &#8226;   <a href="#google.cloud.firestore_v1.vector">google.cloud.firestore_v1.vector</a>
  &#8226;   <a href="#google.cloud.firestore_v1.vector_query">google.cloud.firestore_v1.vector_query</a>
  &#8226;   <a href="#google.cloud.firestore_v1.watch">google.cloud.firestore_v1.watch</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -22048,6 +22142,7 @@ imported by:
  &#8226;   <a href="#google.auth._default">google.auth._default</a>
  &#8226;   <a href="#google.auth.impersonated_credentials">google.auth.impersonated_credentials</a>
  &#8226;   <a href="#google.oauth2">google.oauth2</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -23730,6 +23825,7 @@ imported by:
  &#8226;   <a href="#grpc.experimental">grpc.experimental</a>
  &#8226;   <a href="#grpc_status._common">grpc_status._common</a>
  &#8226;   <a href="#grpc_status.rpc_status">grpc_status.rpc_status</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -23866,6 +23962,7 @@ imported by:
  &#8226;   <a href="#grpc.aio._interceptor">grpc.aio._interceptor</a>
  &#8226;   <a href="#grpc.aio._server">grpc.aio._server</a>
  &#8226;   <a href="#grpc.experimental">grpc.experimental</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -26201,6 +26298,7 @@ imported by:
  &#8226;   <a href="#pandas.io.parquet">pandas.io.parquet</a>
  &#8226;   <a href="#pandas.util._print_versions">pandas.util._print_versions</a>
  &#8226;   <a href="#requests.compat">requests.compat</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#setuptools.config._validate_pyproject.error_reporting">setuptools.config._validate_pyproject.error_reporting</a>
  &#8226;   <a href="#setuptools.msvc">setuptools.msvc</a>
  &#8226;   <a href="#src.config.firebase_config">src.config.firebase_config</a>
@@ -26789,6 +26887,7 @@ imported by:
  &#8226;   <a href="#reportlab.platypus.doctemplate">reportlab.platypus.doctemplate</a>
  &#8226;   <a href="#reportlab.platypus.frames">reportlab.platypus.frames</a>
  &#8226;   <a href="#requests">requests</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#setuptools._vendor.packaging.tags">setuptools._vendor.packaging.tags</a>
  &#8226;   <a href="#setuptools.config._apply_pyprojecttoml">setuptools.config._apply_pyprojecttoml</a>
  &#8226;   <a href="#setuptools.config._validate_pyproject.error_reporting">setuptools.config._validate_pyproject.error_reporting</a>
@@ -27174,6 +27273,7 @@ imported by:
  &#8226;   <a href="#pandas.plotting._matplotlib.style">pandas.plotting._matplotlib.style</a>
  &#8226;   <a href="#pandas.plotting._matplotlib.timeseries">pandas.plotting._matplotlib.timeseries</a>
  &#8226;   <a href="#pandas.plotting._matplotlib.tools">pandas.plotting._matplotlib.tools</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -28261,6 +28361,7 @@ imported by:
  &#8226;   <a href="#matplotlib.backends.backend_qtagg">matplotlib.backends.backend_qtagg</a>
  &#8226;   <a href="#matplotlib.backends.backend_webagg_core">matplotlib.backends.backend_webagg_core</a>
  &#8226;   <a href="#matplotlib.mathtext">matplotlib.mathtext</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -28307,6 +28408,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#matplotlib.backends">matplotlib.backends</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.ui.screens.dashboard_screen">src.ui.screens.dashboard_screen</a>
 
   </div>
@@ -29047,6 +29149,7 @@ imported by:
  &#8226;   <a href="#pandas.plotting._matplotlib.misc">pandas.plotting._matplotlib.misc</a>
  &#8226;   <a href="#pandas.plotting._matplotlib.tools">pandas.plotting._matplotlib.tools</a>
  &#8226;   <a href="#pandas.plotting._misc">pandas.plotting._misc</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.ui.screens.dashboard_screen">src.ui.screens.dashboard_screen</a>
 
   </div>
@@ -29801,6 +29904,7 @@ imported by:
  &#8226;   <a href="#pandas.plotting._matplotlib.misc">pandas.plotting._matplotlib.misc</a>
  &#8226;   <a href="#pandas.plotting._matplotlib.style">pandas.plotting._matplotlib.style</a>
  &#8226;   <a href="#pandas.plotting._matplotlib.tools">pandas.plotting._matplotlib.tools</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.ui.screens.dashboard_screen">src.ui.screens.dashboard_screen</a>
 
   </div>
@@ -32514,6 +32618,7 @@ imported by:
  &#8226;   <a href="#pandas.tseries.frequencies">pandas.tseries.frequencies</a>
  &#8226;   <a href="#pandas.tseries.holiday">pandas.tseries.holiday</a>
  &#8226;   <a href="#pandas.util._validators">pandas.util._validators</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.ui.screens.dashboard_screen">src.ui.screens.dashboard_screen</a>
 
   </div>
@@ -38903,6 +39008,7 @@ imported by:
  &#8226;   <a href="#openpyxl.xml">openpyxl.xml</a>
  &#8226;   <a href="#openpyxl.xml.functions">openpyxl.xml.functions</a>
  &#8226;   <a href="#pandas.io.excel._openpyxl">pandas.io.excel._openpyxl</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -44746,6 +44852,7 @@ imported by:
  &#8226;   <a href="#pandas.tseries.holiday">pandas.tseries.holiday</a>
  &#8226;   <a href="#pandas.util">pandas.util</a>
  &#8226;   <a href="#pandas.util._exceptions">pandas.util._exceptions</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.reports.report_generator">src.reports.report_generator</a>
 
   </div>
@@ -45093,6 +45200,7 @@ imported by:
  &#8226;   <a href="#pandas.plotting._matplotlib.core">pandas.plotting._matplotlib.core</a>
  &#8226;   <a href="#pandas.tseries.frequencies">pandas.tseries.frequencies</a>
  &#8226;   <a href="#pandas.util._validators">pandas.util._validators</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -45807,6 +45915,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#pandas">pandas</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -52694,7 +52803,6 @@ imports:
  &#8226;   <a href="#pandas.core.dtypes.common">pandas.core.dtypes.common</a>
  &#8226;   <a href="#pandas.core.dtypes.missing">pandas.core.dtypes.missing</a>
  &#8226;   <a href="#pandas.util._exceptions">pandas.util._exceptions</a>
- &#8226;   <a href="#scipy">scipy</a>
  &#8226;   <a href="#typing">typing</a>
  &#8226;   <a href="#warnings">warnings</a>
 
@@ -61082,7 +61190,7 @@ imported by:
 <div class="node">
   <a name="pytest"></a>
   <a target="code" href="" type="text/plain"><tt>pytest</tt></a>
-<span class="moduletype">MissingModule</span>  <div class="import">
+<span class="moduletype">ExcludedModule</span>  <div class="import">
 imported by:
     <a href="#pandas._testing">pandas._testing</a>
  &#8226;   <a href="#pandas._testing._io">pandas._testing._io</a>
@@ -61744,6 +61852,7 @@ imported by:
  &#8226;   <a href="#reportlab.platypus.tables">reportlab.platypus.tables</a>
  &#8226;   <a href="#reportlab.rl_config">reportlab.rl_config</a>
  &#8226;   <a href="#reportlab.rl_settings">reportlab.rl_settings</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -61779,6 +61888,7 @@ imported by:
  &#8226;   <a href="#reportlab.graphics.widgets.flags">reportlab.graphics.widgets.flags</a>
  &#8226;   <a href="#reportlab.graphics.widgets.signsandsymbols">reportlab.graphics.widgets.signsandsymbols</a>
  &#8226;   <a href="#reportlab.lib.corp">reportlab.lib.corp</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -62449,6 +62559,7 @@ imported by:
  &#8226;   <a href="#reportlab.platypus.tables">reportlab.platypus.tables</a>
  &#8226;   <a href="#reportlab.platypus.xpreformatted">reportlab.platypus.xpreformatted</a>
  &#8226;   <a href="#reportlab.rl_config">reportlab.rl_config</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.reports.report_generator">src.reports.report_generator</a>
 
   </div>
@@ -63776,6 +63887,7 @@ imported by:
  &#8226;   <a href="#reportlab.pdfgen.pdfimages">reportlab.pdfgen.pdfimages</a>
  &#8226;   <a href="#reportlab.pdfgen.textobject">reportlab.pdfgen.textobject</a>
  &#8226;   <a href="#reportlab.platypus.doctemplate">reportlab.platypus.doctemplate</a>
+ &#8226;   <a href="#run.py">run.py</a>
 
   </div>
 
@@ -63945,6 +64057,7 @@ imported by:
  &#8226;   <a href="#reportlab.platypus.paraparser">reportlab.platypus.paraparser</a>
  &#8226;   <a href="#reportlab.platypus.tables">reportlab.platypus.tables</a>
  &#8226;   <a href="#reportlab.platypus.xpreformatted">reportlab.platypus.xpreformatted</a>
+ &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#src.reports.report_generator">src.reports.report_generator</a>
 
   </div>
@@ -65159,10 +65272,9 @@ imported by:
 <div class="node">
   <a name="scipy"></a>
   <a target="code" href="" type="text/plain"><tt>scipy</tt></a>
-<span class="moduletype">MissingModule</span>  <div class="import">
+<span class="moduletype">ExcludedModule</span>  <div class="import">
 imported by:
     <a href="#pandas.core.missing">pandas.core.missing</a>
- &#8226;   <a href="#pandas.core.nanops">pandas.core.nanops</a>
 
   </div>
 
@@ -70799,6 +70911,7 @@ imported by:
  &#8226;   <a href="#PIL.JpegImagePlugin">PIL.JpegImagePlugin</a>
  &#8226;   <a href="#PIL.PyAccess">PIL.PyAccess</a>
  &#8226;   <a href="#PIL.SpiderImagePlugin">PIL.SpiderImagePlugin</a>
+ &#8226;   <a href="#PIL._tkinter_finder">PIL._tkinter_finder</a>
  &#8226;   <a href="#PIL.features">PIL.features</a>
  &#8226;   <a href="#PyQt5">PyQt5</a>
  &#8226;   <a href="#_aix_support">_aix_support</a>

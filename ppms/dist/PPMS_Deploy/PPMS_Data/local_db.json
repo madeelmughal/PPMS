@@ -1,0 +1,390 @@
+{
+  "users": {
+    "admin123": {
+      "id": "admin123",
+      "email": "admin@ppms.com",
+      "name": "Admin User",
+      "role": "admin",
+      "status": "active",
+      "department": "Management",
+      "created_at": "2024-01-01T00:00:00"
+    },
+    "operator123": {
+      "id": "operator123",
+      "email": "operator@ppms.com",
+      "name": "Operator User",
+      "role": "operator",
+      "status": "active",
+      "department": "Operations",
+      "created_at": "2024-01-01T00:00:00"
+    },
+    "manager123": {
+      "id": "manager123",
+      "email": "manager@ppms.com",
+      "name": "Manager User",
+      "role": "manager",
+      "status": "active",
+      "department": "Management",
+      "created_at": "2024-01-01T00:00:00"
+    }
+  },
+  "sales": {
+    "bfe248a3-1b45-4479-a844-fecca5a4dc8c": {
+      "id": "bfe248a3-1b45-4479-a844-fecca5a4dc8c",
+      "date": "2025-12-30T19:21:22.561510",
+      "nozzle_id": "ed3ce52d-dd01-4a22-b89d-52469365512b",
+      "fuel_type_id": "4010e875-acad-433b-b94e-ccabfdba4d64",
+      "quantity": 100.0,
+      "unit_price": 250.0,
+      "base_amount": 25000.0,
+      "tax_amount": 0.0,
+      "total_amount": 25000.0,
+      "payment_method": "Cash",
+      "status": "completed",
+      "created_at": "2025-12-30T19:21:22.561510"
+    },
+    "2b06af04-1645-46bf-9aff-0450baba664f": {
+      "id": "2b06af04-1645-46bf-9aff-0450baba664f",
+      "date": "2025-12-30T19:21:22.563512",
+      "nozzle_id": "a516b9b4-34c8-4121-8064-e3b534ed7e1b",
+      "fuel_type_id": "4010e875-acad-433b-b94e-ccabfdba4d64",
+      "quantity": 100.0,
+      "unit_price": 250.0,
+      "base_amount": 25000.0,
+      "tax_amount": 0.0,
+      "total_amount": 25000.0,
+      "payment_method": "Cash",
+      "status": "completed",
+      "created_at": "2025-12-30T19:21:22.563512"
+    },
+    "270b249e-5d4e-4c76-9d15-08ad025bd354": {
+      "id": "270b249e-5d4e-4c76-9d15-08ad025bd354",
+      "date": "2025-12-30T19:21:22.565507",
+      "nozzle_id": "f9a4b7a0-ebb9-409b-bfde-dcf978021aec",
+      "fuel_type_id": "32932c83-e94d-4f78-9ffb-2fc10e859813",
+      "quantity": 200.0,
+      "unit_price": 260.0,
+      "base_amount": 52000.0,
+      "tax_amount": 0.0,
+      "total_amount": 52000.0,
+      "payment_method": "Cash",
+      "status": "completed",
+      "created_at": "2025-12-30T19:21:22.565507"
+    },
+    "d8ccca91-161e-42f4-9c6b-a35759fc598d": {
+      "id": "d8ccca91-161e-42f4-9c6b-a35759fc598d",
+      "date": "2025-12-30T19:21:22.567500",
+      "nozzle_id": "61003716-5a6c-40fc-b126-42a50db891ed",
+      "fuel_type_id": "32932c83-e94d-4f78-9ffb-2fc10e859813",
+      "quantity": 120.0,
+      "unit_price": 260.0,
+      "base_amount": 31200.0,
+      "tax_amount": 0.0,
+      "total_amount": 31200.0,
+      "payment_method": "Cash",
+      "status": "completed",
+      "created_at": "2025-12-30T19:21:22.567500"
+    },
+    "4ce96701-9be4-4fab-b7d1-30e875095777": {
+      "id": "4ce96701-9be4-4fab-b7d1-30e875095777",
+      "date": "2025-12-30T19:21:22.569496",
+      "nozzle_id": "b8e62024-9972-4ad3-9c19-135de040f219",
+      "fuel_type_id": "9be12314-7aa7-4593-8e5b-92e097d1decf",
+      "quantity": 50.0,
+      "unit_price": 260.0,
+      "base_amount": 13000.0,
+      "tax_amount": 0.0,
+      "total_amount": 13000.0,
+      "payment_method": "Cash",
+      "status": "completed",
+      "created_at": "2025-12-30T19:21:22.569496"
+    },
+    "76bc0c4a-2669-4f8c-b8f5-2c02f5b740ff": {
+      "id": "76bc0c4a-2669-4f8c-b8f5-2c02f5b740ff",
+      "date": "2025-12-30T19:21:22.571488",
+      "nozzle_id": "fec7fab9-4637-4388-9ad3-39e991756e03",
+      "fuel_type_id": "9be12314-7aa7-4593-8e5b-92e097d1decf",
+      "quantity": 50.0,
+      "unit_price": 260.0,
+      "base_amount": 13000.0,
+      "tax_amount": 0.0,
+      "total_amount": 13000.0,
+      "payment_method": "Cash",
+      "status": "completed",
+      "created_at": "2025-12-30T19:21:22.571488"
+    },
+    "61010d72-1f9d-4686-bb8f-8bf77a7804db": {
+      "id": "61010d72-1f9d-4686-bb8f-8bf77a7804db",
+      "date": "2025-12-30T19:52:01.403207",
+      "nozzle_id": "ed3ce52d-dd01-4a22-b89d-52469365512b",
+      "fuel_type_id": "4010e875-acad-433b-b94e-ccabfdba4d64",
+      "quantity": 10000.0,
+      "unit_price": 250.0,
+      "base_amount": 2500000.0,
+      "tax_amount": 0.0,
+      "total_amount": 2500000.0,
+      "payment_method": "Cash",
+      "status": "completed",
+      "created_at": "2025-12-30T19:52:01.403207"
+    },
+    "810e1dce-2b5b-43c4-92a5-11e9d2ccf555": {
+      "id": "810e1dce-2b5b-43c4-92a5-11e9d2ccf555",
+      "date": "2025-12-30T19:52:01.416176",
+      "nozzle_id": "f9a4b7a0-ebb9-409b-bfde-dcf978021aec",
+      "fuel_type_id": "32932c83-e94d-4f78-9ffb-2fc10e859813",
+      "quantity": 10000.0,
+      "unit_price": 260.0,
+      "base_amount": 2600000.0,
+      "tax_amount": 0.0,
+      "total_amount": 2600000.0,
+      "payment_method": "Cash",
+      "status": "completed",
+      "created_at": "2025-12-30T19:52:01.416176"
+    },
+    "f4349416-62d2-4056-b5e6-673c671d2c5a": {
+      "id": "f4349416-62d2-4056-b5e6-673c671d2c5a",
+      "date": "2025-12-30T19:53:08.372135",
+      "nozzle_id": "ed3ce52d-dd01-4a22-b89d-52469365512b",
+      "fuel_type_id": "4010e875-acad-433b-b94e-ccabfdba4d64",
+      "quantity": 100000.0,
+      "unit_price": 240.0,
+      "base_amount": 24000000.0,
+      "tax_amount": 0.0,
+      "total_amount": 24000000.0,
+      "payment_method": "Cash",
+      "status": "completed",
+      "created_at": "2025-12-30T19:53:08.372135"
+    }
+  },
+  "purchases": {
+    "44489dcc-ae2c-4c87-8351-085d0d980e6a": {
+      "id": "44489dcc-ae2c-4c87-8351-085d0d980e6a",
+      "tank_id": "7611b56b-7713-40d9-914a-b7825322a3bd",
+      "supplier_name": "PSO",
+      "quantity": 20000.0,
+      "unit_cost": 240.0,
+      "total_cost": 4800000.0,
+      "invoice_number": "",
+      "purchase_date": "2025-12-30T19:47:18.964348",
+      "status": "completed",
+      "created_at": "2025-12-30T19:47:18.964348"
+    },
+    "09b2ffca-9acc-404c-9f7a-bdda0dfa1b7c": {
+      "id": "09b2ffca-9acc-404c-9f7a-bdda0dfa1b7c",
+      "tank_id": "d090f9be-7956-4690-99b0-7c54ed70a701",
+      "supplier_name": "PSO",
+      "quantity": 20000.0,
+      "unit_cost": 250.0,
+      "total_cost": 5000000.0,
+      "invoice_number": "",
+      "purchase_date": "2025-12-30T19:47:18.966353",
+      "status": "completed",
+      "created_at": "2025-12-30T19:47:18.966353"
+    },
+    "3343b7e4-da27-46a0-8880-46672f6017a7": {
+      "id": "3343b7e4-da27-46a0-8880-46672f6017a7",
+      "tank_id": "f5aef0f9-7297-4375-a165-a2972c793524",
+      "supplier_name": "PSO",
+      "quantity": 20000.0,
+      "unit_cost": 260.0,
+      "total_cost": 5200000.0,
+      "invoice_number": "",
+      "purchase_date": "2025-12-30T19:47:18.969342",
+      "status": "completed",
+      "created_at": "2025-12-30T19:47:18.969342"
+    }
+  },
+  "customers": {},
+  "expenses": {
+    "69b60014-ebd6-4a6d-8478-87c378bca547": {
+      "id": "69b60014-ebd6-4a6d-8478-87c378bca547",
+      "category": "Utilities",
+      "description": "Electricity Bill",
+      "amount": 2000000.0,
+      "payment_method": "Bank Transfer",
+      "reference_number": "",
+      "notes": "",
+      "expense_date": "2025-12-30T19:51:07.978151",
+      "status": "recorded",
+      "created_at": "2025-12-30T19:51:07.978151"
+    },
+    "c766f418-734e-4b33-8e1a-ad8e4fc47d5b": {
+      "id": "c766f418-734e-4b33-8e1a-ad8e4fc47d5b",
+      "category": "Maintenance",
+      "description": "Machine Mainenance",
+      "amount": 250000.0,
+      "payment_method": "Cash",
+      "reference_number": "",
+      "notes": "",
+      "expense_date": "2025-12-30T19:51:07.982147",
+      "status": "recorded",
+      "created_at": "2025-12-30T19:51:07.982147"
+    },
+    "e9f47b02-2435-4639-bc20-9d2aa868b1e3": {
+      "id": "e9f47b02-2435-4639-bc20-9d2aa868b1e3",
+      "category": "Salaries",
+      "description": "Employee Salaries",
+      "amount": 600000.0,
+      "payment_method": "Cash",
+      "reference_number": "",
+      "notes": "",
+      "expense_date": "2025-12-30T19:51:07.986141",
+      "status": "recorded",
+      "created_at": "2025-12-30T19:51:07.986141"
+    },
+    "e5e1ddfd-0134-400d-b5f1-d4eb40ce13dd": {
+      "id": "e5e1ddfd-0134-400d-b5f1-d4eb40ce13dd",
+      "category": "Insurance",
+      "description": "Insurance",
+      "amount": 200000.0,
+      "payment_method": "Bank Transfer",
+      "reference_number": "",
+      "notes": "",
+      "expense_date": "2025-12-30T19:51:07.991123",
+      "status": "recorded",
+      "created_at": "2025-12-30T19:51:07.991123"
+    }
+  },
+  "tanks": {
+    "7611b56b-7713-40d9-914a-b7825322a3bd": {
+      "id": "7611b56b-7713-40d9-914a-b7825322a3bd",
+      "name": "T1",
+      "fuel_type_id": "4010e875-acad-433b-b94e-ccabfdba4d64",
+      "capacity": 50000.0,
+      "current_stock": 0,
+      "minimum_stock": 1000.0,
+      "location": "",
+      "created_at": "2025-12-30T19:17:57.873530"
+    },
+    "d090f9be-7956-4690-99b0-7c54ed70a701": {
+      "id": "d090f9be-7956-4690-99b0-7c54ed70a701",
+      "name": "T2",
+      "fuel_type_id": "32932c83-e94d-4f78-9ffb-2fc10e859813",
+      "capacity": 50000.0,
+      "current_stock": 0,
+      "minimum_stock": 1000.0,
+      "location": "",
+      "created_at": "2025-12-30T19:17:57.874528"
+    },
+    "f5aef0f9-7297-4375-a165-a2972c793524": {
+      "id": "f5aef0f9-7297-4375-a165-a2972c793524",
+      "name": "T3",
+      "fuel_type_id": "9be12314-7aa7-4593-8e5b-92e097d1decf",
+      "capacity": 50000.0,
+      "current_stock": 0,
+      "minimum_stock": 1000.0,
+      "location": "",
+      "created_at": "2025-12-30T19:17:57.876522"
+    }
+  },
+  "fuel_types": {
+    "4010e875-acad-433b-b94e-ccabfdba4d64": {
+      "id": "4010e875-acad-433b-b94e-ccabfdba4d64",
+      "name": "Petrol",
+      "unit_price": 240.0,
+      "tax_percentage": 0.0,
+      "status": "active",
+      "created_at": "2025-12-30T19:15:58.241314"
+    },
+    "32932c83-e94d-4f78-9ffb-2fc10e859813": {
+      "id": "32932c83-e94d-4f78-9ffb-2fc10e859813",
+      "name": "Diseal",
+      "unit_price": 260.0,
+      "tax_percentage": 0.0,
+      "status": "active",
+      "created_at": "2025-12-30T19:15:58.243313"
+    },
+    "136f29b0-501d-4118-9f5c-ac5ae679ea2b": {
+      "id": "136f29b0-501d-4118-9f5c-ac5ae679ea2b",
+      "name": "Oil- KG",
+      "unit_price": 1000.0,
+      "tax_percentage": 0.0,
+      "status": "active",
+      "created_at": "2025-12-30T19:15:58.244311"
+    },
+    "9be12314-7aa7-4593-8e5b-92e097d1decf": {
+      "id": "9be12314-7aa7-4593-8e5b-92e097d1decf",
+      "name": "High Octan",
+      "unit_price": 255.0,
+      "tax_percentage": 0.0,
+      "status": "active",
+      "created_at": "2025-12-30T19:15:58.246305"
+    },
+    "8f838d45-7c34-4862-8f00-49dd7717b2fd": {
+      "id": "8f838d45-7c34-4862-8f00-49dd7717b2fd",
+      "name": "Oil- Half KG",
+      "unit_price": 500.0,
+      "tax_percentage": 0.0,
+      "status": "active",
+      "created_at": "2025-12-30T19:15:58.248300"
+    }
+  },
+  "nozzles": {
+    "ed3ce52d-dd01-4a22-b89d-52469365512b": {
+      "id": "ed3ce52d-dd01-4a22-b89d-52469365512b",
+      "machine_id": "M1",
+      "nozzle_number": 1,
+      "fuel_type_id": "4010e875-acad-433b-b94e-ccabfdba4d64",
+      "opening_reading": 0.0,
+      "closing_reading": 0.0,
+      "assigned_operator_id": "",
+      "status": "active",
+      "created_at": "2025-12-30T19:19:34.280940"
+    },
+    "a516b9b4-34c8-4121-8064-e3b534ed7e1b": {
+      "id": "a516b9b4-34c8-4121-8064-e3b534ed7e1b",
+      "machine_id": "M1",
+      "nozzle_number": 2,
+      "fuel_type_id": "4010e875-acad-433b-b94e-ccabfdba4d64",
+      "opening_reading": 0.0,
+      "closing_reading": 0.0,
+      "assigned_operator_id": "",
+      "status": "active",
+      "created_at": "2025-12-30T19:19:34.281938"
+    },
+    "f9a4b7a0-ebb9-409b-bfde-dcf978021aec": {
+      "id": "f9a4b7a0-ebb9-409b-bfde-dcf978021aec",
+      "machine_id": "M2",
+      "nozzle_number": 1,
+      "fuel_type_id": "32932c83-e94d-4f78-9ffb-2fc10e859813",
+      "opening_reading": 0.0,
+      "closing_reading": 0.0,
+      "assigned_operator_id": "",
+      "status": "active",
+      "created_at": "2025-12-30T19:19:34.282937"
+    },
+    "61003716-5a6c-40fc-b126-42a50db891ed": {
+      "id": "61003716-5a6c-40fc-b126-42a50db891ed",
+      "machine_id": "M2",
+      "nozzle_number": 2,
+      "fuel_type_id": "32932c83-e94d-4f78-9ffb-2fc10e859813",
+      "opening_reading": 0.0,
+      "closing_reading": 0.0,
+      "assigned_operator_id": "",
+      "status": "active",
+      "created_at": "2025-12-30T19:19:34.283932"
+    },
+    "b8e62024-9972-4ad3-9c19-135de040f219": {
+      "id": "b8e62024-9972-4ad3-9c19-135de040f219",
+      "machine_id": "M3",
+      "nozzle_number": 1,
+      "fuel_type_id": "9be12314-7aa7-4593-8e5b-92e097d1decf",
+      "opening_reading": 0.0,
+      "closing_reading": 0.0,
+      "assigned_operator_id": "",
+      "status": "active",
+      "created_at": "2025-12-30T19:19:34.285934"
+    },
+    "fec7fab9-4637-4388-9ad3-39e991756e03": {
+      "id": "fec7fab9-4637-4388-9ad3-39e991756e03",
+      "machine_id": "M3",
+      "nozzle_number": 3,
+      "fuel_type_id": "9be12314-7aa7-4593-8e5b-92e097d1decf",
+      "opening_reading": 0.0,
+      "closing_reading": 0.0,
+      "assigned_operator_id": "",
+      "status": "active",
+      "created_at": "2025-12-30T19:19:34.302885"
+    }
+  }
+}

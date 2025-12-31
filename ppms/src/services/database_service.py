@@ -368,6 +368,67 @@ class SalesService(DatabaseService):
             logger.error(f"Error recording sale: {str(e)}")
             return False, str(e), None
 
+    def add_sale(self, sale: Sale, user_id: str = "") -> tuple[bool, str]:
+        """Add a new sale (alias for record_sale with tank inventory update)."""
+        try:
+            success, msg, sale_id = self.record_sale(sale, user_id)
+            return success, msg
+        except Exception as e:
+            logger.error(f"Error adding sale: {str(e)}")
+            return False, str(e)
+
+    def update_sale(self, sale_id: str, sale: Sale) -> tuple[bool, str]:
+        """Update an existing sale."""
+        try:
+            success, msg = self.update_document('sales', sale_id, sale.to_dict())
+            return success, msg
+        except Exception as e:
+            logger.error(f"Error updating sale: {str(e)}")
+            return False, str(e)
+
+    def delete_sale(self, sale_id: str) -> tuple[bool, str]:
+        """Delete a sale."""
+        try:
+            self.firestore.collection('sales').document(sale_id).delete()
+            logger.info(f"Sale deleted: {sale_id}")
+            return True, "Sale deleted successfully"
+        except Exception as e:
+            logger.error(f"Error deleting sale: {str(e)}")
+            return False, str(e)
+
+    def get_sales_by_date(self, date_str: str) -> List[Sale]:
+        """Get all sales for a specific date (format: YYYY-MM-DD)."""
+        try:
+            docs = self.firestore.collection('sales').where(
+                'date', '>=', f"{date_str}T00:00:00"
+            ).where(
+                'date', '<', f"{date_str}T23:59:59"
+            ).stream()
+
+            sales = []
+            for doc in docs:
+                data = doc.to_dict()
+                sale = Sale(
+                    id=data.get('id'),
+                    nozzle_id=data.get('nozzle_id'),
+                    fuel_type_id=data.get('fuel_type_id'),
+                    quantity=data.get('quantity'),
+                    unit_price=data.get('unit_price'),
+                    total_amount=data.get('total_amount'),
+                    payment_method=data.get('payment_method'),
+                    customer_name=data.get('customer_name'),
+                    vehicle_number=data.get('vehicle_number'),
+                    notes=data.get('notes'),
+                    sale_date=data.get('sale_date'),
+                    created_at=data.get('created_at'),
+                    created_by=data.get('created_by')
+                )
+                sales.append(sale)
+            return sales
+        except Exception as e:
+            logger.error(f"Error getting sales by date: {str(e)}")
+            return []
+
     def list_daily_sales(self, date: datetime) -> List[Sale]:
         """Get all sales for a specific date."""
         try:
@@ -459,6 +520,7 @@ class NozzleService(DatabaseService):
                 'nozzle_number': nozzle_number,
                 'fuel_type_id': fuel_type_id,
                 'opening_reading': opening_reading,
+                'current_reading': opening_reading,  # Initialize to opening reading
                 'closing_reading': 0.0,
                 'assigned_operator_id': '',
                 'status': 'active'
@@ -543,3 +605,153 @@ class NozzleService(DatabaseService):
         except Exception as e:
             logger.error(f"Error assigning operator: {str(e)}")
             return False, str(e)
+
+
+class AccountHeadService(DatabaseService):
+    """Service for managing account heads (payment methods)."""
+
+    def __init__(self):
+        """Initialize account head service."""
+        super().__init__()
+
+    def create_account_head(
+        self,
+        name: str,
+        head_type: str = "payment",
+        description: str = "",
+        is_active: bool = True
+    ) -> tuple[bool, str]:
+        """
+        Create a new account head.
+
+        Args:
+            name: Account head name (e.g., "Cash", "Bank Transfer")
+            head_type: Type of head ("payment", "expense", "income")
+            description: Optional description
+            is_active: Whether the head is active
+
+        Returns:
+            Tuple of (success, message/id)
+        """
+        try:
+            head_id = str(uuid.uuid4())
+            data = {
+                'id': head_id,
+                'name': name,
+                'head_type': head_type,
+                'description': description,
+                'is_active': is_active,
+                'created_at': datetime.now().isoformat()
+            }
+            return self.create_document('account_heads', head_id, data)
+        except Exception as e:
+            logger.error(f"Error creating account head: {str(e)}")
+            return False, str(e)
+
+    def get_payment_methods(self, active_only: bool = True, head_type_filter: Optional[str] = None) -> List[str]:
+        """
+        Get list of payment method names from account heads.
+
+        Args:
+            active_only: If True, return only active payment methods
+            head_type_filter: Filter by specific account type (e.g., 'Asset', 'Expense', 'payment')
+
+        Returns:
+            List of payment method names
+        """
+        try:
+            # Get all account heads
+            all_heads = self.list_documents('account_heads')
+            
+            # Filter by type and active status in Python
+            payment_heads = []
+            for h in all_heads:
+                # Check for both 'head_type' (new format) and 'account_type' (legacy format)
+                head_type = h.get('head_type') or h.get('account_type', '')
+                
+                # Filter by type if specified
+                if head_type_filter:
+                    if head_type != head_type_filter:
+                        continue
+                else:
+                    # If no filter, accept common types
+                    if head_type not in ['payment', 'Asset', 'Liability', 'Equity', 'Income', 'Expense']:
+                        continue
+                
+                # Check if active
+                is_active = h.get('is_active', True) if h.get('is_active') is not None else h.get('status') == 'active'
+                if not active_only or is_active:
+                    name = h.get('name', '').strip()
+                    if name:
+                        payment_heads.append(name)
+            
+            if payment_heads:
+                logger.info(f"Loaded {len(payment_heads)} payment methods from account heads")
+                return payment_heads
+            else:
+                logger.warning("No payment methods found in account heads")
+                # Return default payment methods if account heads not configured
+                return ["Cash"]
+        except Exception as e:
+            logger.error(f"Error getting payment methods: {str(e)}")
+            # Return default payment methods if account heads not configured
+            return ["Cash"]
+    def list_account_heads(
+        self,
+        head_type: Optional[str] = None,
+        active_only: bool = True
+    ) -> List[Dict[str, Any]]:
+        """
+        List account heads.
+
+        Args:
+            head_type: Filter by type (payment, expense, income)
+            active_only: Return only active heads
+
+        Returns:
+            List of account head dictionaries
+        """
+        try:
+            filters = []
+            if head_type:
+                filters.append(('head_type', '==', head_type))
+            if active_only:
+                filters.append(('is_active', '==', True))
+            
+            return self.list_documents('account_heads', filters if filters else None)
+        except Exception as e:
+            logger.error(f"Error listing account heads: {str(e)}")
+            return []
+
+    def update_account_head(
+        self,
+        head_id: str,
+        data: Dict[str, Any]
+    ) -> tuple[bool, str]:
+        """Update an account head."""
+        return self.update_document('account_heads', head_id, data)
+
+    def delete_account_head(self, head_id: str) -> tuple[bool, str]:
+        """Delete (deactivate) an account head."""
+        return self.update_document('account_heads', head_id, {'is_active': False})
+
+    def initialize_default_payment_methods(self, user_id: str = None) -> tuple[bool, str]:
+        """Initialize default payment methods if none exist."""
+        try:
+            existing = self.list_account_heads(head_type="payment")
+            if existing:
+                return True, "Payment methods already exist"
+            
+            default_methods = [
+                ("Cash", "Cash payment")
+            ]
+            
+            for name, desc in default_methods:
+                self.create_account_head(name, "payment", desc, True)
+            
+            logger.info("Default payment methods initialized")
+            return True, "Default payment methods created"
+        except Exception as e:
+            logger.error(f"Error initializing default payment methods: {str(e)}")
+            return False, str(e)
+

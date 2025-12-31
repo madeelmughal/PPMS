@@ -349,3 +349,220 @@
 2025-12-30 11:27:09 - src.main - INFO - User logged in: admin@ppms.com
 2025-12-30 11:30:35 - src.main - INFO - User logged out
 2025-12-30 11:30:46 - src.main - INFO - Application closing
+2025-12-30 14:21:46 - src.main - INFO - Firebase initialized successfully
+2025-12-30 14:21:47 - src.main - INFO - PPMS Application initialized
+2025-12-30 14:21:51 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 14:21:51 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 14:22:50 - src.services.database_service - INFO - Document created: fuel_types/e8ea1d63-1fa4-45e3-8072-a23378483206
+2025-12-30 14:22:50 - src.services.database_service - INFO - Document created: fuel_types/a1649c06-32c4-4f41-b04b-6e3eee80e99d
+2025-12-30 14:30:45 - src.main - INFO - Application closing
+2025-12-30 14:31:54 - src.main - INFO - Firebase initialized successfully
+2025-12-30 14:31:55 - src.main - INFO - PPMS Application initialized
+2025-12-30 14:32:05 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 14:32:05 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 14:32:35 - src.services.database_service - INFO - Document created: fuel_types/33f1f634-1218-44a7-a59d-5bd1c2e648cd
+2025-12-30 14:43:31 - src.main - INFO - Application closing
+2025-12-30 14:44:11 - src.main - INFO - Firebase initialized successfully
+2025-12-30 14:44:12 - src.main - INFO - PPMS Application initialized
+2025-12-30 14:44:34 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 14:44:34 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 14:49:21 - src.main - INFO - Application closing
+2025-12-30 14:49:40 - src.main - INFO - Firebase initialized successfully
+2025-12-30 14:49:40 - src.main - INFO - PPMS Application initialized
+2025-12-30 14:49:46 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 14:49:46 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 14:52:33 - src.main - INFO - Application closing
+2025-12-30 14:55:24 - src.main - INFO - Firebase initialized successfully
+2025-12-30 14:55:25 - src.main - INFO - PPMS Application initialized
+2025-12-30 14:55:30 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 14:55:30 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 15:01:18 - src.main - INFO - Application closing
+2025-12-30 15:06:12 - src.main - INFO - Firebase initialized successfully
+2025-12-30 15:06:13 - src.main - INFO - PPMS Application initialized
+2025-12-30 15:06:18 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 15:06:18 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 15:07:30 - src.main - INFO - Application closing
+2025-12-30 15:20:03 - src.main - INFO - Firebase initialized successfully
+2025-12-30 15:20:04 - src.main - INFO - PPMS Application initialized
+2025-12-30 15:20:09 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 15:20:09 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 15:24:40 - src.main - INFO - User logged out
+2025-12-30 15:24:48 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 15:24:48 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 15:25:33 - src.services.database_service - INFO - Document created: tanks/1f34565b-2fd9-4d49-b434-70f1a3f69a47
+2025-12-30 15:26:24 - src.services.database_service - INFO - Document created: nozzles/0f08ccc2-346b-42be-8313-d4d3c95ef7bf
+2025-12-30 15:27:30 - src.services.database_service - INFO - Document created: sales/810fff30-769f-47ad-9548-02dce5342a1f
+2025-12-30 15:27:30 - src.services.database_service - INFO - Document created: sales/9c4a8f57-dde7-43c4-afc0-08c63e2fb335
+2025-12-30 15:27:30 - src.services.database_service - INFO - Document created: sales/b6e3991f-0df1-4602-b5f2-9aa96ce0df43
+2025-12-30 15:27:49 - src.main - INFO - Application closing
+2025-12-30 15:28:00 - src.main - INFO - Firebase initialized successfully
+2025-12-30 15:28:01 - src.main - INFO - PPMS Application initialized
+2025-12-30 15:28:06 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 15:28:06 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 15:29:24 - src.services.database_service - INFO - Document created: sales/0327782b-d8c2-438d-814f-e861094b99e5
+2025-12-30 15:29:24 - src.services.database_service - INFO - Document created: sales/bb6b8518-9a7d-454e-9066-c09e4f602e7f
+2025-12-30 15:29:24 - src.services.database_service - INFO - Document created: sales/d446dace-5fe0-4de9-9af7-517b2e27e77e
+2025-12-30 15:29:41 - src.main - INFO - Application closing
+2025-12-30 15:31:05 - src.main - INFO - Firebase initialized successfully
+2025-12-30 15:31:06 - src.main - INFO - PPMS Application initialized
+2025-12-30 15:31:10 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 15:31:10 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 15:33:33 - src.main - INFO - Application closing
+2025-12-30 15:37:19 - src.main - INFO - Firebase initialized successfully
+2025-12-30 15:37:20 - src.main - INFO - PPMS Application initialized
+2025-12-30 15:37:28 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 15:37:28 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 15:38:32 - src.services.database_service - INFO - Document created: expenses/098ec14e-66c0-4ca8-bbc2-db156aa71c62
+2025-12-30 15:47:14 - src.main - INFO - Application closing
+2025-12-30 15:48:33 - src.main - INFO - Firebase initialized successfully
+2025-12-30 15:48:33 - src.main - INFO - PPMS Application initialized
+2025-12-30 15:48:40 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 15:48:40 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 15:55:26 - src.main - INFO - Application closing
+2025-12-30 15:56:54 - src.main - INFO - Firebase initialized successfully
+2025-12-30 15:56:55 - src.main - INFO - PPMS Application initialized
+2025-12-30 15:57:01 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 15:57:01 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 16:02:27 - src.main - INFO - Application closing
+2025-12-30 16:03:15 - src.main - INFO - Firebase initialized successfully
+2025-12-30 16:03:16 - src.main - INFO - PPMS Application initialized
+2025-12-30 16:03:29 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 16:03:29 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 16:10:09 - src.services.database_service - INFO - Document created: purchases/8e846876-c338-4ccc-a630-79de6fbabcc7
+2025-12-30 16:12:23 - src.main - INFO - Application closing
+2025-12-30 17:26:03 - src.main - INFO - Firebase initialized successfully
+2025-12-30 17:26:03 - src.main - INFO - PPMS Application initialized
+2025-12-30 17:26:11 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 17:26:11 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 17:29:12 - src.main - INFO - User logged out
+2025-12-30 17:29:13 - src.main - INFO - Application closing
+2025-12-30 20:03:41 - src.main - INFO - Firebase initialized successfully
+2025-12-30 20:03:42 - src.main - INFO - PPMS Application initialized
+2025-12-30 20:04:10 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 20:04:10 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 20:09:54 - src.main - INFO - Application closing
+2025-12-30 20:11:56 - src.main - INFO - Firebase initialized successfully
+2025-12-30 20:11:57 - src.main - INFO - PPMS Application initialized
+2025-12-30 20:12:18 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 20:12:18 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 20:41:11 - src.main - INFO - Application closing
+2025-12-30 20:41:43 - src.main - INFO - Firebase initialized successfully
+2025-12-30 20:41:44 - src.main - INFO - PPMS Application initialized
+2025-12-30 20:41:50 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 20:41:50 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 20:47:13 - src.main - INFO - Application closing
+2025-12-30 20:49:23 - src.main - INFO - Firebase initialized successfully
+2025-12-30 20:49:24 - src.main - INFO - PPMS Application initialized
+2025-12-30 20:49:56 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 20:49:56 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 20:49:56 - src.services.database_service - INFO - Document created: account_heads/f3eaa622-36b1-4caa-ab41-e39ce012ff37
+2025-12-30 20:49:56 - src.services.database_service - INFO - Document created: account_heads/8949a7c4-86bd-4053-9c8a-80ab7ca30702
+2025-12-30 20:49:56 - src.services.database_service - INFO - Document created: account_heads/dba1c5cc-ce79-4817-9453-fea5344686a5
+2025-12-30 20:49:56 - src.services.database_service - INFO - Document created: account_heads/2d38469c-190a-406b-80d9-2b73940c1470
+2025-12-30 20:49:56 - src.services.database_service - INFO - Document created: account_heads/6ca6932b-bdc1-431f-9803-63d4f0d48474
+2025-12-30 20:49:56 - src.services.database_service - INFO - Document created: account_heads/354f1008-a221-455b-8f6c-01ede2947f9a
+2025-12-30 20:49:56 - src.services.database_service - INFO - Document created: account_heads/42e4ccd7-5e27-45ec-bad4-0b280bb23265
+2025-12-30 20:49:56 - src.services.database_service - INFO - Default payment methods initialized
+2025-12-30 20:57:00 - src.main - INFO - Application closing
+2025-12-30 20:57:10 - src.main - INFO - Firebase initialized successfully
+2025-12-30 20:57:12 - src.main - INFO - PPMS Application initialized
+2025-12-30 20:57:18 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 20:57:18 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 20:58:46 - src.main - INFO - Application closing
+2025-12-30 20:59:30 - src.main - INFO - Firebase initialized successfully
+2025-12-30 20:59:31 - src.main - INFO - PPMS Application initialized
+2025-12-30 20:59:36 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 20:59:36 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 21:03:18 - src.main - INFO - Application closing
+2025-12-30 21:03:27 - src.main - INFO - Firebase initialized successfully
+2025-12-30 21:03:29 - src.main - INFO - PPMS Application initialized
+2025-12-30 21:03:33 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 21:03:33 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 21:03:34 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:04:04 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:04:34 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:05:04 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:05:34 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:06:04 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:06:34 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:07:02 - src.main - INFO - Application closing
+2025-12-30 21:07:12 - src.main - INFO - Firebase initialized successfully
+2025-12-30 21:07:13 - src.main - INFO - PPMS Application initialized
+2025-12-30 21:08:18 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 21:08:18 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 21:08:19 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:08:47 - src.services.database_service - INFO - Document created: account_heads/a70c6064-7b40-421e-a93d-3d50ddf5c9fe
+2025-12-30 21:08:49 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:09:15 - src.main - INFO - Application closing
+2025-12-30 21:09:41 - src.main - INFO - Firebase initialized successfully
+2025-12-30 21:09:43 - src.main - INFO - PPMS Application initialized
+2025-12-30 21:09:58 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 21:09:58 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 21:09:59 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:10:29 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:10:59 - src.services.database_service - INFO - Loaded 7 payment methods from account heads
+2025-12-30 21:11:22 - src.main - INFO - Application closing
+2025-12-30 21:12:03 - src.main - INFO - Firebase initialized successfully
+2025-12-30 21:12:04 - src.main - INFO - PPMS Application initialized
+2025-12-30 21:12:09 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 21:12:09 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 21:12:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:12:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:12:47 - src.services.database_service - INFO - Document created: account_heads/0ae387e0-1f6c-4bbd-a9d1-aca3c1b6a592
+2025-12-30 21:13:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:13:28 - src.services.database_service - INFO - Document created: sales/fec69fb0-682c-4220-be58-4987388d2ede
+2025-12-30 21:13:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:14:03 - src.services.database_service - INFO - Document created: sales/47cda5e5-13cd-4106-80e3-2948d8444dcb
+2025-12-30 21:14:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:14:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:15:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:15:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:16:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:16:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:16:45 - src.main - INFO - Application closing
+2025-12-30 21:17:19 - src.main - INFO - Firebase initialized successfully
+2025-12-30 21:17:20 - src.main - INFO - PPMS Application initialized
+2025-12-30 21:17:25 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 21:17:25 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 21:17:26 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:17:56 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:18:26 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:18:36 - src.services.database_service - INFO - Document created: fuel_types/ca9fd1a6-bbf1-4415-8964-17a3d4081139
+2025-12-30 21:18:36 - src.services.database_service - INFO - Document created: fuel_types/1bf1583c-889e-42d7-9e4a-554786c114c7
+2025-12-30 21:18:36 - src.services.database_service - INFO - Document created: fuel_types/38e07b85-a057-41e6-b842-62d381ab8e88
+2025-12-30 21:18:56 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:19:26 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:19:56 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:20:13 - src.services.database_service - INFO - Document created: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-30 21:20:13 - src.services.database_service - INFO - Document created: tanks/bde255e2-005a-416a-bdbd-52463bfd3e74
+2025-12-30 21:20:13 - src.services.database_service - INFO - Document created: tanks/dd6191e9-dd66-4956-9a4d-bf7f579b389e
+2025-12-30 21:20:26 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:20:56 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:21:26 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:21:26 - src.services.database_service - INFO - Document created: nozzles/b6f0b179-8a52-44dc-93a8-8ca781661584
+2025-12-30 21:21:26 - src.services.database_service - INFO - Document created: nozzles/40429ec1-ea08-4edb-bf1d-53a58174ab7c
+2025-12-30 21:21:26 - src.services.database_service - INFO - Document created: nozzles/ca267f3b-9ec5-434c-b726-f745c6abc848
+2025-12-30 21:21:56 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:22:05 - src.main - INFO - Application closing
+2025-12-30 21:26:10 - src.main - INFO - Firebase initialized successfully
+2025-12-30 21:26:13 - src.main - INFO - PPMS Application initialized
+2025-12-30 21:26:27 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 21:26:27 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 21:26:28 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:26:58 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:27:28 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:27:53 - src.services.database_service - INFO - Document created: account_heads/82a4bb3b-59c0-46ea-a0c8-2d1dfafb2560
+2025-12-30 21:27:53 - src.services.database_service - INFO - Document created: account_heads/74290de0-294e-45ec-9dc3-7af397b4f998
+2025-12-30 21:27:58 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:28:28 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:28:58 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:29:10 - src.services.database_service - INFO - Document created: sales/7f813cbf-82d7-434e-9d13-b7a93f4eb1cf
+2025-12-30 21:29:28 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:29:58 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:30:28 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:30:58 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:31:28 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:31:58 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:32:28 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:32:58 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-30 21:32:59 - src.main - INFO - Application closing

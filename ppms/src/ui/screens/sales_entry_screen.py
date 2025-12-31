@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, pyqtSignal, QDateTime
 from PyQt5.QtGui import QFont, QColor
 from src.services.database_service import (
-    SalesService, FuelService, TankService, NozzleService, DatabaseService
+    SalesService, FuelService, TankService, NozzleService, DatabaseService, AccountHeadService
 )
 from src.models import Sale, Reading
 from src.utils.validators import validate_currency
@@ -24,7 +24,7 @@ logger = setup_logger(__name__)
 class SaleDialog(QDialog):
     """Dialog for recording a fuel sale."""
 
-    def __init__(self, parent=None, fuel_types=None, nozzles=None, sale=None):
+    def __init__(self, parent=None, fuel_types=None, nozzles=None, sale=None, payment_methods=None):
         """
         Initialize dialog.
 
@@ -33,11 +33,13 @@ class SaleDialog(QDialog):
             fuel_types: List of available FuelType objects
             nozzles: List of available Nozzle objects
             sale: Existing Sale to edit (None for new)
+            payment_methods: List of payment method names from account heads
         """
         super().__init__(parent)
         self.fuel_types = fuel_types or []
         self.nozzles = nozzles or []
         self.sale = sale
+        self.payment_methods = payment_methods if payment_methods is not None else []
         self.setWindowTitle("Record Sale" if sale is None else f"Edit Sale #{sale.id}")
         self.setGeometry(200, 200, 500, 500)
         self.init_ui()
@@ -82,9 +84,9 @@ class SaleDialog(QDialog):
             self.unit_price_input.setValue(float(self.sale.unit_price))
         layout.addRow("Unit Price (Rs/L):", self.unit_price_input)
 
-        # Payment method
+        # Payment method - loaded from account heads
         self.payment_combo = QComboBox()
-        self.payment_combo.addItems(["Cash", "Card", "Credit", "Check"])
+        self.payment_combo.addItems(self.payment_methods)
         if self.sale and self.sale.payment_method:
             index = self.payment_combo.findText(self.sale.payment_method)
             self.payment_combo.setCurrentIndex(index if index >= 0 else 0)
@@ -173,6 +175,7 @@ class SalesEntryScreen(QWidget):
         self.tank_service = TankService()
         self.nozzle_service = NozzleService()
         self.db_service = DatabaseService()
+        self.account_head_service = AccountHeadService()
 
         self.setWindowTitle("Sales Entry")
         self.setGeometry(100, 100, 1200, 700)
@@ -180,6 +183,7 @@ class SalesEntryScreen(QWidget):
         self.sales = []
         self.fuel_types = []
         self.nozzles = []
+        self.payment_methods = []
 
         self.init_ui()
         self.load_data()
@@ -236,6 +240,9 @@ class SalesEntryScreen(QWidget):
             # Load nozzles
             self.nozzles = self.nozzle_service.get_all_nozzles()
 
+            # Load payment methods from account heads
+            self.payment_methods = self.account_head_service.get_payment_methods()
+
             # Load today's sales
             from datetime import date
             today = date.today().isoformat()
@@ -259,7 +266,9 @@ class SalesEntryScreen(QWidget):
                 None
             )
             nozzle_text = f"Nozzle {nozzle.nozzle_number}" if nozzle else "Unknown"
-            self.sales_table.setItem(row, 0, QTableWidgetItem(nozzle_text))
+            nozzle_item = QTableWidgetItem(nozzle_text)
+            nozzle_item.setFlags(nozzle_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.sales_table.setItem(row, 0, nozzle_item)
 
             # Fuel type
             fuel = next(
@@ -267,23 +276,35 @@ class SalesEntryScreen(QWidget):
                 None
             )
             fuel_text = fuel.name if fuel else "Unknown"
-            self.sales_table.setItem(row, 1, QTableWidgetItem(fuel_text))
+            fuel_item = QTableWidgetItem(fuel_text)
+            fuel_item.setFlags(fuel_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.sales_table.setItem(row, 1, fuel_item)
 
             # Quantity
-            self.sales_table.setItem(row, 2, QTableWidgetItem(f"{sale.quantity} L"))
+            qty_item = QTableWidgetItem(f"{sale.quantity} L")
+            qty_item.setFlags(qty_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.sales_table.setItem(row, 2, qty_item)
 
             # Unit price
-            self.sales_table.setItem(row, 3, QTableWidgetItem(f"Rs. {sale.unit_price}"))
+            price_item = QTableWidgetItem(f"Rs. {sale.unit_price}")
+            price_item.setFlags(price_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.sales_table.setItem(row, 3, price_item)
 
             # Total amount
-            self.sales_table.setItem(row, 4, QTableWidgetItem(f"Rs. {sale.total_amount}"))
+            total_item = QTableWidgetItem(f"Rs. {sale.total_amount}")
+            total_item.setFlags(total_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.sales_table.setItem(row, 4, total_item)
 
             # Payment method
-            self.sales_table.setItem(row, 5, QTableWidgetItem(sale.payment_method))
+            payment_item = QTableWidgetItem(sale.payment_method)
+            payment_item.setFlags(payment_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.sales_table.setItem(row, 5, payment_item)
 
             # Customer
             customer_text = sale.customer_name or "Walk-in"
-            self.sales_table.setItem(row, 6, QTableWidgetItem(customer_text))
+            customer_item = QTableWidgetItem(customer_text)
+            customer_item.setFlags(customer_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.sales_table.setItem(row, 6, customer_item)
 
             # Actions
             action_layout = QHBoxLayout()
@@ -312,15 +333,49 @@ class SalesEntryScreen(QWidget):
 
     def add_sale(self):
         """Add a new sale."""
-        dialog = SaleDialog(self, self.fuel_types, self.nozzles)
+        dialog = SaleDialog(self, self.fuel_types, self.nozzles, payment_methods=self.payment_methods)
         if dialog.exec_() == QDialog.Accepted:
             try:
                 sale = dialog.get_sale()
+                
+                # Get nozzle and fuel details for inventory check
+                nozzle = next((n for n in self.nozzles if n.id == sale.nozzle_id), None)
+                if not nozzle:
+                    QMessageBox.warning(self, "Error", "Nozzle not found")
+                    return
+                
+                fuel = next((f for f in self.fuel_types if f.id == sale.fuel_type_id), None)
+                if not fuel:
+                    QMessageBox.warning(self, "Error", "Fuel type not found")
+                    return
+                
+                # Get tank and check inventory
+                tanks = self.tank_service.list_tanks()
+                tank = next((t for t in tanks if t.fuel_type_id == fuel.id), None)
+                if not tank:
+                    QMessageBox.warning(self, "Error", f"No tank configured for {fuel.name}")
+                    return
+                
+                quantity = float(sale.quantity)
+                if tank.current_stock < quantity:
+                    QMessageBox.warning(self, "Insufficient Inventory", 
+                        f"Insufficient {fuel.name} inventory.\nAvailable: {tank.current_stock:.2f}L\nRequired: {quantity:.2f}L")
+                    return
+                
+                # Record sale
                 success, message = self.sales_service.add_sale(sale, self.user.id)
 
                 if success:
-                    QMessageBox.information(self, "Success", message)
-                    self.load_data()
+                    # Update tank inventory
+                    new_stock = tank.current_stock - quantity
+                    stock_success, stock_msg = self.tank_service.update_tank_stock(tank.id, new_stock)
+                    
+                    if stock_success:
+                        QMessageBox.information(self, "Success", f"Sale recorded successfully!\nInventory updated.")
+                        self.load_data()
+                    else:
+                        QMessageBox.warning(self, "Warning", f"Sale recorded but inventory update failed: {stock_msg}")
+                        self.load_data()
                 else:
                     QMessageBox.warning(self, "Error", message)
 
@@ -330,7 +385,7 @@ class SalesEntryScreen(QWidget):
 
     def edit_sale(self, sale):
         """Edit an existing sale."""
-        dialog = SaleDialog(self, self.fuel_types, self.nozzles, sale)
+        dialog = SaleDialog(self, self.fuel_types, self.nozzles, sale, payment_methods=self.payment_methods)
         if dialog.exec_() == QDialog.Accepted:
             try:
                 updated_sale = dialog.get_sale()
@@ -351,17 +406,39 @@ class SalesEntryScreen(QWidget):
         reply = QMessageBox.question(
             self,
             "Confirm Delete",
-            f"Are you sure you want to delete this sale (Rs. {sale.total_amount})?",
+            f"Are you sure you want to delete this sale (Rs. {sale.total_amount})?\nInventory will be restored.",
             QMessageBox.Yes | QMessageBox.No
         )
 
         if reply == QMessageBox.Yes:
             try:
+                # Get fuel and tank info to restore inventory
+                fuel = next((f for f in self.fuel_types if f.id == sale.fuel_type_id), None)
+                if not fuel:
+                    QMessageBox.warning(self, "Error", "Fuel type not found")
+                    return
+                
+                tanks = self.tank_service.list_tanks()
+                tank = next((t for t in tanks if t.fuel_type_id == fuel.id), None)
+                if not tank:
+                    QMessageBox.warning(self, "Error", f"Tank for {fuel.name} not found")
+                    return
+                
+                # Delete sale
                 success, message = self.sales_service.delete_sale(sale.id)
 
                 if success:
-                    QMessageBox.information(self, "Success", message)
-                    self.load_data()
+                    # Restore tank inventory
+                    quantity = float(sale.quantity)
+                    new_stock = tank.current_stock + quantity
+                    stock_success, stock_msg = self.tank_service.update_tank_stock(tank.id, new_stock)
+                    
+                    if stock_success:
+                        QMessageBox.information(self, "Success", f"Sale deleted successfully!\nInventory restored: +{quantity:.2f}L")
+                        self.load_data()
+                    else:
+                        QMessageBox.warning(self, "Warning", f"Sale deleted but inventory restore failed: {stock_msg}")
+                        self.load_data()
                 else:
                     QMessageBox.warning(self, "Error", message)
 

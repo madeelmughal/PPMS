@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QFont, QColor
-from src.services.database_service import DatabaseService
+from src.services.database_service import DatabaseService, AccountHeadService
 from src.services.auth_service import AuthenticationService
 from src.models import User, UserRole
 from src.utils.validators import validate_email, validate_phone
@@ -216,11 +216,13 @@ class SettingsManagementScreen(QWidget):
         self.user = user
         self.db_service = DatabaseService()
         self.auth_service = AuthenticationService()
+        self.account_head_service = AccountHeadService()
 
         self.setWindowTitle("Settings & User Management")
         self.setGeometry(100, 100, 1200, 700)
 
         self.users = []
+        self.account_heads = []
 
         self.init_ui()
         self.load_data()
@@ -336,6 +338,37 @@ class SettingsManagementScreen(QWidget):
         audit_widget.setLayout(audit_layout)
         tabs.addTab(audit_widget, "Audit Log")
 
+        # Account Heads (Payment Methods) tab
+        account_heads_widget = QWidget()
+        account_heads_layout = QVBoxLayout()
+
+        ah_label = QLabel("Account Heads / Payment Methods")
+        ah_label.setFont(QFont("Arial", 12, QFont.Bold))
+        account_heads_layout.addWidget(ah_label)
+
+        ah_info_label = QLabel("Define payment methods that appear in Sales and Expense screens.")
+        account_heads_layout.addWidget(ah_info_label)
+
+        # Account heads table
+        self.account_heads_table = QTableWidget()
+        self.account_heads_table.setColumnCount(4)
+        self.account_heads_table.setHorizontalHeaderLabels([
+            "Name", "Description", "Status", "Actions"
+        ])
+        self.account_heads_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        account_heads_layout.addWidget(self.account_heads_table)
+
+        # Buttons
+        ah_btn_layout = QHBoxLayout()
+        add_ah_btn = QPushButton("Add Payment Method")
+        add_ah_btn.clicked.connect(self.add_account_head)
+        ah_btn_layout.addWidget(add_ah_btn)
+        ah_btn_layout.addStretch()
+        account_heads_layout.addLayout(ah_btn_layout)
+
+        account_heads_widget.setLayout(account_heads_layout)
+        tabs.addTab(account_heads_widget, "Payment Methods")
+
         main_layout.addWidget(tabs)
         self.setLayout(main_layout)
 
@@ -352,6 +385,14 @@ class SettingsManagementScreen(QWidget):
             audit_docs = self.db_service.list_documents("audit_logs")
             self.populate_audit_table(audit_docs)
 
+            # Load account heads (payment methods)
+            self.account_heads = self.account_head_service.list_account_heads()
+            if not self.account_heads:
+                # Initialize default payment methods if none exist
+                self.account_head_service.initialize_default_payment_methods(self.user.id)
+                self.account_heads = self.account_head_service.list_account_heads()
+            self.populate_account_heads_table()
+
         except Exception as e:
             logger.error(f"Error loading data: {str(e)}")
             QMessageBox.critical(self, "Error", f"Failed to load data: {str(e)}")
@@ -362,21 +403,30 @@ class SettingsManagementScreen(QWidget):
 
         for row, user in enumerate(self.users):
             # Name
-            self.users_table.setItem(row, 0, QTableWidgetItem(user.name))
+            name_item = QTableWidgetItem(user.name)
+            name_item.setFlags(name_item.flags() & ~Qt.ItemIsEditable)
+            self.users_table.setItem(row, 0, name_item)
 
             # Email
-            self.users_table.setItem(row, 1, QTableWidgetItem(user.email))
+            email_item = QTableWidgetItem(user.email)
+            email_item.setFlags(email_item.flags() & ~Qt.ItemIsEditable)
+            self.users_table.setItem(row, 1, email_item)
 
             # Phone
             phone_text = user.phone or "---"
-            self.users_table.setItem(row, 2, QTableWidgetItem(phone_text))
+            phone_item = QTableWidgetItem(phone_text)
+            phone_item.setFlags(phone_item.flags() & ~Qt.ItemIsEditable)
+            self.users_table.setItem(row, 2, phone_item)
 
             # Role
-            self.users_table.setItem(row, 3, QTableWidgetItem(user.role))
+            role_item = QTableWidgetItem(user.role)
+            role_item.setFlags(role_item.flags() & ~Qt.ItemIsEditable)
+            self.users_table.setItem(row, 3, role_item)
 
             # Status
             status_text = "Active" if user.is_active else "Inactive"
             status_item = QTableWidgetItem(status_text)
+            status_item.setFlags(status_item.flags() & ~Qt.ItemIsEditable)
             status_color = QColor("green") if user.is_active else QColor("red")
             status_item.setForeground(status_color)
             self.users_table.setItem(row, 4, status_item)
@@ -409,25 +459,35 @@ class SettingsManagementScreen(QWidget):
 
             # Date/Time
             timestamp = log.get('timestamp', log.get('created_at', '---'))
-            self.audit_table.setItem(row, 0, QTableWidgetItem(timestamp[:16]))
+            timestamp_item = QTableWidgetItem(timestamp[:16])
+            timestamp_item.setFlags(timestamp_item.flags() & ~Qt.ItemIsEditable)
+            self.audit_table.setItem(row, 0, timestamp_item)
 
             # User
             user = log.get('user_id', '---')
-            self.audit_table.setItem(row, 1, QTableWidgetItem(user))
+            user_item = QTableWidgetItem(user)
+            user_item.setFlags(user_item.flags() & ~Qt.ItemIsEditable)
+            self.audit_table.setItem(row, 1, user_item)
 
             # Action
             action = log.get('action', '---')
-            self.audit_table.setItem(row, 2, QTableWidgetItem(action))
+            action_item = QTableWidgetItem(action)
+            action_item.setFlags(action_item.flags() & ~Qt.ItemIsEditable)
+            self.audit_table.setItem(row, 2, action_item)
 
             # Module
             module = log.get('module', '---')
-            self.audit_table.setItem(row, 3, QTableWidgetItem(module))
+            module_item = QTableWidgetItem(module)
+            module_item.setFlags(module_item.flags() & ~Qt.ItemIsEditable)
+            self.audit_table.setItem(row, 3, module_item)
 
             # Details
             details = log.get('details', '---')
             if isinstance(details, dict):
                 details = str(details)
-            self.audit_table.setItem(row, 4, QTableWidgetItem(details[:50]))
+            details_item = QTableWidgetItem(details[:50])
+            details_item.setFlags(details_item.flags() & ~Qt.ItemIsEditable)
+            self.audit_table.setItem(row, 4, details_item)
 
     def update_summary(self):
         """Update summary statistics."""
@@ -591,3 +651,175 @@ class SettingsManagementScreen(QWidget):
         except Exception as e:
             logger.error(f"Error saving settings: {str(e)}")
             QMessageBox.critical(self, "Error", f"Failed to save settings: {str(e)}")
+
+    def populate_account_heads_table(self):
+        """Populate account heads (payment methods) table."""
+        self.account_heads_table.setRowCount(len(self.account_heads))
+
+        for row, ah_data in enumerate(self.account_heads):
+            ah = ah_data if isinstance(ah_data, dict) else ah_data.__dict__
+
+            # Name
+            name_item = QTableWidgetItem(ah.get('name', ''))
+            name_item.setFlags(name_item.flags() & ~Qt.ItemIsEditable)
+            self.account_heads_table.setItem(row, 0, name_item)
+
+            # Description
+            desc = ah.get('description', '') or '---'
+            desc_item = QTableWidgetItem(desc)
+            desc_item.setFlags(desc_item.flags() & ~Qt.ItemIsEditable)
+            self.account_heads_table.setItem(row, 1, desc_item)
+
+            # Status
+            is_active = ah.get('is_active', True)
+            status_text = "Active" if is_active else "Inactive"
+            status_item = QTableWidgetItem(status_text)
+            status_item.setFlags(status_item.flags() & ~Qt.ItemIsEditable)
+            status_color = QColor("green") if is_active else QColor("red")
+            status_item.setForeground(status_color)
+            self.account_heads_table.setItem(row, 2, status_item)
+
+            # Actions
+            action_layout = QHBoxLayout()
+            edit_btn = QPushButton("Edit")
+            delete_btn = QPushButton("Delete")
+
+            edit_btn.clicked.connect(lambda checked, a=ah: self.edit_account_head(a))
+            delete_btn.clicked.connect(lambda checked, a=ah: self.delete_account_head(a))
+
+            action_widget = QWidget()
+            action_layout.addWidget(edit_btn)
+            action_layout.addWidget(delete_btn)
+            action_layout.addStretch()
+            action_widget.setLayout(action_layout)
+
+            self.account_heads_table.setCellWidget(row, 3, action_widget)
+
+    def add_account_head(self):
+        """Add a new account head (payment method)."""
+        dialog = AccountHeadDialog(self)
+        if dialog.exec_() == QDialog.Accepted:
+            try:
+                name, description = dialog.get_values()
+                success, message = self.account_head_service.create_account_head(
+                    name=name,
+                    description=description,
+                    user_id=self.user.id
+                )
+
+                if success:
+                    QMessageBox.information(self, "Success", message)
+                    self.load_data()
+                else:
+                    QMessageBox.warning(self, "Error", message)
+
+            except Exception as e:
+                logger.error(f"Error adding payment method: {str(e)}")
+                QMessageBox.critical(self, "Error", f"Failed to add payment method: {str(e)}")
+
+    def edit_account_head(self, account_head):
+        """Edit an existing account head (payment method)."""
+        dialog = AccountHeadDialog(self, account_head)
+        if dialog.exec_() == QDialog.Accepted:
+            try:
+                name, description = dialog.get_values()
+                success, message = self.account_head_service.update_account_head(
+                    account_head_id=account_head.get('id'),
+                    name=name,
+                    description=description
+                )
+
+                if success:
+                    QMessageBox.information(self, "Success", message)
+                    self.load_data()
+                else:
+                    QMessageBox.warning(self, "Error", message)
+
+            except Exception as e:
+                logger.error(f"Error updating payment method: {str(e)}")
+                QMessageBox.critical(self, "Error", f"Failed to update payment method: {str(e)}")
+
+    def delete_account_head(self, account_head):
+        """Delete (deactivate) an account head (payment method)."""
+        reply = QMessageBox.question(
+            self,
+            "Confirm Delete",
+            f"Are you sure you want to delete payment method '{account_head.get('name')}'?",
+            QMessageBox.Yes | QMessageBox.No
+        )
+
+        if reply == QMessageBox.Yes:
+            try:
+                success, message = self.account_head_service.delete_account_head(
+                    account_head.get('id')
+                )
+
+                if success:
+                    QMessageBox.information(self, "Success", message)
+                    self.load_data()
+                else:
+                    QMessageBox.warning(self, "Error", message)
+
+            except Exception as e:
+                logger.error(f"Error deleting payment method: {str(e)}")
+                QMessageBox.critical(self, "Error", f"Failed to delete payment method: {str(e)}")
+
+
+class AccountHeadDialog(QDialog):
+    """Dialog for adding/editing account heads (payment methods)."""
+
+    def __init__(self, parent=None, account_head=None):
+        """
+        Initialize dialog.
+
+        Args:
+            parent: Parent widget
+            account_head: Existing account head dict to edit (None for new)
+        """
+        super().__init__(parent)
+        self.account_head = account_head
+        self.setWindowTitle("New Payment Method" if account_head is None else f"Edit {account_head.get('name', '')}")
+        self.setGeometry(200, 200, 400, 200)
+        self.init_ui()
+
+    def init_ui(self):
+        """Initialize UI components."""
+        layout = QFormLayout()
+
+        # Name
+        self.name_input = QLineEdit()
+        if self.account_head:
+            self.name_input.setText(self.account_head.get('name', ''))
+        layout.addRow("Name:", self.name_input)
+
+        # Description
+        self.description_input = QLineEdit()
+        if self.account_head:
+            self.description_input.setText(self.account_head.get('description', ''))
+        layout.addRow("Description:", self.description_input)
+
+        # Buttons
+        button_layout = QHBoxLayout()
+        save_btn = QPushButton("Save")
+        cancel_btn = QPushButton("Cancel")
+
+        save_btn.clicked.connect(self.validate_and_accept)
+        cancel_btn.clicked.connect(self.reject)
+
+        button_layout.addWidget(save_btn)
+        button_layout.addWidget(cancel_btn)
+
+        layout.addRow(button_layout)
+        self.setLayout(layout)
+
+    def validate_and_accept(self):
+        """Validate inputs before accepting."""
+        if not self.name_input.text().strip():
+            QMessageBox.warning(self, "Validation Error", "Name is required")
+            return
+
+        self.accept()
+
+    def get_values(self):
+        """Get values from the dialog."""
+        return self.name_input.text().strip(), self.description_input.text().strip()

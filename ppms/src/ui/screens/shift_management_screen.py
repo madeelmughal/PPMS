@@ -271,30 +271,41 @@ class ShiftManagementScreen(QWidget):
                 None
             )
             operator_text = operator.name if operator else "Unknown"
-            self.shifts_table.setItem(row, 0, QTableWidgetItem(operator_text))
+            operator_item = QTableWidgetItem(operator_text)
+            operator_item.setFlags(operator_item.flags() & ~Qt.ItemIsEditable)
+            self.shifts_table.setItem(row, 0, operator_item)
 
             # Opening time
             opening_time = shift.shift_start[:16] if shift.shift_start else "---"
-            self.shifts_table.setItem(row, 1, QTableWidgetItem(opening_time))
+            opening_item = QTableWidgetItem(opening_time)
+            opening_item.setFlags(opening_item.flags() & ~Qt.ItemIsEditable)
+            self.shifts_table.setItem(row, 1, opening_item)
 
             # Closing time
             closing_time = shift.shift_end[:16] if shift.shift_end else "---"
-            self.shifts_table.setItem(row, 2, QTableWidgetItem(closing_time))
+            closing_item = QTableWidgetItem(closing_time)
+            closing_item.setFlags(closing_item.flags() & ~Qt.ItemIsEditable)
+            self.shifts_table.setItem(row, 2, closing_item)
 
             # Status
             status_text = shift.status.upper() if shift.status else "OPEN"
             status_item = QTableWidgetItem(status_text)
+            status_item.setFlags(status_item.flags() & ~Qt.ItemIsEditable)
             status_color = QColor("green") if shift.status == "open" else QColor("gray")
             status_item.setForeground(status_color)
             self.shifts_table.setItem(row, 3, status_item)
 
             # Opening cash
             opening_cash = f"Rs. {shift.opening_cash}" if shift.opening_cash else "---"
-            self.shifts_table.setItem(row, 4, QTableWidgetItem(opening_cash))
+            opening_cash_item = QTableWidgetItem(opening_cash)
+            opening_cash_item.setFlags(opening_cash_item.flags() & ~Qt.ItemIsEditable)
+            self.shifts_table.setItem(row, 4, opening_cash_item)
 
             # Closing cash
             closing_cash = f"Rs. {shift.closing_cash}" if shift.closing_cash else "---"
-            self.shifts_table.setItem(row, 5, QTableWidgetItem(closing_cash))
+            closing_cash_item = QTableWidgetItem(closing_cash)
+            closing_cash_item.setFlags(closing_cash_item.flags() & ~Qt.ItemIsEditable)
+            self.shifts_table.setItem(row, 5, closing_cash_item)
 
             # Hours
             if shift.shift_start and shift.shift_end:
@@ -304,11 +315,15 @@ class ShiftManagementScreen(QWidget):
                 hours_text = f"{hours:.1f} hrs"
             else:
                 hours_text = "---"
-            self.shifts_table.setItem(row, 6, QTableWidgetItem(hours_text))
+            hours_item = QTableWidgetItem(hours_text)
+            hours_item.setFlags(hours_item.flags() & ~Qt.ItemIsEditable)
+            self.shifts_table.setItem(row, 6, hours_item)
 
             # Sales
             sales_text = f"Rs. {shift.sales_amount}" if shift.sales_amount else "---"
-            self.shifts_table.setItem(row, 7, QTableWidgetItem(sales_text))
+            sales_item = QTableWidgetItem(sales_text)
+            sales_item.setFlags(sales_item.flags() & ~Qt.ItemIsEditable)
+            self.shifts_table.setItem(row, 7, sales_item)
 
             # Actions
             action_layout = QHBoxLayout()

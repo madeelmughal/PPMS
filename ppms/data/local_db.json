@@ -28,18 +28,145 @@
       "created_at": "2024-01-01T00:00:00"
     }
   },
-  "sales": {},
-  "purchases": {},
-  "customers": {},
-  "tanks": {},
+  "account_heads": {
+    "24f923e0-8056-406b-a27a-b156a6eba199": {
+      "id": "24f923e0-8056-406b-a27a-b156a6eba199",
+      "name": "Cash1",
+      "head_type": "Asset",
+      "account_type": "Asset",
+      "code": "A001",
+      "description": "Cash",
+      "opening_balance": 0.0,
+      "outstanding_balance": 0.0,
+      "status": "active",
+      "is_active": true,
+      "created_at": "2026-01-01T01:26:00.524548"
+    },
+    "1593be6c-3565-4706-a6ef-f498e5c54b02": {
+      "id": "1593be6c-3565-4706-a6ef-f498e5c54b02",
+      "name": "Account1",
+      "head_type": "Asset",
+      "account_type": "Asset",
+      "code": "A002",
+      "description": "Account",
+      "opening_balance": 0.0,
+      "outstanding_balance": 0.0,
+      "status": "active",
+      "is_active": true,
+      "created_at": "2026-01-01T01:26:00.526541"
+    },
+    "b7838328-0d4b-458a-8847-942b187c710d": {
+      "id": "b7838328-0d4b-458a-8847-942b187c710d",
+      "name": "Expense1",
+      "head_type": "Expense",
+      "account_type": "Expense",
+      "code": "E001",
+      "description": "Expense",
+      "opening_balance": 0.0,
+      "outstanding_balance": 0.0,
+      "status": "active",
+      "is_active": true,
+      "created_at": "2026-01-01T01:26:00.527539"
+    }
+  },
   "fuel_types": {
-    "ffdf66e2-4a8c-41b1-8b96-9958963bca1f": {
-      "id": "ffdf66e2-4a8c-41b1-8b96-9958963bca1f",
-      "name": "pp",
-      "unit_price": 1000.0,
+    "93faf3c5-c4b4-46f9-a1e4-ddf54a92bbd2": {
+      "id": "93faf3c5-c4b4-46f9-a1e4-ddf54a92bbd2",
+      "name": "Petrol1",
+      "unit_price": 230.0,
       "tax_percentage": 0.0,
       "status": "active",
-      "created_at": "2025-12-30T11:26:13.489420"
+      "created_at": "2026-01-01T01:23:57.120114"
+    },
+    "2025df1c-bb8b-4e03-b652-f5f55cb8cd3f": {
+      "id": "2025df1c-bb8b-4e03-b652-f5f55cb8cd3f",
+      "name": "Diesel",
+      "unit_price": 220.0,
+      "tax_percentage": 0.0,
+      "status": "active",
+      "created_at": "2026-01-01T01:23:57.123107"
     }
-  }
+  },
+  "tanks": {
+    "af3d13b1-2330-4062-be7b-9c096e643c82": {
+      "id": "af3d13b1-2330-4062-be7b-9c096e643c82",
+      "name": "T1",
+      "fuel_type_id": "93faf3c5-c4b4-46f9-a1e4-ddf54a92bbd2",
+      "capacity": 50000.0,
+      "current_stock": 0.0,
+      "minimum_stock": 1000.0,
+      "location": "",
+      "created_at": "2026-01-01T01:24:21.335746",
+      "last_reading_date": "2026-01-01T01:27:56.244407",
+      "updated_at": "2026-01-01T01:27:56.244407"
+    }
+  },
+  "nozzles": {
+    "d7e097a7-5ecb-49e2-a311-0bd3dfcae1ab": {
+      "id": "d7e097a7-5ecb-49e2-a311-0bd3dfcae1ab",
+      "machine_id": "M1",
+      "nozzle_number": 1,
+      "fuel_type_id": "93faf3c5-c4b4-46f9-a1e4-ddf54a92bbd2",
+      "opening_reading": 1010.0,
+      "current_reading": 2010.0,
+      "closing_reading": 2010.0,
+      "assigned_operator_id": "",
+      "status": "active",
+      "created_at": "2026-01-01T01:24:41.924461",
+      "updated_at": "2026-01-01T01:27:56.246402"
+    }
+  },
+  "sales": {
+    "49e83c27-1451-42ff-bd06-514457438436": {
+      "id": "49e83c27-1451-42ff-bd06-514457438436",
+      "date": "2026-01-01T01:27:56.242415",
+      "nozzle_id": "d7e097a7-5ecb-49e2-a311-0bd3dfcae1ab",
+      "fuel_type_id": "93faf3c5-c4b4-46f9-a1e4-ddf54a92bbd2",
+      "quantity": 1000.0,
+      "unit_price": 290.0,
+      "base_amount": 290000.0,
+      "tax_amount": 0.0,
+      "total_amount": 290000.0,
+      "opening_reading": 1010.0,
+      "closing_reading": 2010.0,
+      "account_head_id": "24f923e0-8056-406b-a27a-b156a6eba199",
+      "account_head_name": "Cash1",
+      "payment_method": "Asset",
+      "status": "completed",
+      "created_at": "2026-01-01T01:27:56.242415"
+    }
+  },
+  "purchases": {
+    "d5a56766-6a2d-4ff6-8e02-1ca1613f13bd": {
+      "id": "d5a56766-6a2d-4ff6-8e02-1ca1613f13bd",
+      "tank_id": "af3d13b1-2330-4062-be7b-9c096e643c82",
+      "supplier_name": "PSO",
+      "quantity": 1000.0,
+      "unit_cost": 250.0,
+      "total_cost": 250000.0,
+      "account_head_id": "24f923e0-8056-406b-a27a-b156a6eba199",
+      "account_head_name": "Cash1",
+      "payment_method": "Asset",
+      "invoice_number": "OODSD",
+      "purchase_date": "2026-01-01T01:26:43.578833",
+      "status": "completed",
+      "created_at": "2026-01-01T01:26:43.578833"
+    }
+  },
+  "expenses": {
+    "4bf9eb09-3338-4cf6-9621-d2ed691d9ddd": {
+      "id": "4bf9eb09-3338-4cf6-9621-d2ed691d9ddd",
+      "category": "Salaries",
+      "description": "Salary",
+      "amount": 50000.0,
+      "account_head_id": "b7838328-0d4b-458a-8847-942b187c710d",
+      "account_head_name": "Expense1",
+      "reference_number": "",
+      "notes": "",
+      "expense_date": "2026-01-01T01:28:47.360440",
+      "status": "recorded",
+      "created_at": "2026-01-01T01:28:47.360440"
+    }
+  },
+  "customers": {}
 }

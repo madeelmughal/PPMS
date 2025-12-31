@@ -1,0 +1,1150 @@
+2025-12-31 10:39:55 - src.main - INFO - Firebase initialized successfully
+2025-12-31 10:39:57 - src.main - INFO - PPMS Application initialized
+2025-12-31 10:40:08 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 10:40:08 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 10:40:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:40:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:41:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:41:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:42:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:42:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:43:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:43:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:44:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:44:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:45:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:45:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:46:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:46:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:47:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:47:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:48:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:48:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:49:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:49:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:50:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:50:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:51:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:51:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:52:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:52:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:53:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:53:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:54:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:54:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:55:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:55:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:56:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:56:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:57:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:57:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:58:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:58:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:59:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 10:59:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:00:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:00:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:01:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:01:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:02:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:02:39 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:03:09 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:03:40 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:08:57 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:09:27 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:09:57 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:10:27 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:10:57 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:11:27 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:11:28 - src.main - INFO - Application closing
+2025-12-31 11:19:44 - src.main - INFO - Firebase initialized successfully
+2025-12-31 11:19:45 - src.main - INFO - PPMS Application initialized
+2025-12-31 11:20:15 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 11:20:15 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 11:20:15 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:20:45 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:21:15 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:21:45 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:22:15 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:22:45 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:23:15 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:23:45 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:24:16 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:24:45 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:25:15 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:25:45 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:26:15 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:26:46 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:27:16 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:27:46 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:28:16 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:28:46 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:29:16 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:29:46 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:30:16 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:30:36 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 11:30:45 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 11:30:46 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:31:16 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:31:46 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:32:14 - src.main - INFO - Application closing
+2025-12-31 11:32:36 - src.main - INFO - Firebase initialized successfully
+2025-12-31 11:32:37 - src.main - INFO - PPMS Application initialized
+2025-12-31 11:32:49 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 11:32:49 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 11:32:49 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:32:55 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 11:33:19 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:33:49 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:34:19 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:34:33 - src.main - INFO - Application closing
+2025-12-31 11:34:46 - src.main - INFO - Firebase initialized successfully
+2025-12-31 11:34:47 - src.main - INFO - PPMS Application initialized
+2025-12-31 11:34:53 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 11:34:53 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 11:34:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:34:59 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 11:35:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:35:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:36:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:36:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:37:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:37:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:38:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:38:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:39:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:39:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:40:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:40:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:41:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:41:48 - src.services.database_service - INFO - Document updated: tanks/bde255e2-005a-416a-bdbd-52463bfd3e74
+2025-12-31 11:41:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:41:59 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 11:42:12 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 11:42:19 - src.services.database_service - INFO - Document updated: tanks/bde255e2-005a-416a-bdbd-52463bfd3e74
+2025-12-31 11:42:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:42:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:43:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:43:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:44:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:44:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:45:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:45:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:46:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:46:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:47:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:47:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:48:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:48:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:49:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:49:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:50:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:50:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:51:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:51:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:52:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:52:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:53:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:53:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:54:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:54:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:55:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:55:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:56:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:56:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:57:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:57:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:58:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:58:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:59:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 11:59:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:00:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:00:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:01:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:01:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:02:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:02:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:03:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:03:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:04:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:04:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:05:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:05:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:06:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:06:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:07:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:07:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:08:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:08:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:09:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:09:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:10:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:10:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:11:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:11:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:12:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:12:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:13:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:13:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:14:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:14:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:15:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:15:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:16:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:16:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:17:24 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:17:54 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 12:18:12 - src.main - INFO - Application closing
+2025-12-31 13:12:34 - src.main - INFO - Firebase initialized successfully
+2025-12-31 13:12:37 - src.main - INFO - PPMS Application initialized
+2025-12-31 13:12:51 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 13:12:51 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 13:12:51 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:13:07 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 13:13:17 - src.services.database_service - INFO - Document updated: tanks/bde255e2-005a-416a-bdbd-52463bfd3e74
+2025-12-31 13:13:21 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:13:26 - src.services.database_service - INFO - Document updated: tanks/dd6191e9-dd66-4956-9a4d-bf7f579b389e
+2025-12-31 13:13:51 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:14:21 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:14:51 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:15:21 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:15:51 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:16:10 - src.main - INFO - Application closing
+2025-12-31 13:16:16 - src.main - INFO - Firebase initialized successfully
+2025-12-31 13:16:16 - src.main - INFO - PPMS Application initialized
+2025-12-31 13:16:22 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 13:16:22 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 13:16:22 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:16:36 - src.services.database_service - INFO - Document created: sales/dd0dd323-5ac5-4390-bf6a-2ef7b21196a7
+2025-12-31 13:16:52 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:17:22 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:17:52 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:18:22 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:18:52 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:19:22 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:19:39 - src.services.database_service - INFO - Document created: tanks/8c6e7643-1e36-43c6-9355-960ab0d579ee
+2025-12-31 13:19:52 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:20:22 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:20:30 - src.services.database_service - INFO - Document updated: tanks/8c6e7643-1e36-43c6-9355-960ab0d579ee
+2025-12-31 13:20:38 - src.main - INFO - Application closing
+2025-12-31 13:20:44 - src.main - INFO - Firebase initialized successfully
+2025-12-31 13:20:44 - src.main - INFO - PPMS Application initialized
+2025-12-31 13:20:49 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 13:20:49 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 13:20:50 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:21:20 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:21:38 - src.services.database_service - INFO - Document created: sales/ceded28a-5544-4805-85b0-ac8a560563e3
+2025-12-31 13:21:38 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 13:21:50 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:22:20 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:22:34 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 13:22:50 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:23:04 - src.services.database_service - INFO - Document created: sales/613d3178-3744-4b4f-b0d2-5d8eb190b2d8
+2025-12-31 13:23:04 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 13:23:20 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:23:50 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:24:20 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:24:50 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:25:20 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:25:50 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 13:26:10 - src.main - INFO - Application closing
+2025-12-31 13:26:18 - src.main - INFO - Firebase initialized successfully
+2025-12-31 13:26:19 - src.main - INFO - PPMS Application initialized
+2025-12-31 13:26:24 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 13:26:24 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 13:26:24 - src.services.database_service - ERROR - Error getting payment methods: get expected at most 2 arguments, got 3
+2025-12-31 13:26:54 - src.services.database_service - ERROR - Error getting payment methods: get expected at most 2 arguments, got 3
+2025-12-31 13:27:15 - src.main - INFO - Firebase initialized successfully
+2025-12-31 13:27:16 - src.main - INFO - PPMS Application initialized
+2025-12-31 13:27:31 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 13:27:31 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 13:27:31 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:28:01 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:28:31 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:29:01 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:29:31 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:30:01 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:30:31 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:31:01 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:31:31 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:32:01 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:32:31 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 13:33:01 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:00:00 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:00:30 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:01:00 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:01:30 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:02:00 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:02:30 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:02:41 - src.main - INFO - Application closing
+2025-12-31 14:03:21 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:03:22 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:03:27 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:03:27 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:03:27 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:03:30 - src.ui.screens.dashboard_screen - ERROR - Error viewing inventory report: name 'QHeaderView' is not defined
+2025-12-31 14:03:57 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:04:20 - src.main - INFO - Application closing
+2025-12-31 14:04:26 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:04:27 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:04:31 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:04:31 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:04:32 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:05:02 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:05:32 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:06:02 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:06:32 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:07:02 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:07:25 - src.main - INFO - Application closing
+2025-12-31 14:07:32 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:07:33 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:07:38 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:07:38 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:07:38 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:08:08 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:08:38 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:09:08 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:09:38 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:09:48 - src.main - INFO - Application closing
+2025-12-31 14:12:06 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:12:07 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:12:13 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:12:13 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:12:13 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:12:43 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:13:13 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:13:43 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:14:13 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:14:43 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:15:13 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:15:43 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:16:13 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:16:19 - src.main - INFO - Application closing
+2025-12-31 14:19:14 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:19:15 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:19:36 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:19:36 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:19:36 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:20:06 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:20:36 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:21:06 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:21:36 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:22:06 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:22:21 - src.services.database_service - INFO - Document created: purchases/c9395c37-543a-41fe-bc95-8c9b114e8328
+2025-12-31 14:22:36 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:23:06 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:23:28 - src.services.database_service - INFO - Document created: purchases/296120ef-1205-48a1-b5ce-6fd0e9a4399a
+2025-12-31 14:23:36 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:24:06 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:24:36 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:25:06 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:25:36 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:26:06 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:26:36 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:27:06 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:27:27 - src.main - INFO - Application closing
+2025-12-31 14:27:52 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:27:53 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:28:10 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:28:10 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:28:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:28:40 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:29:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:29:40 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:30:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:30:40 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:31:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:31:40 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:32:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:32:40 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:33:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:33:40 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:33:53 - src.services.database_service - INFO - Document created: expenses/3ea4cce9-d370-4efe-a1ca-6f3e81e3e7a4
+2025-12-31 14:34:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:34:40 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:35:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:35:29 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 14:35:40 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:35:52 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 14:36:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:36:40 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:37:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:37:40 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:38:10 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:38:31 - src.main - INFO - Application closing
+2025-12-31 14:39:38 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:39:39 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:39:46 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:39:46 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:39:46 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:40:06 - src.ui.screens.dashboard_screen - ERROR - Error exporting account position to PDF: local variable 'date' referenced before assignment
+2025-12-31 14:40:16 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:40:46 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:41:02 - src.main - INFO - Application closing
+2025-12-31 14:42:38 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:42:39 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:42:56 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:42:56 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:42:57 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:43:04 - src.ui.screens.dashboard_screen - ERROR - Error exporting account position to PDF: local variable 'date' referenced before assignment
+2025-12-31 14:43:27 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:43:42 - src.main - INFO - Application closing
+2025-12-31 14:43:53 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:43:54 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:43:59 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:43:59 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:44:00 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:44:30 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:45:00 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:45:30 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:46:00 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:46:18 - src.main - INFO - Application closing
+2025-12-31 14:46:52 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:46:53 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:46:59 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:46:59 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:47:00 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:47:30 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:48:00 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:48:13 - src.services.database_service - INFO - Document created: account_heads/cb2de203-379a-4da5-b8bc-e5ab1012450a
+2025-12-31 14:48:30 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 14:48:41 - src.services.database_service - INFO - Document created: account_heads/0abc4836-9ed8-4e5a-8328-45d37b824bdb
+2025-12-31 14:49:00 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 14:49:30 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 14:50:00 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 14:50:10 - src.main - INFO - Application closing
+2025-12-31 14:50:21 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:50:22 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:50:27 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:50:27 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:50:28 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 14:50:57 - src.services.database_service - INFO - Document created: account_heads/be44e9b8-9b0e-4809-92f9-bcc973ef2e4e
+2025-12-31 14:50:58 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 14:51:15 - src.services.database_service - INFO - Document created: account_heads/6dce1f9d-8bc6-478e-aa2a-ed83bc1b06f2
+2025-12-31 14:51:28 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:51:58 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:52:28 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:52:58 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:53:28 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:53:58 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:54:00 - src.main - INFO - Application closing
+2025-12-31 14:54:11 - src.main - INFO - Firebase initialized successfully
+2025-12-31 14:54:12 - src.main - INFO - PPMS Application initialized
+2025-12-31 14:54:16 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 14:54:16 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 14:54:17 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:54:19 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:54:31 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 14:54:47 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:54:51 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 14:55:09 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 14:55:17 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:55:23 - src.services.database_service - INFO - Document created: expenses/296e70c4-0cc5-42fc-bdc9-b1368da907bb
+2025-12-31 14:55:47 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:56:17 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:56:47 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:57:17 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 14:57:22 - src.main - INFO - Application closing
+2025-12-31 15:02:58 - src.main - INFO - Firebase initialized successfully
+2025-12-31 15:02:59 - src.main - INFO - PPMS Application initialized
+2025-12-31 15:03:05 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 15:03:05 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 15:03:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:03:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:04:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:04:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:05:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:05:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:06:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:06:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:07:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:07:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:08:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:08:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:09:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:09:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:10:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:10:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:11:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:11:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:12:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:12:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:13:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:13:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:14:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:14:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:15:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:15:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:16:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:16:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:17:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:17:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:18:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:18:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:19:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:19:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:20:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:20:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:21:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:21:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:22:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:22:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:23:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:23:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:24:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:24:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:25:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:25:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:26:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:26:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:27:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:27:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:28:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:28:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:29:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:29:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:30:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:30:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:31:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:31:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:32:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:32:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:33:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:33:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:34:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:34:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:35:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:35:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:36:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:36:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:37:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:37:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:38:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:38:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:39:06 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 15:39:36 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:12:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:13:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:13:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:14:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:14:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:15:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:15:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:16:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:16:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:17:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:17:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:18:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:18:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:19:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:19:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:20:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:20:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:21:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:21:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:22:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:22:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:23:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:23:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:24:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:24:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:25:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:25:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:26:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:26:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:27:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:27:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:28:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:28:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:29:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:29:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:30:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:30:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:31:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:31:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:32:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:32:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:33:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:33:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:34:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:34:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:35:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:35:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:36:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:36:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:37:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:37:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:38:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:38:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:42:35 - src.main - INFO - Firebase initialized successfully
+2025-12-31 16:42:36 - src.main - INFO - PPMS Application initialized
+2025-12-31 16:42:42 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 16:42:42 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 16:42:43 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:43:13 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:43:43 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:44:13 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:44:43 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:45:13 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:45:43 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:45:56 - src.main - INFO - Application closing
+2025-12-31 16:47:22 - src.main - INFO - Firebase initialized successfully
+2025-12-31 16:47:23 - src.main - INFO - PPMS Application initialized
+2025-12-31 16:47:28 - src.services.auth_service - WARNING - Login attempt with non-existent email: admn
+2025-12-31 16:47:28 - src.main - WARNING - Login failed: Invalid email or password
+2025-12-31 16:47:34 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 16:47:34 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 16:47:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:47:51 - src.services.database_service - INFO - Document updated: tanks/bde255e2-005a-416a-bdbd-52463bfd3e74
+2025-12-31 16:48:04 - src.services.database_service - INFO - Document updated: tanks/bde255e2-005a-416a-bdbd-52463bfd3e74
+2025-12-31 16:48:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:48:22 - src.services.database_service - INFO - Document updated: tanks/dd6191e9-dd66-4956-9a4d-bf7f579b389e
+2025-12-31 16:48:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:48:43 - src.services.database_service - INFO - Document updated: tanks/8c6e7643-1e36-43c6-9355-960ab0d579ee
+2025-12-31 16:49:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:49:29 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 16:49:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:49:54 - src.services.database_service - INFO - Document created: sales/fb1a2963-8fc7-42a8-b0a9-f1277bf5e85c
+2025-12-31 16:49:54 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 16:50:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:50:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:51:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:51:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:52:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:52:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:53:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:53:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:54:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:54:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:55:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:55:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:56:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:56:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:57:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:57:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:58:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:58:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:59:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 16:59:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:00:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:00:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:01:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:01:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:02:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:02:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:03:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:03:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:04:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:04:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:05:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:05:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:06:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:06:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:07:01 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 17:07:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:07:12 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 17:07:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:07:56 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 17:08:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:08:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:09:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:09:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:10:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:10:34 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:11:04 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 17:11:08 - src.main - INFO - Application closing
+2025-12-31 18:52:19 - src.main - INFO - Firebase initialized successfully
+2025-12-31 18:52:20 - src.main - INFO - PPMS Application initialized
+2025-12-31 19:38:59 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 19:38:59 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 19:39:00 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:39:30 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:40:00 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:40:30 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:41:00 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:41:15 - src.main - INFO - Application closing
+2025-12-31 19:41:50 - src.main - INFO - Firebase initialized successfully
+2025-12-31 19:41:51 - src.main - INFO - PPMS Application initialized
+2025-12-31 19:41:57 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 19:41:57 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 19:41:58 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:42:28 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:42:58 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:43:28 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:43:58 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:44:28 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:44:58 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:45:28 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:45:58 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:46:28 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:46:58 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:47:28 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:47:53 - src.main - INFO - Application closing
+2025-12-31 19:48:11 - src.main - INFO - Firebase initialized successfully
+2025-12-31 19:48:12 - src.main - INFO - PPMS Application initialized
+2025-12-31 19:48:20 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 19:48:20 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 19:48:21 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:48:51 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:48:55 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 19:49:07 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 19:49:21 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:49:51 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:50:12 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 19:50:21 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:50:51 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:51:21 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:51:41 - src.main - INFO - Application closing
+2025-12-31 19:51:50 - src.main - INFO - Firebase initialized successfully
+2025-12-31 19:51:51 - src.main - INFO - PPMS Application initialized
+2025-12-31 19:51:57 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 19:51:57 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 19:51:57 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:52:27 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:52:57 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:53:24 - src.main - INFO - Application closing
+2025-12-31 19:53:32 - src.main - INFO - Firebase initialized successfully
+2025-12-31 19:53:33 - src.main - INFO - PPMS Application initialized
+2025-12-31 19:53:48 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 19:53:48 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 19:53:49 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:54:19 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:54:39 - src.services.database_service - INFO - Document created: purchases/885aafad-827a-40d3-9dbb-2863690531b6
+2025-12-31 19:54:49 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:55:19 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:55:49 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:56:19 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:56:49 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:56:54 - src.main - INFO - Application closing
+2025-12-31 19:56:59 - src.main - INFO - Firebase initialized successfully
+2025-12-31 19:57:01 - src.main - INFO - PPMS Application initialized
+2025-12-31 19:57:06 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 19:57:06 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 19:57:07 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:57:37 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:58:07 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:58:37 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:59:07 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 19:59:37 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:00:07 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:00:37 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:01:07 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:01:37 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:02:07 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:02:37 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:03:07 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:03:37 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:04:07 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:04:37 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:04:54 - src.main - INFO - Application closing
+2025-12-31 20:06:02 - src.main - INFO - Firebase initialized successfully
+2025-12-31 20:06:03 - src.main - INFO - PPMS Application initialized
+2025-12-31 20:06:07 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 20:06:07 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 20:06:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:06:18 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 20:06:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:07:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:07:23 - src.services.database_service - INFO - Document created: purchases/0edf9859-1847-4689-9d0c-d9a15a53dd49
+2025-12-31 20:07:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:08:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:08:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:09:08 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:09:38 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:10:03 - src.main - INFO - Application closing
+2025-12-31 20:10:10 - src.main - INFO - Firebase initialized successfully
+2025-12-31 20:10:11 - src.main - INFO - PPMS Application initialized
+2025-12-31 20:10:18 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 20:10:18 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 20:10:18 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:10:34 - src.services.database_service - INFO - Document updated: tanks/8c74f3ee-cacc-4da7-a85f-a47a7a3763a8
+2025-12-31 20:10:48 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:11:05 - src.services.database_service - INFO - Document created: purchases/c99bae80-1b34-4965-80a0-72d7c846518d
+2025-12-31 20:11:18 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:11:48 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:12:18 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:12:48 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 20:15:55 - src.main - INFO - Firebase initialized successfully
+2025-12-31 20:15:57 - src.main - INFO - PPMS Application initialized
+2025-12-31 20:16:11 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 20:16:11 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 20:16:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:16:15 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:16:40 - src.services.database_service - INFO - Document created: fuel_types/a59fb2c2-eadb-4ef4-8e27-7daf4a854da7
+2025-12-31 20:16:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:17:09 - src.services.database_service - INFO - Document created: fuel_types/1aaed07d-1675-45c4-a10d-42b0bedfc6e8
+2025-12-31 20:17:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:17:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:18:10 - src.services.database_service - INFO - Document created: tanks/1a5ba44f-ccd4-4383-bc3c-0e48da72727d
+2025-12-31 20:18:10 - src.services.database_service - INFO - Document created: tanks/ad313670-e73a-4292-b619-590978ee0ae8
+2025-12-31 20:18:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:18:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:18:59 - src.services.database_service - INFO - Document created: nozzles/21f1397d-d9b8-44d7-8fca-094b5077e152
+2025-12-31 20:18:59 - src.services.database_service - INFO - Document created: nozzles/6c7d44fc-2d17-4640-a923-9321b1f71fa2
+2025-12-31 20:18:59 - src.services.database_service - INFO - Document created: nozzles/6a5f11f2-ef49-4440-8021-9cdc4a2b12e3
+2025-12-31 20:18:59 - src.services.database_service - INFO - Document created: nozzles/8948cc38-8a0b-4325-841a-4b800af37b14
+2025-12-31 20:19:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:19:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:20:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:20:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:21:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:21:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:22:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 20:22:25 - src.services.database_service - INFO - Document created: account_heads/0314d813-1003-4b25-9564-26d7383faec7
+2025-12-31 20:22:25 - src.services.database_service - INFO - Document created: account_heads/9cf85fe9-8726-4ec5-b0df-804f7ac99994
+2025-12-31 20:22:25 - src.services.database_service - INFO - Document created: account_heads/bc8162db-98fd-4685-bd77-edb6bc196f84
+2025-12-31 20:22:25 - src.services.database_service - INFO - Document created: account_heads/7832e5d1-4459-4c21-b3db-00e36849ef67
+2025-12-31 20:22:25 - src.services.database_service - INFO - Document created: account_heads/3c8ae320-6482-4095-bd67-0515fe8f5192
+2025-12-31 20:22:25 - src.services.database_service - INFO - Document created: account_heads/0655ed30-25b4-4255-bdeb-541e4743f713
+2025-12-31 20:22:25 - src.services.database_service - INFO - Document created: account_heads/c538d9a0-18c2-4375-83fe-8df2b264f3d4
+2025-12-31 20:22:42 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 20:23:12 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 20:23:22 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 20:23:42 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 20:24:05 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 20:24:12 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:01:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:01:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:02:05 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 21:02:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:02:25 - src.services.database_service - INFO - Document updated: tanks/1a5ba44f-ccd4-4383-bc3c-0e48da72727d
+2025-12-31 21:02:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:03:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:03:09 - src.services.database_service - INFO - Document created: purchases/fb832a1c-e229-47e6-978e-b46f40ba3f90
+2025-12-31 21:03:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:04:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:04:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:05:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:05:17 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 21:05:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:05:44 - src.services.database_service - INFO - Document created: sales/e5f87149-484e-4d4f-a2f6-520a09db5c0a
+2025-12-31 21:05:44 - src.services.database_service - INFO - Document updated: tanks/1a5ba44f-ccd4-4383-bc3c-0e48da72727d
+2025-12-31 21:06:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:06:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:07:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:07:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:08:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:08:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:09:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:09:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:10:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:10:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:11:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:11:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:12:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:12:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:13:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:13:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:14:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:14:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:15:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:15:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:16:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:16:38 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:17:08 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:17:24 - src.main - INFO - Application closing
+2025-12-31 21:18:58 - src.main - INFO - Firebase initialized successfully
+2025-12-31 21:18:59 - src.main - INFO - PPMS Application initialized
+2025-12-31 21:19:07 - src.services.auth_service - WARNING - Login attempt with non-existent email: adeel
+2025-12-31 21:19:07 - src.main - WARNING - Login failed: Invalid email or password
+2025-12-31 21:19:13 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 21:19:13 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 21:19:14 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:19:44 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:20:14 - src.services.database_service - INFO - Loaded 4 payment methods from account heads
+2025-12-31 21:21:53 - src.main - INFO - Firebase initialized successfully
+2025-12-31 21:21:54 - src.main - INFO - PPMS Application initialized
+2025-12-31 21:24:41 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 21:24:41 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 21:24:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:25:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:25:34 - src.services.database_service - INFO - Document created: fuel_types/5e951603-91b4-40d6-84c5-a52a62af0092
+2025-12-31 21:25:34 - src.services.database_service - INFO - Document created: fuel_types/5e8183df-3a10-48d4-b6d2-caf37f6ef52b
+2025-12-31 21:25:34 - src.services.database_service - INFO - Document created: fuel_types/e6a02624-09ca-4245-b877-7f63193e0ac6
+2025-12-31 21:25:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:26:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:26:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:26:52 - src.services.database_service - INFO - Document created: tanks/aeeed385-a682-407a-aafd-be00dc63ddf8
+2025-12-31 21:26:52 - src.services.database_service - INFO - Document created: tanks/9a6896b7-8d2c-41fe-aaf8-e3af0fd30848
+2025-12-31 21:26:52 - src.services.database_service - INFO - Document created: tanks/09db1011-4fd4-4446-bf7b-a2b8dd629ca9
+2025-12-31 21:27:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:27:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:28:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:28:16 - src.services.database_service - INFO - Document created: nozzles/e09844f7-4a88-4a96-8f41-84f69f741885
+2025-12-31 21:28:16 - src.services.database_service - INFO - Document created: nozzles/cda1049a-004e-4878-b104-b3cb9a9b3747
+2025-12-31 21:28:16 - src.services.database_service - INFO - Document created: nozzles/e807f751-4edd-4f1e-94e3-6dd9b7bde1e8
+2025-12-31 21:28:16 - src.services.database_service - INFO - Document created: nozzles/d78f670b-eec1-40b8-9899-8e53d1bf3f70
+2025-12-31 21:28:16 - src.services.database_service - INFO - Document created: nozzles/ca4663e5-cde4-4b69-ae89-161b4982e720
+2025-12-31 21:28:16 - src.services.database_service - INFO - Document created: nozzles/a30235fd-ce8c-4a7f-8c55-1be3beef33be
+2025-12-31 21:28:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:28:47 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:29:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:29:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:30:12 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:30:42 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 21:31:05 - src.services.database_service - INFO - Document created: account_heads/3034e22a-e63e-492e-ba87-d76ac74b8550
+2025-12-31 21:31:05 - src.services.database_service - INFO - Document created: account_heads/6dda0d46-5259-4e3d-afc0-5dd0166a1b0b
+2025-12-31 21:31:05 - src.services.database_service - INFO - Document created: account_heads/693f35fe-b54f-4dde-83f4-583c635bf684
+2025-12-31 21:31:05 - src.services.database_service - INFO - Document created: account_heads/3f248708-05e3-46da-a6e5-cfa2f757c968
+2025-12-31 21:31:05 - src.services.database_service - INFO - Document created: account_heads/ad59498e-5263-4f0c-9b51-dd070596c54f
+2025-12-31 21:31:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:31:12 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 21:31:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:32:09 - src.services.database_service - INFO - Document updated: tanks/aeeed385-a682-407a-aafd-be00dc63ddf8
+2025-12-31 21:32:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:32:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:32:43 - src.services.database_service - INFO - Document created: purchases/d9e030a1-aefc-4671-957a-33a97c315af3
+2025-12-31 21:33:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:33:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 21:33:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:33:49 - src.services.database_service - INFO - Document created: sales/0cc87085-7d18-4d33-8ad3-6be7cb8fff25
+2025-12-31 21:33:49 - src.services.database_service - INFO - Document updated: tanks/aeeed385-a682-407a-aafd-be00dc63ddf8
+2025-12-31 21:34:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:34:27 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 21:34:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:34:54 - src.services.database_service - INFO - Document created: sales/64f772d9-3c7f-4aa1-933c-1f1367785d41
+2025-12-31 21:34:54 - src.services.database_service - INFO - Document updated: tanks/aeeed385-a682-407a-aafd-be00dc63ddf8
+2025-12-31 21:35:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:35:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:36:10 - src.main - INFO - User logged out
+2025-12-31 21:36:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:36:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:37:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:37:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:38:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:38:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:39:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:39:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:40:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:40:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:41:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:41:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:42:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:42:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:43:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:43:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:44:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:44:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:45:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:45:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:46:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:46:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:47:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:47:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:48:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:48:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:49:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:49:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:50:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:50:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:51:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:51:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:52:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:52:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:53:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:53:42 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 21:54:12 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:36:26 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:36:56 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:37:13 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 22:37:13 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 22:37:14 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:37:17 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 22:37:26 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:37:44 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:37:56 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:38:14 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:38:26 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:38:44 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:38:56 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:39:14 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:39:26 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:39:44 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:39:56 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:40:14 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:40:26 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:40:44 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:40:56 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:41:14 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:41:26 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:41:44 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:41:56 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:42:14 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:42:26 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:42:32 - src.main - INFO - Application closing
+2025-12-31 22:42:40 - src.main - INFO - Firebase initialized successfully
+2025-12-31 22:42:42 - src.main - INFO - PPMS Application initialized
+2025-12-31 22:42:49 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 22:42:49 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 22:42:49 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:42:52 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 22:43:19 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:43:49 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:44:19 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:44:49 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:45:19 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:45:49 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:46:19 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:46:49 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:46:50 - src.main - INFO - Application closing
+2025-12-31 22:47:16 - src.main - INFO - Firebase initialized successfully
+2025-12-31 22:47:17 - src.main - INFO - PPMS Application initialized
+2025-12-31 22:47:23 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 22:47:23 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 22:47:24 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:47:29 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 22:47:54 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:48:24 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:48:54 - src.services.database_service - INFO - Loaded 5 payment methods from account heads
+2025-12-31 22:51:14 - src.main - INFO - Firebase initialized successfully
+2025-12-31 22:51:16 - src.main - INFO - PPMS Application initialized
+2025-12-31 22:51:53 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 22:51:53 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 22:51:53 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:52:23 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:52:53 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:53:23 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:53:42 - src.services.database_service - INFO - Document created: fuel_types/0e89353a-f1d7-4d45-bb46-4d9f6082063f
+2025-12-31 22:53:42 - src.services.database_service - INFO - Document created: fuel_types/6306fe6f-ad5d-4efd-96c6-0dc47aea964c
+2025-12-31 22:53:53 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:54:23 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:54:53 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:55:09 - src.services.database_service - INFO - Document created: tanks/5fba1e95-30d9-49e8-9ac1-240185fa4829
+2025-12-31 22:55:09 - src.services.database_service - INFO - Document created: tanks/31a0278a-049a-4327-b07b-d9dc72d0cd2a
+2025-12-31 22:55:23 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:55:53 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:56:23 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:56:47 - src.services.database_service - INFO - Document created: nozzles/216a4845-bd1c-4a13-96b5-9038a2ffd456
+2025-12-31 22:56:47 - src.services.database_service - INFO - Document created: nozzles/9bc4a5fb-a973-4f65-93b9-918634cd7032
+2025-12-31 22:56:47 - src.services.database_service - INFO - Document created: nozzles/d9c99054-8da0-465c-9f51-bb31371b1ecc
+2025-12-31 22:56:47 - src.services.database_service - INFO - Document created: nozzles/af800bfa-4ff6-4d8f-a0dc-bce3e160e3c9
+2025-12-31 22:56:53 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:57:23 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:57:31 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:57:53 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:58:00 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:58:23 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:58:53 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:59:23 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 22:59:53 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 23:00:23 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 23:00:30 - src.services.database_service - INFO - Document created: account_heads/15521451-d88e-442e-9d11-e30bfbf7d908
+2025-12-31 23:00:30 - src.services.database_service - INFO - Document created: account_heads/6ffb085f-5785-4afb-9ea9-a08eb3d5e680
+2025-12-31 23:00:30 - src.services.database_service - INFO - Document created: account_heads/b8ba4249-219d-4019-b541-21d9d70c3540
+2025-12-31 23:00:39 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 23:00:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:01:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:01:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:02:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:02:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:03:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:03:33 - src.services.database_service - INFO - Document updated: tanks/5fba1e95-30d9-49e8-9ac1-240185fa4829
+2025-12-31 23:03:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:04:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:04:32 - src.services.database_service - INFO - Document updated: tanks/5fba1e95-30d9-49e8-9ac1-240185fa4829
+2025-12-31 23:04:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:05:05 - src.services.database_service - INFO - Document created: purchases/be071e84-eeeb-4d39-afe2-d9f8534b608d
+2025-12-31 23:05:19 - src.services.database_service - INFO - Document updated: tanks/31a0278a-049a-4327-b07b-d9dc72d0cd2a
+2025-12-31 23:05:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:05:42 - src.services.database_service - INFO - Document created: purchases/b46fe078-98e6-4279-942f-98d7a504023a
+2025-12-31 23:05:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:06:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:06:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:07:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:07:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:08:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:08:43 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2025-12-31 23:08:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:09:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:09:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:10:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:29:46 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:30:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:30:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:31:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:31:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:32:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:32:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:33:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:33:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:34:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:34:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:35:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:35:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:36:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:36:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:37:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:37:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:38:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:38:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:39:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:39:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:40:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:40:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:41:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:41:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:42:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:42:55 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:43:25 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2025-12-31 23:43:31 - src.main - INFO - Application closing
+2025-12-31 23:52:42 - src.main - INFO - Firebase initialized successfully
+2025-12-31 23:52:43 - src.main - INFO - PPMS Application initialized
+2025-12-31 23:52:50 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-31 23:52:50 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-31 23:52:51 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 23:53:21 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 23:53:42 - src.services.database_service - INFO - Document created: fuel_types/2d5234e2-e47b-4ce0-b17f-5b873de37955
+2025-12-31 23:53:42 - src.services.database_service - INFO - Document created: fuel_types/9d818948-7dea-4d2d-95c2-4c252f985723
+2025-12-31 23:53:51 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 23:54:21 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 23:54:24 - src.services.database_service - INFO - Document created: nozzles/7359565f-0d50-4a5c-a16a-b46365a8dccb
+2025-12-31 23:54:24 - src.services.database_service - INFO - Document created: nozzles/fc837bf0-04f8-411e-b11f-3cbe1ff3479d
+2025-12-31 23:54:51 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 23:54:57 - src.services.database_service - INFO - Document created: tanks/55ed948c-e99a-44ac-8c87-b271329fa6f0
+2025-12-31 23:55:07 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 23:55:21 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 23:55:51 - src.services.database_service - WARNING - No payment methods found in account heads
+2025-12-31 23:56:06 - src.services.database_service - INFO - Document created: account_heads/505b2cac-6a54-494f-991a-a66828d6dcc5
+2025-12-31 23:56:13 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 23:56:21 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 23:56:51 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 23:56:58 - src.services.database_service - INFO - Document updated: tanks/55ed948c-e99a-44ac-8c87-b271329fa6f0
+2025-12-31 23:57:19 - src.services.database_service - INFO - Document created: purchases/b0468370-1689-4f61-a21e-f3b47428dd14
+2025-12-31 23:57:21 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 23:57:29 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 23:57:45 - src.services.database_service - INFO - Document created: sales/9f3c10cc-5c40-4f70-a0bd-58abd32b6d3d
+2025-12-31 23:57:45 - src.services.database_service - INFO - Document updated: tanks/55ed948c-e99a-44ac-8c87-b271329fa6f0
+2025-12-31 23:57:45 - src.services.database_service - INFO - Document updated: nozzles/7359565f-0d50-4a5c-a16a-b46365a8dccb
+2025-12-31 23:57:51 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 23:58:21 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 23:58:51 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 23:59:21 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2025-12-31 23:59:51 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:00:21 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:00:51 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:01:21 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:01:51 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:02:21 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:02:51 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:03:21 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:03:51 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:04:21 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:04:51 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:05:21 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:05:51 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:08:06 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:08:34 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:09:04 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:09:34 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:10:04 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:10:34 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:11:04 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:11:34 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:12:04 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:12:34 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:13:04 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:13:34 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:14:04 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:14:34 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:15:04 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-01 00:15:32 - src.main - INFO - Application closing

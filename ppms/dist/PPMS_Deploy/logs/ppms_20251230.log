@@ -1,0 +1,40 @@
+2025-12-30 18:29:44 - src.main - INFO - Firebase initialized successfully
+2025-12-30 18:29:44 - src.main - INFO - PPMS Application initialized
+2025-12-30 18:29:55 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 18:29:55 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 18:30:12 - src.main - INFO - Application closing
+2025-12-30 19:09:58 - src.main - INFO - Firebase initialized successfully
+2025-12-30 19:09:59 - src.main - INFO - PPMS Application initialized
+2025-12-30 19:10:43 - src.services.auth_service - INFO - User logged in successfully: admin
+2025-12-30 19:10:43 - src.main - INFO - User logged in: admin@ppms.com
+2025-12-30 19:15:58 - src.services.database_service - INFO - Document created: fuel_types/4010e875-acad-433b-b94e-ccabfdba4d64
+2025-12-30 19:15:58 - src.services.database_service - INFO - Document created: fuel_types/32932c83-e94d-4f78-9ffb-2fc10e859813
+2025-12-30 19:15:58 - src.services.database_service - INFO - Document created: fuel_types/136f29b0-501d-4118-9f5c-ac5ae679ea2b
+2025-12-30 19:15:58 - src.services.database_service - INFO - Document created: fuel_types/9be12314-7aa7-4593-8e5b-92e097d1decf
+2025-12-30 19:15:58 - src.services.database_service - INFO - Document created: fuel_types/8f838d45-7c34-4862-8f00-49dd7717b2fd
+2025-12-30 19:17:57 - src.services.database_service - INFO - Document created: tanks/7611b56b-7713-40d9-914a-b7825322a3bd
+2025-12-30 19:17:57 - src.services.database_service - INFO - Document created: tanks/d090f9be-7956-4690-99b0-7c54ed70a701
+2025-12-30 19:17:57 - src.services.database_service - INFO - Document created: tanks/f5aef0f9-7297-4375-a165-a2972c793524
+2025-12-30 19:19:34 - src.services.database_service - INFO - Document created: nozzles/ed3ce52d-dd01-4a22-b89d-52469365512b
+2025-12-30 19:19:34 - src.services.database_service - INFO - Document created: nozzles/a516b9b4-34c8-4121-8064-e3b534ed7e1b
+2025-12-30 19:19:34 - src.services.database_service - INFO - Document created: nozzles/f9a4b7a0-ebb9-409b-bfde-dcf978021aec
+2025-12-30 19:19:34 - src.services.database_service - INFO - Document created: nozzles/61003716-5a6c-40fc-b126-42a50db891ed
+2025-12-30 19:19:34 - src.services.database_service - INFO - Document created: nozzles/b8e62024-9972-4ad3-9c19-135de040f219
+2025-12-30 19:19:34 - src.services.database_service - INFO - Document created: nozzles/fec7fab9-4637-4388-9ad3-39e991756e03
+2025-12-30 19:21:22 - src.services.database_service - INFO - Document created: sales/bfe248a3-1b45-4479-a844-fecca5a4dc8c
+2025-12-30 19:21:22 - src.services.database_service - INFO - Document created: sales/2b06af04-1645-46bf-9aff-0450baba664f
+2025-12-30 19:21:22 - src.services.database_service - INFO - Document created: sales/270b249e-5d4e-4c76-9d15-08ad025bd354
+2025-12-30 19:21:22 - src.services.database_service - INFO - Document created: sales/d8ccca91-161e-42f4-9c6b-a35759fc598d
+2025-12-30 19:21:22 - src.services.database_service - INFO - Document created: sales/4ce96701-9be4-4fab-b7d1-30e875095777
+2025-12-30 19:21:22 - src.services.database_service - INFO - Document created: sales/76bc0c4a-2669-4f8c-b8f5-2c02f5b740ff
+2025-12-30 19:47:18 - src.services.database_service - INFO - Document created: purchases/44489dcc-ae2c-4c87-8351-085d0d980e6a
+2025-12-30 19:47:18 - src.services.database_service - INFO - Document created: purchases/09b2ffca-9acc-404c-9f7a-bdda0dfa1b7c
+2025-12-30 19:47:18 - src.services.database_service - INFO - Document created: purchases/3343b7e4-da27-46a0-8880-46672f6017a7
+2025-12-30 19:51:07 - src.services.database_service - INFO - Document created: expenses/69b60014-ebd6-4a6d-8478-87c378bca547
+2025-12-30 19:51:07 - src.services.database_service - INFO - Document created: expenses/c766f418-734e-4b33-8e1a-ad8e4fc47d5b
+2025-12-30 19:51:07 - src.services.database_service - INFO - Document created: expenses/e9f47b02-2435-4639-bc20-9d2aa868b1e3
+2025-12-30 19:51:07 - src.services.database_service - INFO - Document created: expenses/e5e1ddfd-0134-400d-b5f1-d4eb40ce13dd
+2025-12-30 19:52:01 - src.services.database_service - INFO - Document created: sales/61010d72-1f9d-4686-bb8f-8bf77a7804db
+2025-12-30 19:52:01 - src.services.database_service - INFO - Document created: sales/810e1dce-2b5b-43c4-92a5-11e9d2ccf555
+2025-12-30 19:53:08 - src.services.database_service - INFO - Document created: sales/f4349416-62d2-4056-b5e6-673c671d2c5a
+2025-12-30 20:03:37 - src.main - INFO - Application closing

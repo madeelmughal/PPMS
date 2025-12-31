@@ -6,20 +6,24 @@ from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QGridLayout, QFrame, QScrollArea, QMenuBar, QMenu, QDialog, QLineEdit,
     QDoubleSpinBox, QSpinBox, QComboBox, QMessageBox, QFormLayout, QTableWidget,
-    QTableWidgetItem
+    QTableWidgetItem, QHeaderView, QTabWidget, QFileDialog
 )
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QColor
 from src.services.database_service import (
-    FuelService, TankService, SalesService, DatabaseService, NozzleService, CustomerService
+    FuelService, TankService, SalesService, DatabaseService, NozzleService, CustomerService, AccountHeadService
 )
 from src.config.firebase_config import AppConfig
+from src.config.logger_config import setup_logger
+from src.ui.screens.inventory_screen import UpdateStockLevelDialog
 from datetime import datetime
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import numpy as np
+
+logger = setup_logger(__name__)
 
 
 class DataViewDialog(QDialog):
@@ -29,12 +33,18 @@ class DataViewDialog(QDialog):
         """Initialize data view dialog."""
         super().__init__(parent)
         self.setWindowTitle(title)
-        self.setGeometry(100, 100, 1000, 600)
+        self.resize(1000, 600)
+        # Center on screen
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
         self.setStyleSheet(
             "QDialog { background-color: #f5f5f5; }"
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
             "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
-            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: #333333; }"
+            "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
             "QPushButton { background-color: #4CAF50; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
             "QPushButton:hover { background-color: #45a049; }"
         )
@@ -53,7 +63,9 @@ class DataViewDialog(QDialog):
         self.table.setHorizontalHeaderLabels(columns)
         self.table.setAlternatingRowColors(True)
         self.table.setSelectionBehavior(QTableWidget.SelectRows)
-        self.table.horizontalHeader().setStretchLastSection(True)
+        
+        # Set column widths based on column type
+        self._set_column_widths(columns)
         
         # Add data to table
         self.table.setRowCount(len(data))
@@ -77,6 +89,34 @@ class DataViewDialog(QDialog):
         
         self.setLayout(layout)
 
+    def _set_column_widths(self, columns):
+        """Set column widths based on column names - wider for text, narrower for numbers."""
+        # Define wide columns (text fields)
+        wide_columns = ['Name', 'Description', 'Address', 'Email', 'Notes', 'Location', 'Supplier', 'Nozzle', 'Tank']
+        # Define medium columns
+        medium_columns = ['Phone', 'Type', 'Category', 'Payment', 'Payment Method', 'Invoice', 'Reference', 'Code', 
+                          'Machine ID', 'Fuel Type', 'From Currency', 'To Currency']
+        # Define narrow columns (numeric fields)
+        narrow_columns = ['Rate', 'Tax', 'Tax %', 'Amount', 'Price', 'Total', 'Quantity', 'Unit Price', 'Unit Cost',
+                          'Capacity', 'Min Stock', 'Credit Limit', 'Opening Reading', 'Nozzle Number', 'Date',
+                          'Effective Date']
+        
+        for col_idx, col_name in enumerate(columns):
+            # Check for wide columns (text)
+            if any(wide in col_name for wide in wide_columns):
+                self.table.setColumnWidth(col_idx, 200)
+            # Check for medium columns
+            elif any(med in col_name for med in medium_columns):
+                self.table.setColumnWidth(col_idx, 130)
+            # Check for narrow columns (numeric)
+            elif any(narrow in col_name for narrow in narrow_columns):
+                self.table.setColumnWidth(col_idx, 100)
+            else:
+                self.table.setColumnWidth(col_idx, 120)  # Default width
+        
+        # Stretch last section to fill remaining space
+        self.table.horizontalHeader().setStretchLastSection(True)
+
 
 class DashboardScreen(QMainWindow):
     """Main dashboard screen."""
@@ -93,9 +133,11 @@ class DashboardScreen(QMainWindow):
         self.db_service = DatabaseService()
         self.nozzle_service = NozzleService()
         self.customer_service = CustomerService()
+        self.account_head_service = AccountHeadService()
         
         # KPI card label references for dynamic updates
         self.kpi_labels = {}
+        self.payment_methods = []
 
         self.setWindowTitle(f"PPMS Dashboard - {user.name}")
         self.setGeometry(100, 100, 1400, 900)
@@ -588,24 +630,41 @@ class DashboardScreen(QMainWindow):
         file_menu.addSeparator()
         file_menu.addAction("Exit", self.logout_requested.emit)
         
-        # Data Entry Menu
-        daily_menu = menubar.addMenu("Data Entry")
-        daily_menu.addAction("Record Fuel Sale", self.record_sale_dialog)
-        daily_menu.addAction("Record Fuel Purchase", self.record_purchase_dialog)
-        daily_menu.addAction("Update Exchange Rate", self.update_exchange_rate_dialog)
-        daily_menu.addAction("Record Expense", self.record_expense_dialog)
+        # View Menu
+        view_menu = menubar.addMenu("View")
+        view_menu.addAction("View Sales", self.view_sales_records)
+        view_menu.addAction("View Purchase", self.view_purchase_records)  
+        view_menu.addAction("View Expenses", self.view_expenses)
+        view_menu.addSeparator()
+        view_menu.addAction("View Customers", self.view_customers)
+        view_menu.addSeparator()
+        view_menu.addAction("View Fuel Types", self.view_fuel_types)
+        view_menu.addAction("View Tanks", self.view_tanks)
+        view_menu.addAction("View Nozzles", self.view_nozzles)
+        view_menu.addSeparator()
+        #view_menu.addAction("View Exchange Rates", self.view_exchange_rates)
+        view_menu.addAction("View Account Heads", self.view_account_heads)
+        view_menu.addAction("Account Position Report", self.view_account_position_report)
+        view_menu.addSeparator()
+        view_menu.addAction("View Daily Summary", self.view_daily_summary)
+        view_menu.addAction("Daily Transactions Report", self.daily_transactions_report)
+        view_menu.addAction("View Inventory Report", self.view_inventory_report)
+        
+        # Transaction Menu
+        daily_menu = menubar.addMenu("Transaction")
+        daily_menu.addAction("Add Sales", self.record_sale_dialog)
+        daily_menu.addAction("Add Purchase", self.record_purchase_dialog)
+        daily_menu.addAction("Add Expense", self.record_expense_dialog)
         daily_menu.addSeparator()
-        daily_menu.addAction("Add New Customer", self.add_customer_dialog)
+        #daily_menu.addAction("Add New Customer", self.add_customer_dialog)
         daily_menu.addAction("Record Customer Payment", self.customer_payments_dialog)
-        daily_menu.addSeparator()
-        daily_menu.addAction("View Daily Summary", self.view_daily_summary)
-        daily_menu.addAction("Daily Transactions Report", self.daily_transactions_report)
         
         # Setup Menu (One-time settings)
         setup_menu = menubar.addMenu("Setup")
         setup_menu.addAction("Add Fuel Types", self.add_fuel_type_settings)
         setup_menu.addAction("Add Tanks", self.add_tank)
         setup_menu.addAction("Add Nozzles", self.add_nozzles_settings)
+        setup_menu.addSeparator()
         setup_menu.addAction("Add Account Heads", self.add_account_heads)
         setup_menu.addSeparator()
         setup_menu.addAction("Configure System", self.configure_system)
@@ -613,23 +672,8 @@ class DashboardScreen(QMainWindow):
         # Inventory Menu
         inventory_menu = menubar.addMenu("Inventory")
         inventory_menu.addAction("Update Stock Levels", self.update_stock_levels)
-        inventory_menu.addAction("View Inventory Report", self.view_inventory_report)
         inventory_menu.addSeparator()
         inventory_menu.addAction("Manage Nozzles", self.manage_nozzles)
-        
-        # View Menu
-        view_menu = menubar.addMenu("View")
-        view_menu.addAction("View Sales Records", self.view_sales_records)
-        view_menu.addAction("View Purchase Records", self.view_purchase_records)
-        view_menu.addAction("View Customers", self.view_customers)
-        view_menu.addAction("View Expenses", self.view_expenses)
-        view_menu.addSeparator()
-        view_menu.addAction("View Fuel Types", self.view_fuel_types)
-        view_menu.addAction("View Tanks", self.view_tanks)
-        view_menu.addAction("View Nozzles", self.view_nozzles)
-        view_menu.addSeparator()
-        view_menu.addAction("View Exchange Rates", self.view_exchange_rates)
-        view_menu.addAction("View Account Heads", self.view_account_heads)
         
         # Settings Menu
         settings_menu = menubar.addMenu("Settings")
@@ -644,13 +688,16 @@ class DashboardScreen(QMainWindow):
 
     def record_sale_dialog(self):
         """Open dialog to record a sale."""
-        dialog = RecordSaleDialog(self.fuel_service, self.nozzle_service, self.sales_service, self.db_service)
+        # Get payment methods for Asset type (Cash, Bank, etc.)
+        asset_payment_methods = self.account_head_service.get_payment_methods(head_type_filter='Asset')
+        dialog = RecordSaleDialog(self.fuel_service, self.nozzle_service, self.sales_service, self.db_service, self.tank_service, self.account_head_service, asset_payment_methods)
+        self._center_dialog_on_screen(dialog)
         if dialog.exec_() == QDialog.Accepted:
             QMessageBox.information(self, "Success", "Sale recorded successfully!")
 
     def record_purchase_dialog(self):
         """Open dialog to record a fuel purchase."""
-        dialog = RecordPurchaseDialog(self.fuel_service, self.tank_service, self.db_service)
+        dialog = RecordPurchaseDialog(self.fuel_service, self.tank_service, self.db_service, self.account_head_service)
         if dialog.exec_() == QDialog.Accepted:
             QMessageBox.information(self, "Success", "Fuel purchase recorded successfully!")
 
@@ -662,7 +709,9 @@ class DashboardScreen(QMainWindow):
 
     def record_expense_dialog(self):
         """Open dialog to record an expense."""
-        dialog = RecordExpenseDialog(self.db_service)
+        # Get payment methods for Expense type
+        expense_payment_methods = self.account_head_service.get_payment_methods(head_type_filter='Expense')
+        dialog = RecordExpenseDialog(self.db_service, expense_payment_methods)
         if dialog.exec_() == QDialog.Accepted:
             QMessageBox.information(self, "Success", "Expense recorded successfully!")
 
@@ -682,25 +731,236 @@ class DashboardScreen(QMainWindow):
 
     def daily_transactions_report(self):
         """Daily transactions report."""
-        QMessageBox.information(self, "Daily Transactions", "Daily transactions report coming soon!")
+        try:
+            from datetime import date
+            today = date.today().isoformat()
+            
+            # Get all transactions for today
+            sales = self.db_service.list_documents('sales')
+            purchases = self.db_service.list_documents('purchases')
+            expenses = self.db_service.list_documents('expenses')
+            
+            # Filter for today (check for date, purchase_date, or expense_date fields)
+            today_sales = [s for s in sales if s.get('date', '').startswith(today)]
+            today_purchases = [p for p in purchases if p.get('purchase_date', '').startswith(today) or p.get('date', '').startswith(today)]
+            today_expenses = [e for e in expenses if e.get('expense_date', '').startswith(today) or e.get('date', '').startswith(today)]
+            
+            # Create dialog
+            dialog = QDialog(self)
+            dialog.setWindowTitle(f"Daily Transactions Report - {today}")
+            dialog.setGeometry(100, 100, 1200, 700)
+            self._center_dialog_on_screen(dialog)
+            
+            layout = QVBoxLayout()
+            
+            # Header
+            header = QLabel(f"Daily Transactions Report - {today}")
+            header.setFont(QFont("Arial", 16, QFont.Bold))
+            layout.addWidget(header)
+            
+            # Summary stats
+            summary_layout = QHBoxLayout()
+            
+            total_sales = sum(float(s.get('total_amount', 0)) for s in today_sales)
+            total_sale_qty = sum(float(s.get('quantity', 0)) for s in today_sales)
+            total_purchases = sum(float(p.get('total_cost', 0)) for p in today_purchases)
+            total_expenses = sum(float(e.get('amount', 0)) for e in today_expenses)
+            net_profit = total_sales - total_purchases - total_expenses
+            
+            summary_layout.addWidget(self.create_stat_card("Total Sales", f"Rs. {total_sales:,.2f}", "#4CAF50"))
+            summary_layout.addWidget(self.create_stat_card("Fuel Sold", f"{total_sale_qty:,.2f} L", "#2196F3"))
+            summary_layout.addWidget(self.create_stat_card("Purchases", f"Rs. {total_purchases:,.2f}", "#FF9800"))
+            summary_layout.addWidget(self.create_stat_card("Expenses", f"Rs. {total_expenses:,.2f}", "#f44336"))
+            summary_layout.addWidget(self.create_stat_card("Net Profit", f"Rs. {net_profit:,.2f}", "#9C27B0"))
+            
+            layout.addLayout(summary_layout)
+            
+            # Create tabs for different transaction types
+            tabs = QTabWidget()
+            
+            # Sales Tab
+            sales_table = self._create_sales_table(today_sales)
+            tabs.addTab(sales_table, f"Sales ({len(today_sales)})")
+            
+            # Purchases Tab
+            purchases_table = self._create_purchases_table(today_purchases)
+            tabs.addTab(purchases_table, f"Purchases ({len(today_purchases)})")
+            
+            # Expenses Tab
+            expenses_table = self._create_expenses_table(today_expenses)
+            tabs.addTab(expenses_table, f"Expenses ({len(today_expenses)})")
+            
+            layout.addWidget(tabs)
+            
+            # Export and Close buttons
+            button_layout = QHBoxLayout()
+            pdf_btn = QPushButton("📄 Export to PDF")
+            pdf_btn.clicked.connect(lambda: self._export_transactions_to_pdf(today, total_sales, total_sale_qty, total_purchases, total_expenses, net_profit, today_sales, today_purchases, today_expenses))
+            button_layout.addWidget(pdf_btn)
+            button_layout.addStretch()
+            close_btn = QPushButton("Close")
+            close_btn.clicked.connect(dialog.accept)
+            button_layout.addWidget(close_btn)
+            layout.addLayout(button_layout)
+            
+            dialog.setLayout(layout)
+            dialog.exec_()
+            
+        except Exception as e:
+            logger.error(f"Error viewing daily transactions report: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to load daily transactions report: {str(e)}")
+
+    def _create_sales_table(self, sales_data):
+        """Create sales transactions table."""
+        table = QTableWidget()
+        table.setColumnCount(11)
+        table.setHorizontalHeaderLabels([
+            "Nozzle", "Fuel Type", "Open Reading", "Quantity (L)", "Close Reading",
+            "Unit Price (Rs)", "Total (Rs)", "Payment Method", "Customer", "Date", "Time"
+        ])
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        table.setRowCount(len(sales_data))
+        
+        # Get lookup data
+        nozzles = {n.id: f"M{n.machine_id}-N{n.nozzle_number}" for n in self.nozzle_service.list_nozzles()}
+        fuels = {f.id: f.name for f in self.fuel_service.list_fuel_types()}
+        
+        for row, sale in enumerate(sales_data):
+            nozzle_name = nozzles.get(sale.get('nozzle_id', ''), 'Unknown')
+            fuel_name = fuels.get(sale.get('fuel_type_id', ''), 'Unknown')
+            
+            # Extract date and time
+            date_str = sale.get('date', '')
+            date_display = date_str[:10] if len(date_str) > 10 else ''
+            time_str = date_str[11:19] if len(date_str) > 11 else ''
+            
+            items = [
+                QTableWidgetItem(nozzle_name),
+                QTableWidgetItem(fuel_name),
+                QTableWidgetItem(f"{float(sale.get('opening_reading', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(sale.get('quantity', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(sale.get('closing_reading', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(sale.get('unit_price', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(sale.get('total_amount', 0)):,.2f}"),
+                QTableWidgetItem(sale.get('payment_method', 'Cash')),
+                QTableWidgetItem(sale.get('customer_name', 'Walk-in')),
+                QTableWidgetItem(date_display),
+                QTableWidgetItem(time_str)
+            ]
+            
+            for col_idx, item in enumerate(items):
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, col_idx, item)
+        
+        return table
+
+    def _create_purchases_table(self, purchases_data):
+        """Create purchases transactions table."""
+        table = QTableWidget()
+        table.setColumnCount(8)
+        table.setHorizontalHeaderLabels([
+            "Tank", "Fuel Type", "Quantity (L)", "Unit Cost (Rs)", 
+            "Total Cost (Rs)", "Account Head", "Supplier", "Date"
+        ])
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        table.setRowCount(len(purchases_data))
+        
+        # Get lookup data
+        tanks = {t.id: {'name': t.name, 'fuel_type_id': t.fuel_type_id} for t in self.tank_service.list_tanks()}
+        fuels = {f.id: f.name for f in self.fuel_service.list_fuel_types()}
+        
+        for row, purchase in enumerate(purchases_data):
+            tank_id = purchase.get('tank_id', '')
+            tank_info = tanks.get(tank_id, {})
+            tank_name = tank_info.get('name', 'Unknown')
+            
+            # Get fuel type from tank's fuel_type_id
+            tank_fuel_type_id = tank_info.get('fuel_type_id', '')
+            fuel_name = fuels.get(tank_fuel_type_id, 'Unknown')
+            
+            date_str = purchase.get('purchase_date', purchase.get('date', ''))
+            date_display = date_str[:10] if date_str else ''
+            
+            items = [
+                QTableWidgetItem(tank_name),
+                QTableWidgetItem(fuel_name),
+                QTableWidgetItem(f"{float(purchase.get('quantity', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(purchase.get('unit_cost', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(purchase.get('total_cost', 0)):,.2f}"),
+                QTableWidgetItem(purchase.get('account_head_name', '')),
+                QTableWidgetItem(purchase.get('supplier_name', 'Unknown')),
+                QTableWidgetItem(date_display)
+            ]
+            
+            for col_idx, item in enumerate(items):
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, col_idx, item)
+        
+        return table
+
+    def _create_expenses_table(self, expenses_data):
+        """Create expenses transactions table."""
+        table = QTableWidget()
+        table.setColumnCount(6)
+        table.setHorizontalHeaderLabels([
+            "Description", "Category", "Amount (Rs)", "Payment Method", "Notes", "Date"
+        ])
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        table.setRowCount(len(expenses_data))
+        
+        for row, expense in enumerate(expenses_data):
+            date_str = expense.get('expense_date', expense.get('date', ''))
+            date_display = date_str[:10] if date_str else ''
+            
+            items = [
+                QTableWidgetItem(expense.get('description', '')),
+                QTableWidgetItem(expense.get('category', '')),
+                QTableWidgetItem(f"{float(expense.get('amount', 0)):,.2f}"),
+                QTableWidgetItem(expense.get('payment_method', 'Cash')),
+                QTableWidgetItem(expense.get('notes', '')),
+                QTableWidgetItem(date_display)
+            ]
+            
+            for col_idx, item in enumerate(items):
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, col_idx, item)
+        
+        return table
 
     def view_sales_records(self):
         """View sales records."""
         try:
             sales_data = self.db_service.list_documents('sales')
-            columns = ["ID", "Nozzle", "Fuel Type", "Quantity (L)", "Price", "Total (Rs)", "Payment", "Date"]
+            # Build lookup maps for nozzle names and fuel types
+            nozzles = self.nozzle_service.list_nozzles()
+            nozzle_map = {n.id: f"Machine {n.machine_id} - Nozzle {n.nozzle_number}" for n in nozzles}
+            fuel_types = self.fuel_service.list_fuel_types()
+            fuel_map = {f.id: f.name for f in fuel_types}
+            # Build account head map
+            account_heads = self.db_service.list_documents('account_heads')
+            account_head_map = {a.get('id'): a.get('name', '') for a in account_heads}
+            
+            columns = ["Nozzle", "Fuel Type", "Opening (L)", "Quantity (L)", "Closing (L)", "Unit Price (Rs)", "Total (Rs)", "Account Head"]
             data = []
             
             for sale in sales_data:
+                nozzle_id = sale.get('nozzle_id', '')
+                nozzle_name = nozzle_map.get(nozzle_id, nozzle_id)
+                fuel_type_id = sale.get('fuel_type_id', '')
+                fuel_name = fuel_map.get(fuel_type_id, sale.get('fuel_type', ''))
+                # Get account head name from map
+                account_head_id = sale.get('account_head_id', '')
+                account_head_name = account_head_map.get(account_head_id, sale.get('account_head_name', ''))
+                
                 data.append([
-                    sale.get('id', '')[:8],
-                    sale.get('nozzle_id', ''),
-                    sale.get('fuel_type', ''),
+                    nozzle_name,
+                    fuel_name,
+                    f"{sale.get('opening_reading', 0):.2f}",
                     f"{sale.get('quantity', 0):.2f}",
-                    f"{sale.get('price', 0):.2f}",
+                    f"{sale.get('closing_reading', 0):.2f}",
+                    f"{sale.get('unit_price', sale.get('price', 0)):.2f}",
                     f"{sale.get('total_amount', 0):.2f}",
-                    sale.get('payment_method', ''),
-                    sale.get('timestamp', '')[:10]
+                    account_head_name
                 ])
             
             if not data:
@@ -715,23 +975,31 @@ class DashboardScreen(QMainWindow):
         """View purchase records."""
         try:
             purchases_data = self.db_service.list_documents('purchases')
-            columns = ["ID", "Tank", "Supplier", "Quantity (L)", "Unit Cost", "Total (Rs)", "Invoice", "Date"]
+            # Build lookup map for tank names
+            tanks = self.tank_service.list_tanks()
+            tank_map = {t.id: t.name for t in tanks}
+            
+            columns = ["Tank", "Supplier", "Quantity (L)", "Unit Cost", "Total (Rs)", "Invoice", "Date"]
             data = []
             
             for purchase in purchases_data:
+                tank_id = purchase.get('tank_id', '')
+                tank_name = tank_map.get(tank_id, tank_id)
+                # Get date from 'purchase_date' or 'timestamp' field
+                date_str = purchase.get('purchase_date', purchase.get('timestamp', ''))
+                date_display = date_str[:10] if date_str else ''
                 data.append([
-                    purchase.get('id', '')[:8],
-                    purchase.get('tank_id', ''),
+                    tank_name,
                     purchase.get('supplier_name', ''),
                     f"{purchase.get('quantity', 0):.2f}",
                     f"{purchase.get('unit_cost', 0):.2f}",
                     f"{purchase.get('total_cost', 0):.2f}",
                     purchase.get('invoice_number', ''),
-                    purchase.get('timestamp', '')[:10]
+                    date_display
                 ])
             
             if not data:
-                data = [["No purchase records found", "", "", "", "", "", "", ""]]
+                data = [["No purchase records found", "", "", "", "", "", ""]]
             
             dialog = DataViewDialog("Purchase Records", columns, data, self)
             dialog.exec_()
@@ -742,12 +1010,11 @@ class DashboardScreen(QMainWindow):
         """View customers."""
         try:
             customers_data = self.db_service.list_documents('customers')
-            columns = ["ID", "Name", "Phone", "Email", "Address", "Credit Limit (Rs)", "Type"]
+            columns = ["Name", "Phone", "Email", "Address", "Credit Limit (Rs)", "Type"]
             data = []
             
             for customer in customers_data:
                 data.append([
-                    customer.get('id', '')[:8],
                     customer.get('name', ''),
                     customer.get('phone', ''),
                     customer.get('email', ''),
@@ -757,7 +1024,7 @@ class DashboardScreen(QMainWindow):
                 ])
             
             if not data:
-                data = [["No customers found", "", "", "", "", "", ""]]
+                data = [["No customers found", "", "", "", "", ""]]
             
             dialog = DataViewDialog("Customers", columns, data, self)
             dialog.exec_()
@@ -768,22 +1035,24 @@ class DashboardScreen(QMainWindow):
         """View expenses."""
         try:
             expenses_data = self.db_service.list_documents('expenses')
-            columns = ["ID", "Category", "Description", "Amount (Rs)", "Payment Method", "Reference", "Date"]
+            columns = ["Category", "Description", "Amount (Rs)", "Payment Method", "Reference", "Date"]
             data = []
             
             for expense in expenses_data:
+                # Get date from 'expense_date' or 'timestamp' field
+                date_str = expense.get('expense_date', expense.get('timestamp', ''))
+                date_display = date_str[:10] if date_str else ''
                 data.append([
-                    expense.get('id', '')[:8],
                     expense.get('category', ''),
                     expense.get('description', ''),
                     f"{expense.get('amount', 0):.2f}",
                     expense.get('payment_method', ''),
                     expense.get('reference_number', ''),
-                    expense.get('timestamp', '')[:10]
+                    date_display
                 ])
             
             if not data:
-                data = [["No expenses found", "", "", "", "", "", ""]]
+                data = [["No expenses found", "", "", "", "", ""]]
             
             dialog = DataViewDialog("Expenses", columns, data, self)
             dialog.exec_()
@@ -794,19 +1063,18 @@ class DashboardScreen(QMainWindow):
         """View fuel types."""
         try:
             fuel_types = self.fuel_service.list_fuel_types()
-            columns = ["ID", "Name", "Unit Price (Rs)", "Tax %"]
+            columns = ["Name", "Unit Price (Rs)", "Tax %"]
             data = []
             
             for fuel in fuel_types:
                 data.append([
-                    fuel.id[:8] if fuel.id else '',
                     fuel.name,
                     f"{float(fuel.unit_price):.2f}",
                     f"{float(fuel.tax_percentage):.2f}"
                 ])
             
             if not data:
-                data = [["No fuel types found", "", "", ""]]
+                data = [["No fuel types found", "", ""]]
             
             dialog = DataViewDialog("Fuel Types", columns, data, self)
             dialog.exec_()
@@ -817,21 +1085,25 @@ class DashboardScreen(QMainWindow):
         """View tanks."""
         try:
             tanks = self.tank_service.list_tanks()
-            columns = ["ID", "Name", "Fuel Type", "Capacity (L)", "Min Stock (L)", "Location"]
+            # Build lookup map for fuel type names
+            fuel_types = self.fuel_service.list_fuel_types()
+            fuel_map = {f.id: f.name for f in fuel_types}
+            
+            columns = ["Name", "Fuel Type", "Capacity (L)", "Min Stock (L)", "Location"]
             data = []
             
             for tank in tanks:
+                fuel_name = fuel_map.get(tank.fuel_type_id, tank.fuel_type_id)
                 data.append([
-                    tank.id[:8] if tank.id else '',
                     tank.name,
-                    tank.fuel_type_id,
+                    fuel_name,
                     f"{float(tank.capacity):.0f}",
                     f"{float(tank.minimum_stock):.0f}",
                     tank.location
                 ])
             
             if not data:
-                data = [["No tanks found", "", "", "", "", ""]]
+                data = [["No tanks found", "", "", "", ""]]
             
             dialog = DataViewDialog("Tanks", columns, data, self)
             dialog.exec_()
@@ -842,20 +1114,24 @@ class DashboardScreen(QMainWindow):
         """View nozzles."""
         try:
             nozzles = self.nozzle_service.list_nozzles()
-            columns = ["ID", "Machine ID", "Nozzle Number", "Fuel Type", "Opening Reading"]
+            # Build lookup map for fuel type names
+            fuel_types = self.fuel_service.list_fuel_types()
+            fuel_map = {f.id: f.name for f in fuel_types}
+            
+            columns = ["Machine ID", "Nozzle Number", "Fuel Type", "Opening Reading"]
             data = []
             
             for nozzle in nozzles:
+                fuel_name = fuel_map.get(nozzle.fuel_type_id, nozzle.fuel_type_id)
                 data.append([
-                    nozzle.id[:8] if nozzle.id else '',
                     nozzle.machine_id,
                     str(nozzle.nozzle_number),
-                    nozzle.fuel_type_id,
+                    fuel_name,
                     f"{float(nozzle.opening_reading):.2f}"
                 ])
             
             if not data:
-                data = [["No nozzles found", "", "", "", ""]]
+                data = [["No nozzles found", "", "", ""]]
             
             dialog = DataViewDialog("Nozzles", columns, data, self)
             dialog.exec_()
@@ -866,12 +1142,11 @@ class DashboardScreen(QMainWindow):
         """View exchange rates."""
         try:
             rates_data = self.db_service.list_documents('exchange_rates')
-            columns = ["ID", "From Currency", "To Currency", "Rate", "Effective Date"]
+            columns = ["From Currency", "To Currency", "Rate", "Effective Date"]
             data = []
             
             for rate in rates_data:
                 data.append([
-                    rate.get('id', '')[:8],
                     rate.get('from_currency', ''),
                     rate.get('to_currency', ''),
                     f"{rate.get('rate', 0):.4f}",
@@ -879,7 +1154,7 @@ class DashboardScreen(QMainWindow):
                 ])
             
             if not data:
-                data = [["No exchange rates found", "", "", "", ""]]
+                data = [["No exchange rates found", "", "", ""]]
             
             dialog = DataViewDialog("Exchange Rates", columns, data, self)
             dialog.exec_()
@@ -890,25 +1165,311 @@ class DashboardScreen(QMainWindow):
         """View account heads."""
         try:
             accounts = self.db_service.list_documents('account_heads')
-            columns = ["ID", "Name", "Type", "Code", "Description"]
+            columns = ["Name", "Type", "Code", "Description"]
             data = []
             
             for account in accounts:
+                account_type = account.get('account_type', '') or account.get('head_type', '')
                 data.append([
-                    account.get('id', '')[:8],
                     account.get('name', ''),
-                    account.get('account_type', ''),
+                    account_type,
                     account.get('code', ''),
                     account.get('description', '')
                 ])
             
             if not data:
-                data = [["No account heads found", "", "", "", ""]]
+                data = [["No account heads found", "", "", ""]]
             
             dialog = DataViewDialog("Account Heads", columns, data, self)
             dialog.exec_()
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Failed to load account heads: {str(e)}")
+
+    def view_account_position_report(self):
+        """View account position report showing outstanding balance of all account heads with real-time impact from transactions.
+        
+        Transaction Impact Logic:
+        - Sales: CREDIT (positive impact - cash received)
+        - Purchases: DEBIT (negative impact - cash paid out)
+        - Expenses: DEBIT (negative impact - cash paid out)
+        """
+        try:
+            # Get all account heads
+            accounts = self.db_service.list_documents('account_heads')
+            
+            if not accounts:
+                QMessageBox.information(self, "Account Position Report", "No account heads found.")
+                return
+            
+            # Get all transactions
+            sales = self.db_service.list_documents('sales')
+            expenses = self.db_service.list_documents('expenses')
+            purchases = self.db_service.list_documents('purchases')
+            
+            # Create a map of account ID to transaction impact
+            account_impacts = {}
+            for account in accounts:
+                account_id = account.get('id', '')
+                account_name = account.get('name', '')
+                account_type = account.get('head_type', account.get('account_type', ''))
+                account_impacts[account_id] = {
+                    'impact': 0.0,
+                    'type': account_type,
+                    'name': account_name
+                }
+            
+            # Calculate impacts based on account head ID and transaction type
+            # CREDIT: Sales - cash received (positive impact)
+            for sale in sales:
+                account_head_id = sale.get('account_head_id', '')
+                amount = float(sale.get('total_amount', 0))
+                if account_head_id in account_impacts:
+                    account_impacts[account_head_id]['impact'] += amount  # CREDIT: add to account
+            
+            # DEBIT: Expenses - cash paid out (negative impact)
+            for expense in expenses:
+                account_head_id = expense.get('account_head_id', '')
+                amount = float(expense.get('amount', 0))
+                if account_head_id in account_impacts:
+                    account_impacts[account_head_id]['impact'] -= amount  # DEBIT: subtract from account
+            
+            # DEBIT: Purchases - cash paid out (negative impact)
+            for purchase in purchases:
+                account_head_id = purchase.get('account_head_id', '')
+                amount = float(purchase.get('total_cost', 0))
+                if account_head_id in account_impacts:
+                    account_impacts[account_head_id]['impact'] -= amount  # DEBIT: subtract from account
+            
+            # Create dialog
+            dialog = QDialog(self)
+            dialog.setWindowTitle("Account Position Report - Real Time")
+            dialog.setGeometry(100, 100, 1200, 650)
+            self._center_dialog_on_screen(dialog)
+            
+            layout = QVBoxLayout()
+            
+            # Header
+            header = QLabel("Account Position Report - Real Time Impact")
+            header.setFont(QFont("Arial", 16, QFont.Bold))
+            layout.addWidget(header)
+            
+            # Subtitle with date
+            from datetime import date
+            today = date.today()
+            subtitle = QLabel(f"As on {today.strftime('%d-%b-%Y')} | Updated in Real Time")
+            subtitle.setFont(QFont("Arial", 10))
+            subtitle.setStyleSheet("color: #666;")
+            layout.addWidget(subtitle)
+            
+            # Create table
+            table = QTableWidget()
+            table.setColumnCount(6)
+            table.setHorizontalHeaderLabels([
+                "Account Head", "Code", "Type", "Opening Balance (Rs)", "Transaction Impact (Rs)", "Outstanding Position (Rs)"
+            ])
+            table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            table.setRowCount(len(accounts))
+            
+            total_opening = 0.0
+            total_impact = 0.0
+            total_outstanding = 0.0
+            
+            for row, account in enumerate(accounts):
+                account_id = account.get('id', '')
+                name = account.get('name', '')
+                code = account.get('code', '')
+                head_type = account.get('head_type', account.get('account_type', ''))
+                opening_balance = float(account.get('opening_balance', 0))
+                
+                # Get transaction impact for this account head using account ID
+                impact_data = account_impacts.get(account_id, {'impact': 0.0, 'type': ''})
+                transaction_impact = impact_data['impact']
+                
+                # Outstanding = Opening Balance + Transaction Impact
+                outstanding = opening_balance + transaction_impact
+                
+                total_opening += opening_balance
+                total_impact += transaction_impact
+                total_outstanding += outstanding
+                
+                items = [
+                    QTableWidgetItem(name),
+                    QTableWidgetItem(code),
+                    QTableWidgetItem(head_type),
+                    QTableWidgetItem(f"{opening_balance:,.2f}"),
+                    QTableWidgetItem(f"{transaction_impact:,.2f}"),
+                    QTableWidgetItem(f"{outstanding:,.2f}")
+                ]
+                for col_idx, item in enumerate(items):
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                    table.setItem(row, col_idx, item)
+                
+                # Color code the transaction impact (CREDIT = green, DEBIT = red)
+                if transaction_impact > 0:
+                    table.item(row, 4).setBackground(QColor("#C8E6C9"))  # Green for CREDIT (positive)
+                elif transaction_impact < 0:
+                    table.item(row, 4).setBackground(QColor("#FFCDD2"))  # Red for DEBIT (negative)
+            
+            layout.addWidget(table)
+            
+            # Summary section
+            summary_layout = QHBoxLayout()
+            summary_layout.addStretch()
+            
+            # Summary in boxes
+            summary_box = QFrame()
+            summary_box_layout = QHBoxLayout(summary_box)
+            
+            opening_label = QLabel(f"Total Opening: Rs. {total_opening:,.2f}")
+            opening_label.setFont(QFont("Arial", 11, QFont.Bold))
+            opening_label.setStyleSheet("padding: 8px; background-color: #E3F2FD; border-radius: 5px;")
+            summary_box_layout.addWidget(opening_label)
+            
+            impact_label = QLabel(f"Total Transaction Impact: Rs. {total_impact:,.2f}")
+            impact_label.setFont(QFont("Arial", 11, QFont.Bold))
+            impact_label.setStyleSheet("padding: 8px; background-color: #C8E6C9; border-radius: 5px; color: #2E7D32;")
+            summary_box_layout.addWidget(impact_label)
+            
+            outstanding_label = QLabel(f"Total Outstanding: Rs. {total_outstanding:,.2f}")
+            outstanding_label.setFont(QFont("Arial", 11, QFont.Bold))
+            outstanding_label.setStyleSheet("padding: 8px; background-color: #BBDEFB; border-radius: 5px; color: #1565C0;")
+            summary_box_layout.addWidget(outstanding_label)
+            
+            summary_layout.addWidget(summary_box)
+            summary_layout.addStretch()
+            layout.addLayout(summary_layout)
+            
+            # Buttons
+            button_layout = QHBoxLayout()
+            pdf_btn = QPushButton("📄 Export to PDF")
+            pdf_btn.clicked.connect(lambda: self._export_account_position_to_pdf(accounts, account_impacts))
+            button_layout.addWidget(pdf_btn)
+            button_layout.addStretch()
+            close_btn = QPushButton("Close")
+            close_btn.clicked.connect(dialog.accept)
+            button_layout.addWidget(close_btn)
+            layout.addLayout(button_layout)
+            
+            dialog.setLayout(layout)
+            dialog.exec_()
+            
+            
+        except Exception as e:
+            logger.error(f"Error viewing account position report: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to load account position report: {str(e)}")
+
+    def _export_account_position_to_pdf(self, accounts, account_impacts):
+        """Export account position report to PDF with real-time transaction impact."""
+        try:
+            from PyQt5.QtWidgets import QFileDialog
+            from datetime import date
+            
+            # Get file path from user
+            file_path, _ = QFileDialog.getSaveFileName(
+                self,
+                "Export Account Position Report to PDF",
+                f"Account_Position_Report_{date.today().isoformat().replace('-', '')}.pdf",
+                "PDF Files (*.pdf)"
+            )
+            
+            if not file_path:
+                return
+            
+            try:
+                from reportlab.lib import colors
+                from reportlab.lib.pagesizes import letter, A4
+                from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+                from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+                from reportlab.lib.units import inch
+                
+                # Create PDF document
+                doc = SimpleDocTemplate(file_path, pagesize=letter, topMargin=0.5*inch, bottomMargin=0.5*inch)
+                elements = []
+                
+                # Title
+                styles = getSampleStyleSheet()
+                title_style = ParagraphStyle(
+                    'CustomTitle',
+                    parent=styles['Heading1'],
+                    fontSize=18,
+                    textColor=colors.HexColor('#1565C0'),
+                    spaceAfter=12,
+                    alignment=1  # Center
+                )
+                elements.append(Paragraph("Account Position Report", title_style))
+                elements.append(Paragraph(f"As on {date.today().strftime('%d-%b-%Y')}", styles['Normal']))
+                elements.append(Spacer(1, 0.3*inch))
+                
+                # Account positions table with real-time transaction impact
+                account_data = [['Account Head', 'Code', 'Type', 'Opening Balance (Rs)', 'Transaction Impact (Rs)', 'Outstanding Position (Rs)']]
+                total_opening = 0.0
+                total_transaction_impact = 0.0
+                total_outstanding = 0.0
+                
+                for account in accounts:
+                    account_id = account.get('id', '')
+                    name = account.get('name', '')
+                    code = account.get('code', '')
+                    head_type = account.get('head_type', account.get('account_type', ''))
+                    opening_balance = float(account.get('opening_balance', 0))
+                    
+                    # Get transaction impact for this account head using account ID
+                    impact_data = account_impacts.get(account_id, {})
+                    transaction_impact = impact_data.get('impact', 0.0) if isinstance(impact_data, dict) else 0.0
+                    
+                    # Outstanding = Opening Balance + Transaction Impact
+                    outstanding = opening_balance + transaction_impact
+                    
+                    total_opening += opening_balance
+                    total_transaction_impact += transaction_impact
+                    total_outstanding += outstanding
+                    
+                    account_data.append([
+                        name,
+                        code,
+                        head_type,
+                        f"{opening_balance:,.2f}",
+                        f"{transaction_impact:,.2f}",
+                        f"{outstanding:,.2f}"
+                    ])
+                
+                # Add total row
+                account_data.append([
+                    '',
+                    '',
+                    'TOTAL',
+                    f"{total_opening:,.2f}",
+                    f"{total_transaction_impact:,.2f}",
+                    f"{total_outstanding:,.2f}"
+                ])
+                
+                account_table = Table(account_data, colWidths=[1.6*inch, 0.9*inch, 1*inch, 1.2*inch, 1.2*inch, 1.4*inch])
+                account_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1565C0')),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                    ('ALIGN', (3, 0), (-1, -1), 'RIGHT'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 0), (-1, 0), 10),
+                    ('FONTSIZE', (0, 1), (-1, -1), 9),
+                    ('TOPPADDING', (0, 0), (-1, -1), 5),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+                    ('ROWBACKGROUNDS', (0, 1), (-1, -2), [colors.white, colors.HexColor('#E3F2FD')]),
+                    ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor('#BBDEFB')),
+                    ('FONTNAME', (0, -1), (-1, -1), 'Helvetica-Bold'),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#BDBDBD'))
+                ]))
+                elements.append(account_table)
+                
+                # Build PDF
+                doc.build(elements)
+                QMessageBox.information(self, "Success", f"Account position report exported successfully to:\n{file_path}")
+                
+            except ImportError:
+                QMessageBox.warning(self, "Missing Library", "reportlab is not installed. Please install it to export to PDF.\n\nRun: pip install reportlab")
+        except Exception as e:
+            logger.error(f"Error exporting account position to PDF: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to export PDF: {str(e)}")
 
     def manage_credit_accounts(self):
         """Manage credit accounts."""
@@ -942,11 +1503,523 @@ class DashboardScreen(QMainWindow):
 
     def update_stock_levels(self):
         """Update stock levels."""
-        print("Update Stock Levels clicked")
+        dialog = UpdateStockLevelDialog(self.tank_service, self.fuel_service, self.db_service, self)
+        dialog.exec_()
 
     def view_inventory_report(self):
         """View inventory report."""
-        print("View Inventory Report clicked")
+        try:
+            # Get all tanks
+            tanks = self.tank_service.list_tanks()
+            
+            if not tanks:
+                QMessageBox.information(self, "Inventory Report", "No tanks found in the system.")
+                return
+            
+            # Get fuel types
+            fuel_types = self.fuel_service.list_fuel_types()
+            fuel_dict = {f.id: f.name for f in fuel_types}
+            
+            # Create dialog to display inventory report
+            dialog = QDialog(self)
+            dialog.setWindowTitle("Inventory Report")
+            dialog.setGeometry(100, 100, 1000, 600)
+            self._center_dialog_on_screen(dialog)
+            
+            layout = QVBoxLayout()
+            
+            # Header
+            header = QLabel("Tank Inventory Report")
+            header.setFont(QFont("Arial", 16, QFont.Bold))
+            layout.addWidget(header)
+            
+            # Summary stats
+            summary_layout = QHBoxLayout()
+            total_capacity = sum(t.capacity for t in tanks)
+            total_stock = sum(t.current_stock for t in tanks)
+            avg_stock_pct = (total_stock / total_capacity * 100) if total_capacity > 0 else 0
+            
+            summary_layout.addWidget(self.create_stat_card("Total Capacity", f"{total_capacity:,.2f} L", "#2196F3"))
+            summary_layout.addWidget(self.create_stat_card("Total Stock", f"{total_stock:,.2f} L", "#4CAF50"))
+            summary_layout.addWidget(self.create_stat_card("Average Stock %", f"{avg_stock_pct:.1f}%", "#FF9800"))
+            layout.addLayout(summary_layout)
+            
+            # Create table
+            table = QTableWidget()
+            table.setColumnCount(7)
+            table.setHorizontalHeaderLabels([
+                "Tank Name", "Fuel Type", "Capacity (L)", "Current Stock (L)", 
+                "Minimum Stock (L)", "Stock %", "Status"
+            ])
+            table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            
+            table.setRowCount(len(tanks))
+            
+            for row, tank in enumerate(tanks):
+                fuel_name = fuel_dict.get(tank.fuel_type_id, "Unknown")
+                stock_pct = (tank.current_stock / tank.capacity * 100) if tank.capacity > 0 else 0
+                
+                # Determine status
+                if tank.current_stock < tank.minimum_stock:
+                    status = "⚠ Low Stock"
+                    status_color = QColor("red")
+                elif stock_pct < 25:
+                    status = "⚠ Critical"
+                    status_color = QColor("orange")
+                elif stock_pct > 90:
+                    status = "✓ Full"
+                    status_color = QColor("green")
+                else:
+                    status = "✓ Normal"
+                    status_color = QColor("green")
+                
+                # Tank Name
+                name_item = QTableWidgetItem(tank.name)
+                name_item.setFlags(name_item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, 0, name_item)
+                
+                # Fuel Type
+                fuel_item = QTableWidgetItem(fuel_name)
+                fuel_item.setFlags(fuel_item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, 1, fuel_item)
+                
+                # Capacity
+                capacity_item = QTableWidgetItem(f"{tank.capacity:,.2f}")
+                capacity_item.setFlags(capacity_item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, 2, capacity_item)
+                
+                # Current Stock
+                stock_item = QTableWidgetItem(f"{tank.current_stock:,.2f}")
+                stock_item.setFlags(stock_item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, 3, stock_item)
+                
+                # Minimum Stock
+                min_stock_item = QTableWidgetItem(f"{tank.minimum_stock:,.2f}")
+                min_stock_item.setFlags(min_stock_item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, 4, min_stock_item)
+                
+                # Stock Percentage
+                pct_item = QTableWidgetItem(f"{stock_pct:.1f}%")
+                pct_item.setFlags(pct_item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, 5, pct_item)
+                
+                # Status
+                status_item = QTableWidgetItem(status)
+                status_item.setFlags(status_item.flags() & ~Qt.ItemIsEditable)
+                status_item.setForeground(status_color)
+                status_item.setFont(QFont("Arial", 10, QFont.Bold))
+                table.setItem(row, 6, status_item)
+            
+            layout.addWidget(table)
+            
+            # Export and Close buttons
+            button_layout = QHBoxLayout()
+            pdf_btn = QPushButton("📄 Export to PDF")
+            pdf_btn.clicked.connect(lambda: self._export_inventory_to_pdf(tanks, fuel_dict))
+            button_layout.addWidget(pdf_btn)
+            button_layout.addStretch()
+            close_btn = QPushButton("Close")
+            close_btn.clicked.connect(dialog.accept)
+            button_layout.addWidget(close_btn)
+            
+            layout.addLayout(button_layout)
+            dialog.setLayout(layout)
+            dialog.exec_()
+            
+        except Exception as e:
+            logger.error(f"Error viewing inventory report: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to load inventory report: {str(e)}")
+
+    def create_stat_card(self, label: str, value: str, color: str) -> QWidget:
+        """Create a stat card widget."""
+        card = QFrame()
+        card.setStyleSheet(f"background-color: {color}; border-radius: 5px; padding: 10px;")
+        layout = QVBoxLayout(card)
+        
+        label_widget = QLabel(label)
+        label_widget.setStyleSheet("color: white; font-size: 11px;")
+        layout.addWidget(label_widget)
+        
+        value_widget = QLabel(value)
+        value_widget.setStyleSheet("color: white; font-size: 14px; font-weight: bold;")
+        layout.addWidget(value_widget)
+        
+        return card
+
+    def _center_dialog_on_screen(self, dialog):
+        """Center dialog on screen."""
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = dialog.geometry()
+        dialog.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
+
+    def _export_inventory_to_pdf(self, tanks, fuel_dict):
+        """Export inventory report to PDF."""
+        try:
+            file_path, _ = QFileDialog.getSaveFileName(
+                self,
+                "Export Inventory Report to PDF",
+                f"Inventory_Report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf",
+                "PDF Files (*.pdf)"
+            )
+            
+            if not file_path:
+                return
+            
+            # Create PDF
+            try:
+                from reportlab.lib import colors
+                from reportlab.lib.pagesizes import letter
+                from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+                from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+                from reportlab.lib.units import inch
+                
+                # Create PDF document
+                doc = SimpleDocTemplate(file_path, pagesize=letter, topMargin=0.75*inch, bottomMargin=0.75*inch)
+                elements = []
+                
+                # Styles
+                styles = getSampleStyleSheet()
+                title_style = ParagraphStyle(
+                    'CustomTitle',
+                    parent=styles['Heading1'],
+                    fontSize=20,
+                    textColor=colors.HexColor('#1565C0'),
+                    spaceAfter=6,
+                    alignment=1,
+                    fontName='Helvetica-Bold'
+                )
+                
+                heading_style = ParagraphStyle(
+                    'CustomHeading',
+                    parent=styles['Heading2'],
+                    fontSize=12,
+                    textColor=colors.HexColor('#1565C0'),
+                    spaceAfter=8,
+                    spaceBefore=8,
+                    fontName='Helvetica-Bold'
+                )
+                
+                # Title
+                elements.append(Paragraph("TANK INVENTORY REPORT", title_style))
+                elements.append(Paragraph(f"Generated: {datetime.now().strftime('%B %d, %Y at %H:%M:%S')}", styles['Normal']))
+                elements.append(Spacer(1, 0.25*inch))
+                
+                # Summary stats
+                total_capacity = sum(t.capacity for t in tanks)
+                total_stock = sum(t.current_stock for t in tanks)
+                avg_stock_pct = (total_stock / total_capacity * 100) if total_capacity > 0 else 0
+                
+                summary_data = [
+                    ['Metric', 'Value'],
+                    ['Total Capacity', f'{total_capacity:,.2f} L'],
+                    ['Total Current Stock', f'{total_stock:,.2f} L'],
+                    ['Average Stock Level', f'{avg_stock_pct:.1f}%']
+                ]
+                
+                summary_table = Table(summary_data, colWidths=[2.5*inch, 2.5*inch])
+                summary_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1565C0')),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 0), (-1, 0), 11),
+                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                    ('TOPPADDING', (0, 0), (-1, 0), 8),
+                    ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#E3F2FD')),
+                    ('TEXTCOLOR', (0, 1), (-1, -1), colors.HexColor('#0D47A1')),
+                    ('FONTNAME', (0, 1), (0, -1), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 1), (-1, -1), 10),
+                    ('GRID', (0, 0), (-1, -1), 1.5, colors.HexColor('#1565C0')),
+                    ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.HexColor('#FFFFFF'), colors.HexColor('#E3F2FD')]),
+                    ('LEFTPADDING', (0, 0), (-1, -1), 10),
+                    ('RIGHTPADDING', (0, 0), (-1, -1), 10),
+                    ('VALIGN', (0, 0), (-1, -1), 'MIDDLE')
+                ]))
+                elements.append(summary_table)
+                elements.append(Spacer(1, 0.3*inch))
+                
+                # Inventory table
+                elements.append(Paragraph("TANK INVENTORY DETAILS", heading_style))
+                
+                data = [['Tank Name', 'Fuel Type', 'Capacity\n(L)', 'Current Stock\n(L)', 'Min Stock\n(L)', 'Stock %', 'Status']]
+                
+                for tank in tanks:
+                    fuel_name = fuel_dict.get(tank.fuel_type_id, "Unknown")
+                    stock_pct = (tank.current_stock / tank.capacity * 100) if tank.capacity > 0 else 0
+                    
+                    if tank.current_stock < tank.minimum_stock:
+                        status = "Low Stock"
+                    elif stock_pct < 25:
+                        status = "Critical"
+                    elif stock_pct > 90:
+                        status = "Full"
+                    else:
+                        status = "Normal"
+                    
+                    data.append([
+                        tank.name,
+                        fuel_name,
+                        f'{tank.capacity:,.0f}',
+                        f'{tank.current_stock:,.0f}',
+                        f'{tank.minimum_stock:,.0f}',
+                        f'{stock_pct:.1f}%',
+                        status
+                    ])
+                
+                table = Table(data, colWidths=[1.1*inch, 1*inch, 0.9*inch, 1*inch, 0.9*inch, 0.8*inch, 0.8*inch])
+                table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1565C0')),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 0), (-1, 0), 9),
+                    ('TOPPADDING', (0, 0), (-1, 0), 8),
+                    ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#90CAF9')),
+                    ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.HexColor('#FFFFFF'), colors.HexColor('#E3F2FD')]),
+                    ('FONTSIZE', (0, 1), (-1, -1), 8),
+                    ('LEFTPADDING', (0, 0), (-1, -1), 6),
+                    ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+                    ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                    ('TOPPADDING', (0, 1), (-1, -1), 6),
+                    ('BOTTOMPADDING', (0, 1), (-1, -1), 6)
+                ]))
+                elements.append(table)
+                
+                # Build PDF
+                doc.build(elements)
+                QMessageBox.information(self, "Success", f"Inventory report exported successfully to:\n{file_path}")
+                
+            except ImportError:
+                QMessageBox.warning(self, "Missing Library", "reportlab is not installed. Please install it to export to PDF.\n\nRun: pip install reportlab")
+        except Exception as e:
+            logger.error(f"Error exporting inventory to PDF: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to export PDF: {str(e)}")
+
+    def _export_transactions_to_pdf(self, today, total_sales, total_sale_qty, total_purchases, total_expenses, net_profit, today_sales, today_purchases, today_expenses):
+        """Export daily transactions report to PDF."""
+        try:
+            from PyQt5.QtWidgets import QFileDialog
+            from PyQt5.QtCore import QDateTime
+            
+            # Get file path from user
+            file_path, _ = QFileDialog.getSaveFileName(
+                self,
+                "Export Daily Transactions Report to PDF",
+                f"Daily_Transactions_{today.replace('-', '')}.pdf",
+                "PDF Files (*.pdf)"
+            )
+            
+            if not file_path:
+                return
+            
+            # Create PDF
+            try:
+                from reportlab.lib import colors
+                from reportlab.lib.pagesizes import letter, A4
+                from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak
+                from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+                from reportlab.lib.units import inch
+                from datetime import datetime
+                
+                # Create PDF document
+                doc = SimpleDocTemplate(file_path, pagesize=letter, topMargin=0.5*inch, bottomMargin=0.5*inch)
+                elements = []
+                
+                # Title
+                styles = getSampleStyleSheet()
+                title_style = ParagraphStyle(
+                    'CustomTitle',
+                    parent=styles['Heading1'],
+                    fontSize=18,
+                    textColor=colors.HexColor('#1565C0'),
+                    spaceAfter=12,
+                    alignment=1  # Center
+                )
+                elements.append(Paragraph("Daily Transactions Report", title_style))
+                elements.append(Paragraph(f"Date: {today}", styles['Normal']))
+                elements.append(Spacer(1, 0.2*inch))
+                
+                # Summary stats with professional formatting
+                summary_data = [
+                    ['Metric', 'Value'],
+                    ['Total Sales', f'Rs. {total_sales:,.2f}'],
+                    ['Fuel Sold', f'{total_sale_qty:,.2f} L'],
+                    ['Total Purchases', f'Rs. {total_purchases:,.2f}'],
+                    ['Total Expenses', f'Rs. {total_expenses:,.2f}'],
+                    ['Net Profit', f'Rs. {net_profit:,.2f}']
+                ]
+                
+                summary_table = Table(summary_data, colWidths=[3*inch, 2*inch])
+                summary_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1565C0')),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                    ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 0), (-1, 0), 11),
+                    ('FONTSIZE', (0, 1), (-1, -1), 10),
+                    ('TOPPADDING', (0, 0), (-1, -1), 6),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+                    ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#E3F2FD')]),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#BDBDBD'))
+                ]))
+                elements.append(summary_table)
+                elements.append(Spacer(1, 0.3*inch))
+                
+                # Sales section
+                if today_sales:
+                    sales_heading_style = ParagraphStyle(
+                        'SalesHeading',
+                        parent=styles['Heading2'],
+                        fontSize=12,
+                        textColor=colors.HexColor('#388E3C'),
+                        spaceAfter=8
+                    )
+                    elements.append(Paragraph(f"Sales ({len(today_sales)} transactions)", sales_heading_style))
+                    
+                    # Build nozzle lookup
+                    nozzles = {n.id: f"M{n.machine_id}-N{n.nozzle_number}" for n in self.nozzle_service.list_nozzles()}
+                    fuels = {f.id: f.name for f in self.fuel_service.list_fuel_types()}
+                    
+                    sales_data = [['Nozzle', 'Fuel Type', 'Open Read', 'Qty (L)', 'Close Read', 'Unit Price', 'Total (Rs)', 'Date', 'Time']]
+                    for sale in today_sales:
+                        nozzle_name = nozzles.get(sale.get('nozzle_id', ''), 'Unknown')
+                        fuel_name = fuels.get(sale.get('fuel_type_id', ''), 'Unknown')
+                        
+                        # Extract date and time
+                        date_str = sale.get('date', '')
+                        date_display = date_str[:10] if len(date_str) > 10 else ''
+                        time_display = date_str[11:19] if len(date_str) > 11 else ''
+                        
+                        sales_data.append([
+                            nozzle_name,
+                            fuel_name,
+                            f"{float(sale.get('opening_reading', 0)):.2f}",
+                            f"{float(sale.get('quantity', 0)):.2f}",
+                            f"{float(sale.get('closing_reading', 0)):.2f}",
+                            f"{float(sale.get('unit_price', 0)):.2f}",
+                            f"{float(sale.get('total_amount', 0)):,.2f}",
+                            date_display,
+                            time_display
+                        ])
+                    
+                    sales_table = Table(sales_data, colWidths=[0.9*inch, 0.9*inch, 0.7*inch, 0.7*inch, 0.7*inch, 0.7*inch, 0.9*inch, 0.8*inch, 0.7*inch])
+                    sales_table.setStyle(TableStyle([
+                        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#388E3C')),
+                        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                        ('FONTSIZE', (0, 0), (-1, 0), 9),
+                        ('FONTSIZE', (0, 1), (-1, -1), 8),
+                        ('TOPPADDING', (0, 0), (-1, -1), 4),
+                        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+                        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F1F8E9')]),
+                        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#BDBDBD'))
+                    ]))
+                    elements.append(sales_table)
+                    elements.append(Spacer(1, 0.2*inch))
+                
+                # Purchases section
+                if today_purchases:
+                    elements.append(PageBreak())
+                    purchases_heading_style = ParagraphStyle(
+                        'PurchasesHeading',
+                        parent=styles['Heading2'],
+                        fontSize=12,
+                        textColor=colors.HexColor('#E65100'),
+                        spaceAfter=8
+                    )
+                    elements.append(Paragraph(f"Purchases ({len(today_purchases)} transactions)", purchases_heading_style))
+                    
+                    # Build lookups for fuel types
+                    tanks = {t.id: {'name': t.name, 'fuel_type_id': t.fuel_type_id} for t in self.tank_service.list_tanks()}
+                    fuels = {f.id: f.name for f in self.fuel_service.list_fuel_types()}
+                    
+                    purchases_data = [['Tank', 'Fuel Type', 'Qty (L)', 'Unit Cost', 'Total Cost (Rs)', 'Supplier', 'Date']]
+                    for purchase in today_purchases:
+                        tank_id = purchase.get('tank_id', '')
+                        tank_info = tanks.get(tank_id, {})
+                        tank_name = tank_info.get('name', 'Unknown')
+                        
+                        # Get fuel type from tank's fuel_type_id
+                        tank_fuel_type_id = tank_info.get('fuel_type_id', '')
+                        fuel_name = fuels.get(tank_fuel_type_id, 'Unknown')
+                        
+                        # Extract date
+                        date_str = purchase.get('purchase_date', purchase.get('date', ''))
+                        date_display = date_str[:10] if date_str else ''
+                        
+                        purchases_data.append([
+                            tank_name,
+                            fuel_name,
+                            f"{float(purchase.get('quantity', 0)):.2f}",
+                            f"{float(purchase.get('unit_cost', 0)):.2f}",
+                            f"{float(purchase.get('total_cost', 0)):,.2f}",
+                            purchase.get('supplier_name', 'Unknown'),
+                            date_display
+                        ])
+                    
+                    purchases_table = Table(purchases_data, colWidths=[1.1*inch, 1.1*inch, 0.9*inch, 0.9*inch, 1.1*inch, 1*inch, 0.8*inch])
+                    purchases_table.setStyle(TableStyle([
+                        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#E65100')),
+                        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                        ('FONTSIZE', (0, 0), (-1, 0), 10),
+                        ('FONTSIZE', (0, 1), (-1, -1), 9),
+                        ('TOPPADDING', (0, 0), (-1, -1), 5),
+                        ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+                        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#FFF3E0')]),
+                        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#BDBDBD'))
+                    ]))
+                    elements.append(purchases_table)
+                    elements.append(Spacer(1, 0.2*inch))
+                
+                # Expenses section
+                if today_expenses:
+                    expenses_heading_style = ParagraphStyle(
+                        'ExpensesHeading',
+                        parent=styles['Heading2'],
+                        fontSize=12,
+                        textColor=colors.HexColor('#D32F2F'),
+                        spaceAfter=8
+                    )
+                    elements.append(Paragraph(f"Expenses ({len(today_expenses)} transactions)", expenses_heading_style))
+                    expenses_data = [['Description', 'Category', 'Amount (Rs)', 'Payment Method']]
+                    for expense in today_expenses:
+                        expenses_data.append([
+                            expense.get('description', '')[:20],
+                            expense.get('category', '')[:15],
+                            f"{float(expense.get('amount', 0)):,.2f}",
+                            expense.get('payment_method', 'Cash')
+                        ])
+                    
+                    expenses_table = Table(expenses_data, colWidths=[2*inch, 1.5*inch, 1*inch, 1*inch])
+                    expenses_table.setStyle(TableStyle([
+                        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#D32F2F')),
+                        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                        ('FONTSIZE', (0, 0), (-1, 0), 10),
+                        ('FONTSIZE', (0, 1), (-1, -1), 9),
+                        ('TOPPADDING', (0, 0), (-1, -1), 5),
+                        ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+                        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#FFEBEE')]),
+                        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#BDBDBD'))
+                    ]))
+                    elements.append(expenses_table)
+                
+                # Build PDF
+                doc.build(elements)
+                QMessageBox.information(self, "Success", f"Daily transactions report exported successfully to:\n{file_path}")
+                
+            except ImportError:
+                QMessageBox.warning(self, "Missing Library", "reportlab is not installed. Please install it to export to PDF.\n\nRun: pip install reportlab")
+        except Exception as e:
+            logger.error(f"Error exporting transactions to PDF: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to export PDF: {str(e)}")
 
     def manage_nozzles(self):
         """Manage nozzles."""
@@ -1011,6 +2084,14 @@ class DashboardScreen(QMainWindow):
     def load_dashboard_data(self):
         """Load dashboard data from real sales and purchase records."""
         try:
+            # Load payment methods from account heads
+            self.payment_methods = self.account_head_service.get_payment_methods()
+            
+            # Initialize default payment methods if none exist
+            if not self.payment_methods:
+                self.account_head_service.initialize_default_payment_methods()
+                self.payment_methods = self.account_head_service.get_payment_methods()
+            
             # Get all sales records
             sales_data = self.db_service.list_documents('sales')
             
@@ -1019,6 +2100,9 @@ class DashboardScreen(QMainWindow):
             
             # Get all customers
             customers_data = self.db_service.list_documents('customers')
+            
+            # Get all expenses
+            expenses_data = self.db_service.list_documents('expenses')
             
             # Get all tanks for inventory status
             tanks = self.tank_service.list_tanks()
@@ -1041,8 +2125,14 @@ class DashboardScreen(QMainWindow):
                 total_cost = float(purchase.get('total_cost', 0))
                 total_purchase_cost += total_cost
             
-            # Net Revenue = Sales Revenue - Purchase Cost
-            net_revenue = total_sales_revenue - total_purchase_cost
+            # Calculate total expenses
+            total_expenses = 0
+            for expense in expenses_data:
+                amount = float(expense.get('amount', 0))
+                total_expenses += amount
+            
+            # Net Revenue = Sales Revenue - Purchase Cost - Expenses
+            net_revenue = total_sales_revenue - total_purchase_cost - total_expenses
             
             # Average ticket (revenue per transaction)
             average_ticket = total_sales_revenue / total_sales_count if total_sales_count > 0 else 0
@@ -1060,7 +2150,7 @@ class DashboardScreen(QMainWindow):
             if 'total_sales' in self.kpi_labels:
                 self.kpi_labels['total_sales'].setText(f"{total_sales_units:,.2f}")
             
-            # Now showing Net Revenue (Sales - Purchases)
+            # Now showing Net Revenue (Sales - Purchases - Expenses)
             if 'total_revenue' in self.kpi_labels:
                 self.kpi_labels['total_revenue'].setText(f"Rs. {net_revenue:,.0f}")
             
@@ -1100,8 +2190,16 @@ class AddFuelTypeDialog(QDialog):
         self.fuel_service = fuel_service
         
         self.setWindowTitle("Add Fuel Types")
-        self.setGeometry(300, 200, 800, 500)
+        self.resize(800, 500)
+        self._center_on_screen()
         self.init_ui()
+
+    def _center_on_screen(self):
+        """Center dialog on screen."""
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
 
     def init_ui(self):
         """Initialize UI components with grid-based entry."""
@@ -1119,11 +2217,17 @@ class AddFuelTypeDialog(QDialog):
         self.table.setColumnCount(3)
         self.table.setHorizontalHeaderLabels(["Name", "Unit Price (Rs)", "Tax %"])
         self.table.setAlternatingRowColors(True)
-        self.table.horizontalHeader().setStretchLastSection(True)
         self.table.setMinimumHeight(300)
-        
-        # Connect to item changed signal for auto-add rows
-        self.table.itemChanged.connect(self.on_cell_changed)
+        self.table.setStyleSheet(
+            "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+            "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
+        )
+        # Set column widths - Name wider, numeric fields narrower
+        self.table.setColumnWidth(0, 300)  # Name
+        self.table.setColumnWidth(1, 150)  # Unit Price
+        self.table.setColumnWidth(2, 100)  # Tax %
+        self.table.horizontalHeader().setStretchLastSection(True)
         
         # Add initial single empty row
         self.add_empty_rows(1)
@@ -1132,6 +2236,14 @@ class AddFuelTypeDialog(QDialog):
 
         # Buttons
         button_layout = QHBoxLayout()
+        
+        add_row_btn = QPushButton("+ Add Row")
+        add_row_btn.setStyleSheet(
+            "QPushButton { background-color: #FF9800; color: white; padding: 8px 20px; border-radius: 5px; }"
+            "QPushButton:hover { background-color: #F57C00; }"
+        )
+        add_row_btn.clicked.connect(lambda: self.add_empty_rows(1))
+        button_layout.addWidget(add_row_btn)
         
         save_btn = QPushButton("Save All")
         save_btn.setStyleSheet(
@@ -1159,31 +2271,6 @@ class AddFuelTypeDialog(QDialog):
         
         layout.addLayout(button_layout)
         self.setLayout(layout)
-
-    def on_cell_changed(self, item):
-        """Auto-add new row when last row gets data."""
-        if self.table.rowCount() == 0:
-            return
-            
-        last_row = self.table.rowCount() - 1
-        
-        # Check if we're editing the last row
-        if item.row() == last_row:
-            # Check if last row has any data
-            has_data = False
-            for col in range(self.table.columnCount()):
-                cell = self.table.item(last_row, col)
-                if cell and cell.text().strip():
-                    has_data = True
-                    break
-            
-            # If last row has data, add new empty row
-            if has_data:
-                # Disconnect signal before adding row to prevent recursion
-                self.table.itemChanged.disconnect(self.on_cell_changed)
-                self.add_empty_rows(1)
-                # Reconnect signal
-                self.table.itemChanged.connect(self.on_cell_changed)
 
     def add_empty_rows(self, count=1):
         """Add empty rows to the table."""
@@ -1241,6 +2328,9 @@ class AddFuelTypeDialog(QDialog):
             
             if saved_count > 0:
                 QMessageBox.information(self, "Success", f"Successfully saved {saved_count} fuel type(s)")
+                # Reset grid to 1 empty row
+                self.table.setRowCount(0)
+                self.add_empty_rows(1)
                 self.view_fuel_types_list()
             
             if errors:
@@ -1254,19 +2344,18 @@ class AddFuelTypeDialog(QDialog):
         """View fuel types list in grid."""
         try:
             fuel_types = self.fuel_service.list_fuel_types()
-            columns = ["ID", "Name", "Unit Price (Rs)", "Tax %"]
+            columns = ["Name", "Unit Price (Rs)", "Tax %"]
             data = []
             
             for fuel in fuel_types:
                 data.append([
-                    fuel.id[:8] if fuel.id else '',
                     fuel.name,
                     f"{float(fuel.unit_price):.2f}",
                     f"{float(fuel.tax_percentage):.2f}"
                 ])
             
             if not data:
-                data = [["No fuel types found", "", "", ""]]
+                data = [["No fuel types found", "", ""]]
             
             dialog = DataViewDialog("Fuel Types", columns, data, self)
             dialog.exec_()
@@ -1284,8 +2373,16 @@ class AddTankDialog(QDialog):
         self.fuel_service = fuel_service
         
         self.setWindowTitle("Add Tanks")
-        self.setGeometry(300, 200, 1000, 500)
+        self.resize(1000, 500)
+        self._center_on_screen()
         self.init_ui()
+
+    def _center_on_screen(self):
+        """Center dialog on screen."""
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
 
     def init_ui(self):
         """Initialize UI components with grid-based entry."""
@@ -1303,11 +2400,19 @@ class AddTankDialog(QDialog):
         self.table.setColumnCount(5)
         self.table.setHorizontalHeaderLabels(["Name", "Fuel Type", "Capacity (L)", "Min Stock (L)", "Location"])
         self.table.setAlternatingRowColors(True)
-        self.table.horizontalHeader().setStretchLastSection(True)
         self.table.setMinimumHeight(300)
-        
-        # Connect to item changed signal for auto-add rows
-        self.table.itemChanged.connect(self.on_cell_changed)
+        self.table.setStyleSheet(
+            "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+            "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
+        )
+        # Set column widths - Name/Location wider, numeric fields narrower
+        self.table.setColumnWidth(0, 200)  # Name
+        self.table.setColumnWidth(1, 150)  # Fuel Type
+        self.table.setColumnWidth(2, 120)  # Capacity
+        self.table.setColumnWidth(3, 120)  # Min Stock
+        self.table.setColumnWidth(4, 200)  # Location
+        self.table.horizontalHeader().setStretchLastSection(True)
         
         # Store fuel types for combo boxes
         self.fuel_types_dict = {}
@@ -1325,6 +2430,14 @@ class AddTankDialog(QDialog):
 
         # Buttons
         button_layout = QHBoxLayout()
+        
+        add_row_btn = QPushButton("+ Add Row")
+        add_row_btn.setStyleSheet(
+            "QPushButton { background-color: #FF9800; color: white; padding: 8px 20px; border-radius: 5px; }"
+            "QPushButton:hover { background-color: #F57C00; }"
+        )
+        add_row_btn.clicked.connect(lambda: self.add_empty_rows(1))
+        button_layout.addWidget(add_row_btn)
         
         save_btn = QPushButton("Save All")
         save_btn.setStyleSheet(
@@ -1352,39 +2465,6 @@ class AddTankDialog(QDialog):
         
         layout.addLayout(button_layout)
         self.setLayout(layout)
-
-    def on_cell_changed(self, item):
-        """Auto-add new row when last row gets data."""
-        if self.table.rowCount() == 0:
-            return
-            
-        last_row = self.table.rowCount() - 1
-        
-        # Check if we're editing the last row
-        if item.row() == last_row:
-            # Check if last row has any data
-            has_data = False
-            for col in range(self.table.columnCount()):
-                if col == 1:  # Skip fuel type combo
-                    widget = self.table.cellWidget(last_row, col)
-                    if widget:
-                        combo = widget
-                        if combo.currentText().strip():
-                            has_data = True
-                            break
-                else:
-                    cell = self.table.item(last_row, col)
-                    if cell and cell.text().strip():
-                        has_data = True
-                        break
-            
-            # If last row has data, add new empty row
-            if has_data:
-                # Disconnect signal before adding row to prevent recursion
-                self.table.itemChanged.disconnect(self.on_cell_changed)
-                self.add_empty_rows(1)
-                # Reconnect signal
-                self.table.itemChanged.connect(self.on_cell_changed)
 
     def add_empty_rows(self, count=1):
         """Add empty rows to the table."""
@@ -1459,6 +2539,9 @@ class AddTankDialog(QDialog):
             
             if saved_count > 0:
                 QMessageBox.information(self, "Success", f"Successfully saved {saved_count} tank(s)")
+                # Reset grid to 1 empty row
+                self.table.setRowCount(0)
+                self.add_empty_rows(1)
                 self.view_tanks_list()
             
             if errors:
@@ -1472,21 +2555,25 @@ class AddTankDialog(QDialog):
         """View tanks list in grid."""
         try:
             tanks = self.tank_service.list_tanks()
-            columns = ["ID", "Name", "Fuel Type", "Capacity (L)", "Min Stock (L)", "Location"]
+            # Build lookup map for fuel type names
+            fuel_types = self.fuel_service.list_fuel_types()
+            fuel_map = {f.id: f.name for f in fuel_types}
+            
+            columns = ["Name", "Fuel Type", "Capacity (L)", "Min Stock (L)", "Location"]
             data = []
             
             for tank in tanks:
+                fuel_name = fuel_map.get(tank.fuel_type_id, tank.fuel_type_id)
                 data.append([
-                    tank.id[:8] if tank.id else '',
                     tank.name,
-                    tank.fuel_type_id,
+                    fuel_name,
                     f"{float(tank.capacity):.0f}",
                     f"{float(tank.minimum_stock):.0f}",
                     tank.location
                 ])
             
             if not data:
-                data = [["No tanks found", "", "", "", "", ""]]
+                data = [["No tanks found", "", "", "", ""]]
             
             dialog = DataViewDialog("Tanks", columns, data, self)
             dialog.exec_()
@@ -1505,9 +2592,17 @@ class AddAccountHeadsDialog(QDialog):
             self.db_service = getattr(parent, 'db_service', None)
         
         self.setWindowTitle("Add Account Heads")
-        self.setGeometry(300, 200, 1000, 500)
+        self.resize(1000, 500)
+        self._center_on_screen()
         self.account_types = ["Revenue", "Expense", "Asset", "Liability", "Equity"]
         self.init_ui()
+
+    def _center_on_screen(self):
+        """Center dialog on screen."""
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
 
     def init_ui(self):
         """Initialize UI components."""
@@ -1522,19 +2617,37 @@ class AddAccountHeadsDialog(QDialog):
 
         # Create table widget
         self.table = QTableWidget()
-        self.table.setColumnCount(4)
-        self.table.setHorizontalHeaderLabels(["Name", "Account Type", "Code", "Description"])
+        self.table.setColumnCount(6)
+        self.table.setHorizontalHeaderLabels(["Name", "Account Type", "Code", "Opening Balance (Rs)", "Outstanding (Rs)", "Description"])
         self.table.setAlternatingRowColors(True)
-        self.table.horizontalHeader().setStretchLastSection(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
             "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
+        # Set column widths
+        self.table.setColumnWidth(0, 150)  # Name
+        self.table.setColumnWidth(1, 120)  # Account Type
+        self.table.setColumnWidth(2, 100)  # Code
+        self.table.setColumnWidth(3, 140)  # Opening Balance
+        self.table.setColumnWidth(4, 140)  # Outstanding
+        self.table.setColumnWidth(5, 250)  # Description
+        self.table.horizontalHeader().setStretchLastSection(True)
         layout.addWidget(self.table)
+        
+        # Add initial empty row
+        self.add_empty_rows(1)
 
         # Buttons
         button_layout = QHBoxLayout()
+        
+        add_row_btn = QPushButton("+ Add Row")
+        add_row_btn.setStyleSheet(
+            "QPushButton { background-color: #FF9800; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
+            "QPushButton:hover { background-color: #F57C00; }"
+        )
+        add_row_btn.clicked.connect(lambda: self.add_empty_rows(1))
+        button_layout.addWidget(add_row_btn)
         
         save_btn = QPushButton("Save All")
         save_btn.setStyleSheet(
@@ -1563,10 +2676,6 @@ class AddAccountHeadsDialog(QDialog):
         layout.addLayout(button_layout)
         self.setLayout(layout)
 
-        # Add empty rows and connect signal
-        self.add_empty_rows(1)
-        self.table.itemChanged.connect(self.on_cell_changed)
-
     def add_empty_rows(self, count=1):
         """Add empty rows to table."""
         for _ in range(count):
@@ -1584,32 +2693,14 @@ class AddAccountHeadsDialog(QDialog):
             # Code cell
             self.table.setItem(row, 2, QTableWidgetItem(""))
             
-            # Description cell
-            self.table.setItem(row, 3, QTableWidgetItem(""))
-
-    def on_cell_changed(self, item):
-        """Handle cell changes for auto-expand."""
-        self.table.itemChanged.disconnect(self.on_cell_changed)
-        
-        # Check if last row has data
-        last_row = self.table.rowCount() - 1
-        if last_row >= 0:
-            last_row_data = []
-            for col in range(4):
-                if col == 1:
-                    widget = self.table.cellWidget(last_row, col)
-                    if widget:
-                        last_row_data.append(widget.currentText())
-                else:
-                    cell = self.table.item(last_row, col)
-                    if cell:
-                        last_row_data.append(cell.text())
+            # Opening Balance cell
+            self.table.setItem(row, 3, QTableWidgetItem("0.00"))
             
-            # If last row has any data, add a new empty row
-            if any(last_row_data):
-                self.add_empty_rows(1)
-        
-        self.table.itemChanged.connect(self.on_cell_changed)
+            # Outstanding Balance cell
+            self.table.setItem(row, 4, QTableWidgetItem("0.00"))
+            
+            # Description cell
+            self.table.setItem(row, 5, QTableWidgetItem(""))
 
     def save_all_account_heads(self):
         """Save all non-empty account heads to database."""
@@ -1622,11 +2713,15 @@ class AddAccountHeadsDialog(QDialog):
                 name = self.table.item(row, 0)
                 type_widget = self.table.cellWidget(row, 1)
                 code = self.table.item(row, 2)
-                desc = self.table.item(row, 3)
+                opening_balance = self.table.item(row, 3)
+                outstanding_balance = self.table.item(row, 4)
+                desc = self.table.item(row, 5)
                 
                 name_text = name.text().strip() if name else ""
                 account_type = type_widget.currentText() if type_widget else ""
                 code_text = code.text().strip() if code else ""
+                opening_bal_text = opening_balance.text().strip() if opening_balance else "0.00"
+                outstanding_bal_text = outstanding_balance.text().strip() if outstanding_balance else "0.00"
                 desc_text = desc.text().strip() if desc else ""
                 
                 # Skip empty rows
@@ -1642,16 +2737,28 @@ class AddAccountHeadsDialog(QDialog):
                     errors[row + 1] = "Account Code is required"
                     continue
                 
+                # Validate balance fields
+                try:
+                    opening_bal = float(opening_bal_text) if opening_bal_text else 0.0
+                    outstanding_bal = float(outstanding_bal_text) if outstanding_bal_text else 0.0
+                except ValueError:
+                    errors[row + 1] = "Opening and Outstanding balances must be valid numbers"
+                    continue
+                
                 # Create account head
                 try:
                     account_id = self.db_service.firestore.collection('account_heads').document().id
                     data = {
                         'id': account_id,
                         'name': name_text,
-                        'account_type': account_type,
+                        'head_type': account_type,  # Save the selected account type (Revenue, Expense, Asset, Liability, Equity)
+                        'account_type': account_type,  # Also save as account_type for backward compatibility
                         'code': code_text,
                         'description': desc_text,
-                        'status': 'active'
+                        'opening_balance': opening_bal,
+                        'outstanding_balance': outstanding_bal,
+                        'status': 'active',
+                        'is_active': True
                     }
                     
                     success, msg = self.db_service.create_document('account_heads', account_id, data)
@@ -1673,15 +2780,9 @@ class AddAccountHeadsDialog(QDialog):
                 QMessageBox.warning(self, "Validation Errors", error_msg)
             else:
                 QMessageBox.information(self, "Success", f"All {len(saved_rows)} account head(s) saved successfully!")
-            
-            # Clear saved rows
-            for row in sorted(saved_rows, reverse=True):
-                self.table.removeRow(row)
-            
-            if not self.table.rowCount():
+                # Reset grid to 1 empty row
+                self.table.setRowCount(0)
                 self.add_empty_rows(1)
-            
-            if not errors:
                 self.view_account_heads_list()
         except Exception as e:
             QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
@@ -1690,12 +2791,11 @@ class AddAccountHeadsDialog(QDialog):
         """View account heads list in grid."""
         try:
             accounts = self.db_service.list_documents('account_heads')
-            columns = ["ID", "Name", "Type", "Code", "Description"]
+            columns = ["Name", "Type", "Code", "Description"]
             data = []
             
             for account in accounts:
                 data.append([
-                    account.get('id', '')[:8],
                     account.get('name', ''),
                     account.get('account_type', ''),
                     account.get('code', ''),
@@ -1703,7 +2803,7 @@ class AddAccountHeadsDialog(QDialog):
                 ])
             
             if not data:
-                data = [["No account heads found", "", "", "", ""]]
+                data = [["No account heads found", "", "", ""]]
             
             dialog = DataViewDialog("Account Heads", columns, data, self)
             dialog.exec_()
@@ -1723,10 +2823,18 @@ class AddNozzleDialog(QDialog):
             self.db_service = getattr(parent, 'db_service', None)
         
         self.setWindowTitle("Add Nozzles")
-        self.setGeometry(300, 200, 1000, 500)
+        self.resize(1000, 500)
+        self._center_on_screen()
         self.fuel_types = []
         self.load_fuel_types()
         self.init_ui()
+
+    def _center_on_screen(self):
+        """Center dialog on screen."""
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
 
     def init_ui(self):
         """Initialize UI components."""
@@ -1741,19 +2849,35 @@ class AddNozzleDialog(QDialog):
 
         # Create table widget
         self.table = QTableWidget()
-        self.table.setColumnCount(4)
-        self.table.setHorizontalHeaderLabels(["Machine ID", "Nozzle Number", "Fuel Type", "Opening Reading (L)"])
+        self.table.setColumnCount(5)
+        self.table.setHorizontalHeaderLabels(["Machine ID", "Nozzle Number", "Fuel Type", "Opening Reading (L)", "Current Reading (L)"])
         self.table.setAlternatingRowColors(True)
-        self.table.horizontalHeader().setStretchLastSection(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
             "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
+        # Set column widths
+        self.table.setColumnWidth(0, 200)  # Machine ID
+        self.table.setColumnWidth(1, 120)  # Nozzle Number
+        self.table.setColumnWidth(2, 180)  # Fuel Type
+        self.table.setColumnWidth(3, 150)  # Opening Reading
+        self.table.horizontalHeader().setStretchLastSection(True)
         layout.addWidget(self.table)
+        
+        # Add initial empty row
+        self.add_empty_rows(1)
 
         # Buttons
         button_layout = QHBoxLayout()
+        
+        add_row_btn = QPushButton("+ Add Row")
+        add_row_btn.setStyleSheet(
+            "QPushButton { background-color: #FF9800; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
+            "QPushButton:hover { background-color: #F57C00; }"
+        )
+        add_row_btn.clicked.connect(lambda: self.add_empty_rows(1))
+        button_layout.addWidget(add_row_btn)
         
         save_btn = QPushButton("Save All")
         save_btn.setStyleSheet(
@@ -1782,10 +2906,6 @@ class AddNozzleDialog(QDialog):
         layout.addLayout(button_layout)
         self.setLayout(layout)
 
-        # Add empty rows and connect signal
-        self.add_empty_rows(1)
-        self.table.itemChanged.connect(self.on_cell_changed)
-
     def add_empty_rows(self, count=1):
         """Add empty rows to table."""
         for _ in range(count):
@@ -1809,6 +2929,12 @@ class AddNozzleDialog(QDialog):
             # Opening Reading cell (numeric)
             opening_item = QTableWidgetItem("")
             self.table.setItem(row, 3, opening_item)
+            
+            # Current Reading cell (read-only, starts same as opening)
+            current_item = QTableWidgetItem("")
+            current_item.setFlags(current_item.flags() & ~Qt.ItemIsEditable)  # Make read-only
+            current_item.setBackground(QColor(240, 240, 240))  # Light gray background
+            self.table.setItem(row, 4, current_item)
 
     def load_fuel_types(self):
         """Load fuel types into memory."""
@@ -1816,30 +2942,6 @@ class AddNozzleDialog(QDialog):
             self.fuel_types = self.fuel_service.list_fuel_types()
         except Exception as e:
             print(f"Error loading fuel types: {str(e)}")
-
-    def on_cell_changed(self, item):
-        """Handle cell changes for auto-expand."""
-        self.table.itemChanged.disconnect(self.on_cell_changed)
-        
-        # Check if last row has data
-        last_row = self.table.rowCount() - 1
-        if last_row >= 0:
-            last_row_data = []
-            for col in range(4):
-                if col == 2:
-                    widget = self.table.cellWidget(last_row, col)
-                    if widget:
-                        last_row_data.append(widget.currentData())
-                else:
-                    cell = self.table.item(last_row, col)
-                    if cell:
-                        last_row_data.append(cell.text())
-            
-            # If last row has any data, add a new empty row
-            if any(last_row_data):
-                self.add_empty_rows(1)
-        
-        self.table.itemChanged.connect(self.on_cell_changed)
 
     def save_all_nozzles(self):
         """Save all non-empty nozzles to database."""
@@ -1916,15 +3018,9 @@ class AddNozzleDialog(QDialog):
                 QMessageBox.warning(self, "Validation Errors", error_msg)
             else:
                 QMessageBox.information(self, "Success", f"All {len(saved_rows)} nozzle(s) saved successfully!")
-            
-            # Clear saved rows
-            for row in sorted(saved_rows, reverse=True):
-                self.table.removeRow(row)
-            
-            if not self.table.rowCount():
+                # Reset grid to 1 empty row
+                self.table.setRowCount(0)
                 self.add_empty_rows(1)
-            
-            if not errors:
                 self.view_nozzles_list()
         except Exception as e:
             QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
@@ -1933,16 +3029,22 @@ class AddNozzleDialog(QDialog):
         """View nozzles list in grid."""
         try:
             nozzles = self.nozzle_service.list_nozzles()
-            columns = ["ID", "Machine ID", "Nozzle Number", "Fuel Type", "Opening Reading"]
+            # Build lookup map for fuel type names
+            fuel_types = self.fuel_service.list_fuel_types()
+            fuel_map = {f.id: f.name for f in fuel_types}
+            
+            columns = ["Machine ID", "Nozzle Number", "Fuel Type", "Opening Reading", "Current Reading"]
             data = []
             
             for nozzle in nozzles:
+                fuel_name = fuel_map.get(nozzle.fuel_type_id, nozzle.fuel_type_id)
+                current_reading = nozzle.closing_reading if nozzle.closing_reading > 0 else nozzle.opening_reading
                 data.append([
-                    nozzle.id[:8] if nozzle.id else '',
                     nozzle.machine_id,
                     str(nozzle.nozzle_number),
-                    nozzle.fuel_type_id,
-                    f"{float(nozzle.opening_reading):.2f}"
+                    fuel_name,
+                    f"{float(nozzle.opening_reading):.2f}",
+                    f"{float(current_reading):.2f}"
                 ])
             
             if not data:
@@ -1962,21 +3064,34 @@ class AddNozzleDialog(QDialog):
 class RecordSaleDialog(QDialog):
     """Dialog for recording multiple fuel sales with grid interface."""
 
-    def __init__(self, fuel_service, nozzle_service, sales_service, db_service, parent=None):
+    def __init__(self, fuel_service, nozzle_service, sales_service, db_service, tank_service=None, account_head_service=None, payment_methods=None, parent=None):
         """Initialize dialog."""
         super().__init__(parent)
         self.fuel_service = fuel_service
         self.nozzle_service = nozzle_service
         self.sales_service = sales_service
         self.db_service = db_service
+        self.tank_service = tank_service
+        self.account_head_service = account_head_service
         self.nozzles = []
         self.fuel_types = []
+        self.tanks = []
+        self.account_heads = []
         self.nozzle_fuel_map = {}
+        self.payment_methods = payment_methods if payment_methods is not None else []
         
         self.setWindowTitle("Record Sales")
-        self.setGeometry(300, 200, 1000, 500)
+        self.resize(1200, 550)
+        self._center_on_screen()
         self.load_data()
         self.init_ui()
+
+    def _center_on_screen(self):
+        """Center dialog on screen."""
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
 
     def init_ui(self):
         """Initialize UI components."""
@@ -1991,19 +3106,39 @@ class RecordSaleDialog(QDialog):
 
         # Create table widget
         self.table = QTableWidget()
-        self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels(["Nozzle", "Fuel Type", "Quantity (L)", "Unit Price (Rs)", "Total (Rs)", "Payment Method"])
+        self.table.setColumnCount(8)
+        self.table.setHorizontalHeaderLabels(["Nozzle", "Fuel Type", "Opening Reading (L)", "Quantity (L)", "Closing Reading (L)", "Unit Price (Rs)", "Total (Rs)", "Account Head"])
         self.table.setAlternatingRowColors(True)
-        self.table.horizontalHeader().setStretchLastSection(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
             "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
+        # Set column widths
+        self.table.setColumnWidth(0, 150)  # Nozzle
+        self.table.setColumnWidth(1, 120)  # Fuel Type
+        self.table.setColumnWidth(2, 120)  # Opening Reading
+        self.table.setColumnWidth(3, 100)  # Quantity
+        self.table.setColumnWidth(4, 120)  # Closing Reading
+        self.table.setColumnWidth(5, 110)  # Unit Price
+        self.table.setColumnWidth(6, 110)  # Total
+        self.table.setColumnWidth(7, 150)  # Account Head
+        self.table.horizontalHeader().setStretchLastSection(True)
         layout.addWidget(self.table)
+        
+        # Add initial empty row
+        self.add_empty_rows(1)
 
         # Buttons
         button_layout = QHBoxLayout()
+        
+        add_row_btn = QPushButton("+ Add Row")
+        add_row_btn.setStyleSheet(
+            "QPushButton { background-color: #FF9800; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
+            "QPushButton:hover { background-color: #F57C00; }"
+        )
+        add_row_btn.clicked.connect(lambda: self.add_empty_rows(1))
+        button_layout.addWidget(add_row_btn)
         
         save_btn = QPushButton("Save All")
         save_btn.setStyleSheet(
@@ -2031,16 +3166,20 @@ class RecordSaleDialog(QDialog):
         
         layout.addLayout(button_layout)
         self.setLayout(layout)
-
-        # Add empty rows and connect signal
-        self.add_empty_rows(1)
+        
+        # Connect signal for calculations
         self.table.itemChanged.connect(self.on_cell_changed)
 
     def load_data(self):
-        """Load nozzles and fuel types."""
+        """Load nozzles, fuel types, tanks, and asset type account heads."""
         try:
             self.nozzles = self.nozzle_service.list_nozzles()
             self.fuel_types = self.fuel_service.list_fuel_types()
+            if self.tank_service:
+                self.tanks = self.tank_service.list_tanks()
+            # Load only Asset type account heads for sales
+            if self.account_head_service:
+                self.account_heads = self.account_head_service.list_account_heads(head_type='Asset', active_only=True)
             
             # Build nozzle to fuel type map
             for nozzle in self.nozzles:
@@ -2070,26 +3209,45 @@ class RecordSaleDialog(QDialog):
             fuel_combo.setEnabled(False)
             self.table.setCellWidget(row, 1, fuel_combo)
             
+            # Opening Reading cell (read-only, auto-fetched from nozzle)
+            opening_item = QTableWidgetItem("0.00")
+            opening_item.setFlags(opening_item.flags() & ~Qt.ItemIsEditable)
+            opening_item.setBackground(QColor(240, 240, 240))  # Light gray background
+            self.table.setItem(row, 2, opening_item)
+            
             # Quantity cell
-            self.table.setItem(row, 2, QTableWidgetItem(""))
+            qty_item = QTableWidgetItem("")
+            self.table.setItem(row, 3, qty_item)
+            
+            # Closing Reading cell (read-only, auto-calculated)
+            closing_item = QTableWidgetItem("0.00")
+            closing_item.setFlags(closing_item.flags() & ~Qt.ItemIsEditable)
+            closing_item.setBackground(QColor(240, 240, 240))  # Light gray background
+            self.table.setItem(row, 4, closing_item)
             
             # Unit Price cell
-            self.table.setItem(row, 3, QTableWidgetItem(""))
+            price_item = QTableWidgetItem("")
+            self.table.setItem(row, 5, price_item)
             
             # Total cell (read-only, calculated)
             total_item = QTableWidgetItem("0.00")
             total_item.setFlags(total_item.flags() & ~Qt.ItemIsEditable)
-            self.table.setItem(row, 4, total_item)
+            self.table.setItem(row, 6, total_item)
             
-            # Payment Method combo
-            payment_combo = QComboBox()
-            payment_combo.addItems(["Cash", "Credit Card", "Bank Transfer", "Credit Account"])
-            self.table.setCellWidget(row, 5, payment_combo)
+            # Account Head combo (LOV) - populated from database
+            account_head_combo = QComboBox()
+            account_head_combo.addItem("-- Select Account Head --", "")
+            for head in self.account_heads:
+                head_id = head.get('id', '')
+                head_name = head.get('name', '')
+                account_head_combo.addItem(head_name, head_id)
+            self.table.setCellWidget(row, 7, account_head_combo)
 
     def on_nozzle_changed(self, row):
-        """Update fuel type when nozzle changes."""
+        """Update fuel type and opening reading when nozzle changes."""
         nozzle_combo = self.table.cellWidget(row, 0)
         fuel_combo = self.table.cellWidget(row, 1)
+        opening_item = self.table.item(row, 2)
         
         if nozzle_combo and fuel_combo:
             nozzle_id = nozzle_combo.currentData()
@@ -2098,45 +3256,45 @@ class RecordSaleDialog(QDialog):
                 index = fuel_combo.findData(fuel_type_id)
                 if index >= 0:
                     fuel_combo.setCurrentIndex(index)
+                
+                # Fetch and display opening reading from nozzle
+                try:
+                    nozzle = self.nozzle_service.get_nozzle(nozzle_id)
+                    if nozzle and opening_item:
+                        # Current reading = closing_reading if set, else opening_reading
+                        current_reading = nozzle.closing_reading if nozzle.closing_reading > 0 else nozzle.opening_reading
+                        opening_item.setText(f"{float(current_reading):.2f}")
+                except Exception as e:
+                    print(f"Error fetching nozzle reading: {str(e)}")
 
     def on_cell_changed(self, item):
-        """Handle cell changes for auto-expand and calculations."""
+        """Handle cell changes for calculations."""
         self.table.itemChanged.disconnect(self.on_cell_changed)
         
-        # Calculate totals for all rows
+        # Calculate totals and closing readings for all rows
         for row in range(self.table.rowCount()):
-            qty_item = self.table.item(row, 2)
-            price_item = self.table.item(row, 3)
-            total_item = self.table.item(row, 4)
+            opening_item = self.table.item(row, 2)
+            qty_item = self.table.item(row, 3)
+            closing_item = self.table.item(row, 4)
+            price_item = self.table.item(row, 5)
+            total_item = self.table.item(row, 6)
             
             try:
+                opening = float(opening_item.text()) if opening_item and opening_item.text() else 0
                 qty = float(qty_item.text()) if qty_item and qty_item.text() else 0
                 price = float(price_item.text()) if price_item and price_item.text() else 0
+                
+                # Calculate closing reading = opening + quantity
+                closing = opening + qty
+                if closing_item:
+                    closing_item.setText(f"{closing:.2f}")
+                
+                # Calculate total = quantity * price
                 total = qty * price
                 if total_item:
                     total_item.setText(f"{total:.2f}")
             except ValueError:
                 pass
-        
-        # Check if last row has data
-        last_row = self.table.rowCount() - 1
-        if last_row >= 0:
-            last_row_data = []
-            for col in range(4):
-                if col == 0:
-                    widget = self.table.cellWidget(last_row, col)
-                    if widget:
-                        last_row_data.append(widget.currentData())
-                elif col == 1:
-                    continue
-                else:
-                    cell = self.table.item(last_row, col)
-                    if cell:
-                        last_row_data.append(cell.text())
-            
-            # If last row has any data, add a new empty row
-            if any(last_row_data):
-                self.add_empty_rows(1)
         
         self.table.itemChanged.connect(self.on_cell_changed)
 
@@ -2145,18 +3303,24 @@ class RecordSaleDialog(QDialog):
         try:
             errors = {}
             saved_rows = []
+            nozzles_to_update = []  # Track nozzles to update after successful saves
             
             for row in range(self.table.rowCount()):
                 # Get row data
                 nozzle_combo = self.table.cellWidget(row, 0)
                 fuel_combo = self.table.cellWidget(row, 1)
-                qty_item = self.table.item(row, 2)
-                price_item = self.table.item(row, 3)
-                payment_combo = self.table.cellWidget(row, 5)
+                opening_item = self.table.item(row, 2)
+                qty_item = self.table.item(row, 3)
+                closing_item = self.table.item(row, 4)
+                price_item = self.table.item(row, 5)
+                account_head_combo = self.table.cellWidget(row, 7)
                 
                 nozzle_id = nozzle_combo.currentData() if nozzle_combo else ""
+                opening_text = opening_item.text().strip() if opening_item else ""
                 qty_text = qty_item.text().strip() if qty_item else ""
+                closing_text = closing_item.text().strip() if closing_item else ""
                 price_text = price_item.text().strip() if price_item else ""
+                account_head_id = account_head_combo.currentData() if account_head_combo else ""
                 
                 # Skip empty rows
                 if not nozzle_id and not qty_text:
@@ -2175,20 +3339,37 @@ class RecordSaleDialog(QDialog):
                     errors[row + 1] = "Unit Price is required"
                     continue
                 
+                if not account_head_id or account_head_id == "":
+                    errors[row + 1] = "Account Head is required"
+                    continue
+                
                 # Try to convert to numbers
                 try:
+                    opening_reading = float(opening_text) if opening_text else 0.0
                     quantity = float(qty_text)
+                    closing_reading = float(closing_text) if closing_text else 0.0
                     unit_price = float(price_text)
                 except ValueError:
-                    errors[row + 1] = "Quantity and Price must be numbers"
+                    errors[row + 1] = "Quantity, Price, and Readings must be numbers"
                     continue
                 
                 if quantity <= 0:
                     errors[row + 1] = "Quantity must be greater than 0"
                     continue
                 
-                # Get payment method
-                payment_method = payment_combo.currentText() if payment_combo else "Cash"
+                # Validate closing > opening
+                if closing_reading <= opening_reading:
+                    errors[row + 1] = f"Closing reading ({closing_reading:.2f}L) must be greater than opening reading ({opening_reading:.2f}L)"
+                    continue
+                
+                # Get account head details
+                account_head_data = None
+                for head in self.account_heads:
+                    if head.get('id') == account_head_id:
+                        account_head_data = head
+                        break
+                account_head_name = account_head_data.get('name', '') if account_head_data else ''
+                payment_method = account_head_data.get('head_type', 'Other') if account_head_data else 'Other'
                 
                 # Create sale record
                 try:
@@ -2201,6 +3382,16 @@ class RecordSaleDialog(QDialog):
                     fuel = next((f for f in self.fuel_types if f.id == nozzle.fuel_type_id), None)
                     if not fuel:
                         errors[row + 1] = "Fuel type not found"
+                        continue
+                    
+                    # Check inventory
+                    tank = next((t for t in self.tanks if t.fuel_type_id == fuel.id), None)
+                    if not tank:
+                        errors[row + 1] = f"No tank configured for {fuel.name}"
+                        continue
+                    
+                    if tank.current_stock < quantity:
+                        errors[row + 1] = f"Insufficient {fuel.name} inventory. Available: {tank.current_stock:.2f}L, Required: {quantity:.2f}L"
                         continue
                     
                     # Calculate amounts
@@ -2221,6 +3412,10 @@ class RecordSaleDialog(QDialog):
                         'base_amount': base_amount,
                         'tax_amount': tax_amount,
                         'total_amount': total_amount,
+                        'opening_reading': opening_reading,
+                        'closing_reading': closing_reading,
+                        'account_head_id': account_head_id,
+                        'account_head_name': account_head_name,
                         'payment_method': payment_method,
                         'status': 'completed'
                     }
@@ -2228,11 +3423,32 @@ class RecordSaleDialog(QDialog):
                     success, msg = self.db_service.create_document('sales', sale_id, data)
                     
                     if success:
-                        saved_rows.append(row)
+                        # Update tank inventory after successful sale
+                        new_stock = tank.current_stock - quantity
+                        stock_success, stock_msg = self.tank_service.update_tank_stock(tank.id, new_stock)
+                        if stock_success:
+                            tank.current_stock = new_stock  # Update in-memory tank object
+                            saved_rows.append(row)
+                            # Track nozzle for update - update current_reading to closing_reading
+                            nozzles_to_update.append((nozzle_id, closing_reading))
+                        else:
+                            errors[row + 1] = f"Sale saved but inventory update failed: {stock_msg}"
                     else:
                         errors[row + 1] = msg
                 except Exception as e:
                     errors[row + 1] = str(e)
+            
+            # Update nozzle current_reading after all sales are successfully saved
+            for nozzle_id, closing_reading in nozzles_to_update:
+                try:
+                    nozzle = self.nozzle_service.get_nozzle(nozzle_id)
+                    if nozzle:
+                        self.db_service.update_document('nozzles', nozzle_id, {
+                            'closing_reading': closing_reading,
+                            'current_reading': closing_reading
+                        })
+                except Exception as e:
+                    print(f"Warning: Failed to update nozzle {nozzle_id}: {str(e)}")
             
             # Display results
             if errors:
@@ -2244,15 +3460,9 @@ class RecordSaleDialog(QDialog):
                 QMessageBox.warning(self, "Validation Errors", error_msg)
             else:
                 QMessageBox.information(self, "Success", f"All {len(saved_rows)} sale(s) saved successfully!")
-            
-            # Clear saved rows
-            for row in sorted(saved_rows, reverse=True):
-                self.table.removeRow(row)
-            
-            if not self.table.rowCount():
+                # Reset grid to 1 empty row
+                self.table.setRowCount(0)
                 self.add_empty_rows(1)
-            
-            if not errors:
                 self.view_sales()
         except Exception as e:
             QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
@@ -2395,19 +3605,36 @@ class RecordSaleDialog(QDialog):
         """View sales records in grid."""
         try:
             sales_data = self.db_service.list_documents('sales')
-            columns = ["ID", "Nozzle", "Fuel Type", "Quantity (L)", "Price", "Total (Rs)", "Payment", "Date"]
+            # Build lookup map for nozzle names and fuel types
+            nozzles = self.nozzle_service.list_nozzles()
+            nozzle_map = {n.id: f"Machine {n.machine_id} - Nozzle {n.nozzle_number}" for n in nozzles}
+            fuel_types = self.fuel_service.list_fuel_types()
+            fuel_map = {f.id: f.name for f in fuel_types}
+            # Build account head map
+            account_heads = self.db_service.list_documents('account_heads')
+            account_head_map = {a.get('id'): a.get('name', '') for a in account_heads}
+            
+            columns = ["Nozzle", "Fuel Type", "Opening (L)", "Quantity (L)", "Closing (L)", "Unit Price (Rs)", "Total (Rs)", "Account Head"]
             data = []
             
             for sale in sales_data:
+                nozzle_id = sale.get('nozzle_id', '')
+                nozzle_name = nozzle_map.get(nozzle_id, nozzle_id)
+                fuel_type_id = sale.get('fuel_type_id', '')
+                fuel_name = fuel_map.get(fuel_type_id, sale.get('fuel_type', ''))
+                # Get account head name from map
+                account_head_id = sale.get('account_head_id', '')
+                account_head_name = account_head_map.get(account_head_id, sale.get('account_head_name', ''))
+                
                 data.append([
-                    sale.get('id', '')[:8],
-                    sale.get('nozzle_id', ''),
-                    sale.get('fuel_type', ''),
+                    nozzle_name,
+                    fuel_name,
+                    f"{sale.get('opening_reading', 0):.2f}",
                     f"{sale.get('quantity', 0):.2f}",
-                    f"{sale.get('price', 0):.2f}",
+                    f"{sale.get('closing_reading', 0):.2f}",
+                    f"{sale.get('unit_price', sale.get('price', 0)):.2f}",
                     f"{sale.get('total_amount', 0):.2f}",
-                    sale.get('payment_method', ''),
-                    sale.get('timestamp', '')[:10]
+                    account_head_name
                 ])
             
             if not data:
@@ -2429,8 +3656,16 @@ class AddCustomerDialog(QDialog):
         self.customer_types = ["Retail", "Wholesale", "Commercial"]
         
         self.setWindowTitle("Add Customers")
-        self.setGeometry(300, 200, 1000, 500)
+        self.resize(1000, 500)
+        self._center_on_screen()
         self.init_ui()
+
+    def _center_on_screen(self):
+        """Center dialog on screen."""
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
 
     def init_ui(self):
         """Initialize UI components."""
@@ -2448,16 +3683,34 @@ class AddCustomerDialog(QDialog):
         self.table.setColumnCount(6)
         self.table.setHorizontalHeaderLabels(["Name", "Phone", "Email", "Address", "Credit Limit (Rs)", "Type"])
         self.table.setAlternatingRowColors(True)
-        self.table.horizontalHeader().setStretchLastSection(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
             "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
+        # Set column widths - Name/Address/Email wider, numeric fields narrower
+        self.table.setColumnWidth(0, 180)  # Name
+        self.table.setColumnWidth(1, 120)  # Phone
+        self.table.setColumnWidth(2, 180)  # Email
+        self.table.setColumnWidth(3, 200)  # Address
+        self.table.setColumnWidth(4, 120)  # Credit Limit
+        self.table.setColumnWidth(5, 100)  # Type
+        self.table.horizontalHeader().setStretchLastSection(True)
         layout.addWidget(self.table)
+        
+        # Add initial empty row
+        self.add_empty_rows(1)
 
         # Buttons
         button_layout = QHBoxLayout()
+        
+        add_row_btn = QPushButton("+ Add Row")
+        add_row_btn.setStyleSheet(
+            "QPushButton { background-color: #FF9800; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
+            "QPushButton:hover { background-color: #F57C00; }"
+        )
+        add_row_btn.clicked.connect(lambda: self.add_empty_rows(1))
+        button_layout.addWidget(add_row_btn)
         
         save_btn = QPushButton("Save All")
         save_btn.setStyleSheet(
@@ -2486,10 +3739,6 @@ class AddCustomerDialog(QDialog):
         layout.addLayout(button_layout)
         self.setLayout(layout)
 
-        # Add empty rows and connect signal
-        self.add_empty_rows(1)
-        self.table.itemChanged.connect(self.on_cell_changed)
-
     def add_empty_rows(self, count=1):
         """Add empty rows to table."""
         for _ in range(count):
@@ -2515,27 +3764,6 @@ class AddCustomerDialog(QDialog):
             type_combo = QComboBox()
             type_combo.addItems(self.customer_types)
             self.table.setCellWidget(row, 5, type_combo)
-
-    def on_cell_changed(self, item):
-        """Handle cell changes for auto-expand."""
-        self.table.itemChanged.disconnect(self.on_cell_changed)
-        
-        # Check if last row has data
-        last_row = self.table.rowCount() - 1
-        if last_row >= 0:
-            last_row_data = []
-            for col in range(5):
-                if col == 5:
-                    continue
-                cell = self.table.item(last_row, col)
-                if cell:
-                    last_row_data.append(cell.text())
-            
-            # If last row has any data, add a new empty row
-            if any(last_row_data):
-                self.add_empty_rows(1)
-        
-        self.table.itemChanged.connect(self.on_cell_changed)
 
     def save_all_customers(self):
         """Save all non-empty customers to database."""
@@ -2614,15 +3842,9 @@ class AddCustomerDialog(QDialog):
                 QMessageBox.warning(self, "Validation Errors", error_msg)
             else:
                 QMessageBox.information(self, "Success", f"All {len(saved_rows)} customer(s) saved successfully!")
-            
-            # Clear saved rows
-            for row in sorted(saved_rows, reverse=True):
-                self.table.removeRow(row)
-            
-            if not self.table.rowCount():
+                # Reset grid to 1 empty row
+                self.table.setRowCount(0)
                 self.add_empty_rows(1)
-            
-            if not errors:
                 self.view_customers_list()
         except Exception as e:
             QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
@@ -2631,12 +3853,11 @@ class AddCustomerDialog(QDialog):
         """View customers records in grid."""
         try:
             customers_data = self.db_service.list_documents('customers')
-            columns = ["ID", "Name", "Phone", "Email", "Address", "Credit Limit (Rs)", "Type"]
+            columns = ["Name", "Phone", "Email", "Address", "Credit Limit (Rs)", "Type"]
             data = []
             
             for customer in customers_data:
                 data.append([
-                    customer.get('id', '')[:8],
                     customer.get('name', ''),
                     customer.get('phone', ''),
                     customer.get('email', ''),
@@ -2646,7 +3867,7 @@ class AddCustomerDialog(QDialog):
                 ])
             
             if not data:
-                data = [["No customers found", "", "", "", "", "", ""]]
+                data = [["No customers found", "", "", "", "", ""]]
             
             dialog = DataViewDialog("Customers", columns, data, self)
             dialog.exec_()
@@ -2657,18 +3878,30 @@ class AddCustomerDialog(QDialog):
 class RecordPurchaseDialog(QDialog):
     """Dialog for recording multiple fuel purchases with grid interface."""
 
-    def __init__(self, fuel_service, tank_service, db_service, parent=None):
+    def __init__(self, fuel_service, tank_service, db_service, account_head_service, parent=None):
         """Initialize dialog."""
         super().__init__(parent)
         self.fuel_service = fuel_service
         self.tank_service = tank_service
         self.db_service = db_service
+        self.account_head_service = account_head_service
         self.tanks = []
+        self.account_heads = []
+        self.account_head_balances = {}  # Store current balances for account heads
         
         self.setWindowTitle("Record Purchases")
-        self.setGeometry(300, 200, 1000, 500)
+        self.resize(1100, 550)
+        self._center_on_screen()
         self.load_tanks()
+        self.load_account_heads()
         self.init_ui()
+
+    def _center_on_screen(self):
+        """Center dialog on screen."""
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
 
     def init_ui(self):
         """Initialize UI components."""
@@ -2683,19 +3916,37 @@ class RecordPurchaseDialog(QDialog):
 
         # Create table widget
         self.table = QTableWidget()
-        self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels(["Tank", "Supplier Name", "Quantity (L)", "Unit Cost (Rs)", "Total (Rs)", "Invoice Number"])
+        self.table.setColumnCount(7)
+        self.table.setHorizontalHeaderLabels(["Tank", "Supplier Name", "Quantity (L)", "Unit Cost (Rs)", "Total (Rs)", "Account Head", "Invoice Number"])
         self.table.setAlternatingRowColors(True)
-        self.table.horizontalHeader().setStretchLastSection(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
             "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
+        # Set column widths - Supplier wider, numeric fields narrower
+        self.table.setColumnWidth(0, 150)  # Tank
+        self.table.setColumnWidth(1, 200)  # Supplier Name
+        self.table.setColumnWidth(2, 100)  # Quantity
+        self.table.setColumnWidth(3, 120)  # Unit Cost
+        self.table.setColumnWidth(4, 120)  # Total
+        self.table.setColumnWidth(5, 150)  # Account Head
+        self.table.horizontalHeader().setStretchLastSection(True)
         layout.addWidget(self.table)
+        
+        # Add initial empty row
+        self.add_empty_rows(1)
 
         # Buttons
         button_layout = QHBoxLayout()
+        
+        add_row_btn = QPushButton("+ Add Row")
+        add_row_btn.setStyleSheet(
+            "QPushButton { background-color: #FF9800; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
+            "QPushButton:hover { background-color: #F57C00; }"
+        )
+        add_row_btn.clicked.connect(lambda: self.add_empty_rows(1))
+        button_layout.addWidget(add_row_btn)
         
         save_btn = QPushButton("Save All")
         save_btn.setStyleSheet(
@@ -2723,9 +3974,8 @@ class RecordPurchaseDialog(QDialog):
         
         layout.addLayout(button_layout)
         self.setLayout(layout)
-
-        # Add empty rows and connect signal
-        self.add_empty_rows(1)
+        
+        # Connect signal for calculations
         self.table.itemChanged.connect(self.on_cell_changed)
 
     def load_tanks(self):
@@ -2734,6 +3984,34 @@ class RecordPurchaseDialog(QDialog):
             self.tanks = self.tank_service.list_tanks()
         except Exception as e:
             print(f"Error loading tanks: {str(e)}")
+
+    def load_account_heads(self):
+        """Load account heads from database."""
+        try:
+            self.account_heads = self.account_head_service.list_account_heads(active_only=True)
+            # Initialize balances - in a real scenario, these would come from account balances
+            for head in self.account_heads:
+                head_id = head.get('id', '')
+                # Get current balance from purchases/expenses for this account head
+                self.account_head_balances[head_id] = self._calculate_account_head_balance(head_id)
+        except Exception as e:
+            print(f"Error loading account heads: {str(e)}")
+            self.account_heads = []
+
+    def _calculate_account_head_balance(self, head_id: str) -> float:
+        """
+        Calculate current balance for an account head.
+        This would sum up all purchases/expenses for this account head.
+        """
+        try:
+            purchases = self.db_service.list_documents('purchases')
+            balance = 0.0
+            for purchase in purchases:
+                if purchase.get('account_head_id') == head_id:
+                    balance += float(purchase.get('total_cost', 0))
+            return balance
+        except Exception:
+            return 0.0
 
     def add_empty_rows(self, count=1):
         """Add empty rows to table."""
@@ -2762,14 +4040,55 @@ class RecordPurchaseDialog(QDialog):
             total_item.setFlags(total_item.flags() & ~Qt.ItemIsEditable)
             self.table.setItem(row, 4, total_item)
             
+            # Account Head combo (LOV) - Show only account head names from database
+            account_head_combo = QComboBox()
+            account_head_combo.addItem("-- Select Account Head --", "")
+            for head in self.account_heads:
+                head_id = head.get('id', '')
+                head_name = head.get('name', '')
+                # Display: Account Head Name only
+                account_head_combo.addItem(head_name, head_id)
+            
+            # Connect signal to update projected balance on selection
+            account_head_combo.currentIndexChanged.connect(lambda idx, r=row: self.on_account_head_changed(r))
+            self.table.setCellWidget(row, 5, account_head_combo)
+            
             # Invoice Number cell
-            self.table.setItem(row, 5, QTableWidgetItem(""))
+            self.table.setItem(row, 6, QTableWidgetItem(""))
+
+    def on_account_head_changed(self, row):
+        """Handle account head selection changes and display projected balance."""
+        account_head_combo = self.table.cellWidget(row, 5)
+        if not account_head_combo:
+            return
+        
+        head_id = account_head_combo.currentData()
+        if not head_id:
+            return
+        
+        # Get current and projected balance
+        current_balance = self.account_head_balances.get(head_id, 0.0)
+        total_item = self.table.item(row, 4)
+        total = float(total_item.text()) if total_item else 0.0
+        projected_balance = current_balance + total
+        
+        # Update the combo display to show projected balance
+        # This shows real-time impact when amount is entered
+        current_text = account_head_combo.currentText()
+        if "Projected" in current_text:
+            # Already updated, just refresh the projected value
+            base_text = current_text.split(" | Projected")[0]
+        else:
+            base_text = current_text
+        
+        updated_text = f"{base_text} | Projected: Rs {projected_balance:.2f}"
+        account_head_combo.setItemText(account_head_combo.currentIndex(), updated_text)
 
     def on_cell_changed(self, item):
-        """Handle cell changes for auto-expand and calculations."""
+        """Handle cell changes for calculations."""
         self.table.itemChanged.disconnect(self.on_cell_changed)
         
-        # Calculate totals for all rows
+        # Calculate totals for all rows and update projected balances
         for row in range(self.table.rowCount()):
             qty_item = self.table.item(row, 2)
             cost_item = self.table.item(row, 3)
@@ -2781,28 +4100,10 @@ class RecordPurchaseDialog(QDialog):
                 total = qty * cost
                 if total_item:
                     total_item.setText(f"{total:.2f}")
+                    # Update projected balance display
+                    self.on_account_head_changed(row)
             except ValueError:
                 pass
-        
-        # Check if last row has data
-        last_row = self.table.rowCount() - 1
-        if last_row >= 0:
-            last_row_data = []
-            for col in range(5):
-                if col == 0:
-                    widget = self.table.cellWidget(last_row, col)
-                    if widget:
-                        last_row_data.append(widget.currentData())
-                elif col == 4:
-                    continue
-                else:
-                    cell = self.table.item(last_row, col)
-                    if cell:
-                        last_row_data.append(cell.text())
-            
-            # If last row has any data, add a new empty row
-            if any(last_row_data):
-                self.add_empty_rows(1)
         
         self.table.itemChanged.connect(self.on_cell_changed)
 
@@ -2818,12 +4119,14 @@ class RecordPurchaseDialog(QDialog):
                 supplier_item = self.table.item(row, 1)
                 qty_item = self.table.item(row, 2)
                 cost_item = self.table.item(row, 3)
-                invoice_item = self.table.item(row, 5)
+                account_head_combo = self.table.cellWidget(row, 5)
+                invoice_item = self.table.item(row, 6)
                 
                 tank_id = tank_combo.currentData() if tank_combo else ""
                 supplier = supplier_item.text().strip() if supplier_item else ""
                 qty_text = qty_item.text().strip() if qty_item else ""
                 cost_text = cost_item.text().strip() if cost_item else ""
+                account_head_id = account_head_combo.currentData() if account_head_combo else ""
                 invoice = invoice_item.text().strip() if invoice_item else ""
                 
                 # Skip empty rows
@@ -2847,6 +4150,10 @@ class RecordPurchaseDialog(QDialog):
                     errors[row + 1] = "Unit Cost is required"
                     continue
                 
+                if not account_head_id or account_head_id == "":
+                    errors[row + 1] = "Account Head is required"
+                    continue
+                
                 # Try to convert to numbers
                 try:
                     quantity = float(qty_text)
@@ -2858,6 +4165,16 @@ class RecordPurchaseDialog(QDialog):
                 if quantity <= 0:
                     errors[row + 1] = "Quantity must be greater than 0"
                     continue
+                
+                # Get account head details for payment method derivation
+                account_head_data = None
+                for head in self.account_heads:
+                    if head.get('id') == account_head_id:
+                        account_head_data = head
+                        break
+                
+                payment_method = account_head_data.get('head_type', 'Other') if account_head_data else 'Other'
+                account_head_name = account_head_data.get('name', '') if account_head_data else ''
                 
                 # Create purchase record
                 try:
@@ -2872,6 +4189,9 @@ class RecordPurchaseDialog(QDialog):
                         'quantity': quantity,
                         'unit_cost': unit_cost,
                         'total_cost': total_cost,
+                        'account_head_id': account_head_id,
+                        'account_head_name': account_head_name,
+                        'payment_method': payment_method,  # Derived from account head type
                         'invoice_number': invoice,
                         'purchase_date': datetime.now().isoformat(),
                         'status': 'completed'
@@ -2881,6 +4201,8 @@ class RecordPurchaseDialog(QDialog):
 
                     if success:
                         saved_rows.append(row)
+                        # Update account head balance in memory
+                        self.account_head_balances[account_head_id] = self.account_head_balances.get(account_head_id, 0.0) + total_cost
                     else:
                         errors[row + 1] = msg
                 except Exception as e:
@@ -2896,15 +4218,9 @@ class RecordPurchaseDialog(QDialog):
                 QMessageBox.warning(self, "Validation Errors", error_msg)
             else:
                 QMessageBox.information(self, "Success", f"All {len(saved_rows)} purchase(s) saved successfully!")
-            
-            # Clear saved rows
-            for row in sorted(saved_rows, reverse=True):
-                self.table.removeRow(row)
-            
-            if not self.table.rowCount():
+                # Reset grid to 1 empty row
+                self.table.setRowCount(0)
                 self.add_empty_rows(1)
-            
-            if not errors:
                 self.view_purchases()
         except Exception as e:
             QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
@@ -2913,19 +4229,28 @@ class RecordPurchaseDialog(QDialog):
         """View purchase records in grid."""
         try:
             purchases_data = self.db_service.list_documents('purchases')
-            columns = ["ID", "Tank", "Supplier", "Quantity (L)", "Unit Cost", "Total (Rs)", "Invoice", "Date"]
+            # Build lookup map for tank names
+            tanks = self.tank_service.list_tanks()
+            tank_map = {t.id: t.name for t in tanks}
+            
+            columns = ["Tank", "Supplier", "Quantity (L)", "Unit Cost", "Total (Rs)", "Account Head", "Invoice", "Date"]
             data = []
             
             for purchase in purchases_data:
+                tank_id = purchase.get('tank_id', '')
+                tank_name = tank_map.get(tank_id, tank_id)
+                # Get date from 'purchase_date' or 'timestamp' field
+                date_str = purchase.get('purchase_date', purchase.get('timestamp', ''))
+                date_display = date_str[:10] if date_str else ''
                 data.append([
-                    purchase.get('id', '')[:8],
-                    purchase.get('tank_id', ''),
+                    tank_name,
                     purchase.get('supplier_name', ''),
                     f"{purchase.get('quantity', 0):.2f}",
                     f"{purchase.get('unit_cost', 0):.2f}",
                     f"{purchase.get('total_cost', 0):.2f}",
+                    purchase.get('account_head_name', ''),
                     purchase.get('invoice_number', ''),
-                    purchase.get('timestamp', '')[:10]
+                    date_display
                 ])
             
             if not data:
@@ -2946,8 +4271,16 @@ class UpdateExchangeRateDialog(QDialog):
         self.db_service = db_service
         
         self.setWindowTitle("Update Exchange Rate")
-        self.setGeometry(400, 300, 500, 300)
+        self.resize(500, 300)
+        self._center_on_screen()
         self.init_ui()
+
+    def _center_on_screen(self):
+        """Center dialog on screen."""
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
 
     def init_ui(self):
         """Initialize UI components."""
@@ -3052,12 +4385,11 @@ class UpdateExchangeRateDialog(QDialog):
         """View exchange rates in grid."""
         try:
             rates_data = self.db_service.list_documents('exchange_rates')
-            columns = ["ID", "From Currency", "To Currency", "Rate", "Effective Date"]
+            columns = ["From Currency", "To Currency", "Rate", "Effective Date"]
             data = []
             
             for rate in rates_data:
                 data.append([
-                    rate.get('id', '')[:8],
                     rate.get('from_currency', ''),
                     rate.get('to_currency', ''),
                     f"{rate.get('rate', 0):.4f}",
@@ -3065,7 +4397,7 @@ class UpdateExchangeRateDialog(QDialog):
                 ])
             
             if not data:
-                data = [["No exchange rates found", "", "", "", ""]]
+                data = [["No exchange rates found", "", "", ""]]
             
             dialog = DataViewDialog("Exchange Rates", columns, data, self)
             dialog.exec_()
@@ -3074,27 +4406,13 @@ class UpdateExchangeRateDialog(QDialog):
 
 
 class RecordExpenseDialog(QDialog):
-    """Dialog for recording expenses."""
+    """Dialog for recording multiple expenses with grid interface."""
 
-    def __init__(self, db_service, parent=None):
+    def __init__(self, db_service, payment_methods=None, parent=None):
         """Initialize dialog."""
         super().__init__(parent)
         self.db_service = db_service
-        
-        self.setWindowTitle("Record Expense")
-        self.setGeometry(300, 200, 550, 450)
-        self.init_ui()
-
-    def init_ui(self):
-        """Initialize UI components."""
-        layout = QFormLayout()
-        layout.setSpacing(12)
-        layout.setContentsMargins(20, 20, 20, 20)
-
-        # Expense Category
-        category_label = QLabel("Expense Category:")
-        self.category_combo = QComboBox()
-        self.category_combo.addItems([
+        self.expense_categories = [
             "Utilities",
             "Maintenance",
             "Salaries",
@@ -3103,113 +4421,224 @@ class RecordExpenseDialog(QDialog):
             "Insurance",
             "Equipment",
             "Other"
-        ])
-        layout.addRow(category_label, self.category_combo)
+        ]
+        self.payment_methods = payment_methods if payment_methods is not None else []
+        
+        # Get account heads with expense nature
+        all_account_heads = self.db_service.list_documents('account_heads')
+        # Filter to only expense account heads
+        self.account_heads = [acc for acc in all_account_heads if acc.get('head_type', '').lower() == 'expense']
+        self.account_head_map = {acc.get('id', ''): acc.get('name', '') for acc in self.account_heads}
+        self.account_head_names = [acc.get('name', '') for acc in self.account_heads]
+        
+        self.setWindowTitle("Record Expenses")
+        self.resize(1200, 500)
+        self._center_on_screen()
+        self.init_ui()
 
-        # Description
-        desc_label = QLabel("Description:")
-        self.desc_input = QLineEdit()
-        self.desc_input.setPlaceholderText("Expense details")
-        layout.addRow(desc_label, self.desc_input)
+    def _center_on_screen(self):
+        """Center dialog on screen."""
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
 
-        # Amount
-        amount_label = QLabel("Amount (Rs.):")
-        self.amount_input = QDoubleSpinBox()
-        self.amount_input.setMinimum(0)
-        self.amount_input.setMaximum(999999999)
-        self.amount_input.setDecimals(2)
-        layout.addRow(amount_label, self.amount_input)
+    def init_ui(self):
+        """Initialize UI components."""
+        layout = QVBoxLayout()
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(12)
 
-        # Payment Method
-        payment_label = QLabel("Payment Method:")
-        self.payment_combo = QComboBox()
-        self.payment_combo.addItems(["Cash", "Bank Transfer", "Cheque", "Credit Card"])
-        layout.addRow(payment_label, self.payment_combo)
+        # Title label
+        title_label = QLabel("Record Expenses")
+        title_label.setFont(QFont("Arial", 14, QFont.Bold))
+        layout.addWidget(title_label)
 
-        # Reference/Invoice
-        ref_label = QLabel("Reference Number:")
-        self.ref_input = QLineEdit()
-        self.ref_input.setPlaceholderText("Invoice or receipt number")
-        layout.addRow(ref_label, self.ref_input)
-
-        # Notes
-        notes_label = QLabel("Notes:")
-        self.notes_input = QLineEdit()
-        self.notes_input.setPlaceholderText("Additional information")
-        layout.addRow(notes_label, self.notes_input)
+        # Create table widget
+        self.table = QTableWidget()
+        self.table.setColumnCount(6)
+        self.table.setHorizontalHeaderLabels(["Category", "Description", "Amount (Rs)", "Account Head", "Reference No.", "Notes"])
+        self.table.setAlternatingRowColors(True)
+        self.table.setStyleSheet(
+            "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+            "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
+        )
+        # Set column widths
+        self.table.setColumnWidth(0, 130)  # Category
+        self.table.setColumnWidth(1, 200)  # Description
+        self.table.setColumnWidth(2, 100)  # Amount
+        self.table.setColumnWidth(3, 150)  # Account Head
+        self.table.setColumnWidth(4, 110)  # Reference No.
+        self.table.setColumnWidth(5, 200)  # Notes
+        self.table.horizontalHeader().setStretchLastSection(True)
+        layout.addWidget(self.table)
+        
+        # Add initial empty row
+        self.add_empty_rows(1)
 
         # Buttons
         button_layout = QHBoxLayout()
         
-        record_btn = QPushButton("Record Expense")
-        record_btn.setStyleSheet(
-            "QPushButton { background-color: #4CAF50; color: white; padding: 8px 20px; border-radius: 5px; }"
+        add_row_btn = QPushButton("+ Add Row")
+        add_row_btn.setStyleSheet(
+            "QPushButton { background-color: #FF9800; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
+            "QPushButton:hover { background-color: #F57C00; }"
+        )
+        add_row_btn.clicked.connect(lambda: self.add_empty_rows(1))
+        button_layout.addWidget(add_row_btn)
+        
+        save_btn = QPushButton("Save All")
+        save_btn.setStyleSheet(
+            "QPushButton { background-color: #4CAF50; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
             "QPushButton:hover { background-color: #45a049; }"
         )
-        record_btn.clicked.connect(self.record_expense)
-        button_layout.addWidget(record_btn)
+        save_btn.clicked.connect(self.save_all_expenses)
+        button_layout.addWidget(save_btn)
         
         view_btn = QPushButton("View Records")
         view_btn.setStyleSheet(
-            "QPushButton { background-color: #2196F3; color: white; padding: 8px 20px; border-radius: 5px; }"
+            "QPushButton { background-color: #2196F3; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
             "QPushButton:hover { background-color: #0b7dda; }"
         )
         view_btn.clicked.connect(self.view_expenses_list)
         button_layout.addWidget(view_btn)
         
-        cancel_btn = QPushButton("Cancel")
-        cancel_btn.setStyleSheet(
-            "QPushButton { background-color: #f44336; color: white; padding: 8px 20px; border-radius: 5px; }"
+        close_btn = QPushButton("Close")
+        close_btn.setStyleSheet(
+            "QPushButton { background-color: #f44336; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
             "QPushButton:hover { background-color: #da190b; }"
         )
-        cancel_btn.clicked.connect(self.reject)
-        button_layout.addWidget(cancel_btn)
+        close_btn.clicked.connect(self.reject)
+        button_layout.addWidget(close_btn)
         
-        layout.addRow(button_layout)
+        layout.addLayout(button_layout)
         self.setLayout(layout)
 
-    def record_expense(self):
-        """Record the expense."""
-        try:
-            category = self.category_combo.currentText()
-            description = self.desc_input.text().strip()
-            amount = self.amount_input.value()
-            payment_method = self.payment_combo.currentText()
-            reference = self.ref_input.text().strip()
-            notes = self.notes_input.text().strip()
-
-            if not description:
-                QMessageBox.warning(self, "Error", "Please enter expense description")
-                return
-
-            if amount <= 0:
-                QMessageBox.warning(self, "Error", "Amount must be greater than 0")
-                return
-
-            # Create expense record
-            import uuid
-            expense_id = str(uuid.uuid4())
+    def add_empty_rows(self, count=1):
+        """Add empty rows to table."""
+        for _ in range(count):
+            row = self.table.rowCount()
+            self.table.insertRow(row)
             
-            data = {
-                'id': expense_id,
-                'category': category,
-                'description': description,
-                'amount': amount,
-                'payment_method': payment_method,
-                'reference_number': reference,
-                'notes': notes,
-                'expense_date': datetime.now().isoformat(),
-                'status': 'recorded'
-            }
+            # Category combo
+            category_combo = QComboBox()
+            category_combo.addItems(self.expense_categories)
+            self.table.setCellWidget(row, 0, category_combo)
+            
+            # Description cell
+            self.table.setItem(row, 1, QTableWidgetItem(""))
+            
+            # Amount cell
+            self.table.setItem(row, 2, QTableWidgetItem(""))
+            
+            # Account Head combo
+            account_head_combo = QComboBox()
+            account_head_combo.addItems(self.account_head_names)
+            self.table.setCellWidget(row, 3, account_head_combo)
+            
+            # Reference Number cell
+            self.table.setItem(row, 4, QTableWidgetItem(""))
+            
+            # Notes cell
+            self.table.setItem(row, 5, QTableWidgetItem(""))
 
-            success, msg = self.db_service.create_document('expenses', expense_id, data)
+    def save_all_expenses(self):
+        """Save all non-empty expenses to database."""
+        try:
+            import uuid
+            errors = {}
+            saved_rows = []
+            
+            for row in range(self.table.rowCount()):
+                # Get row data
+                category_combo = self.table.cellWidget(row, 0)
+                desc_item = self.table.item(row, 1)
+                amount_item = self.table.item(row, 2)
+                account_head_combo = self.table.cellWidget(row, 3)
+                ref_item = self.table.item(row, 4)
+                notes_item = self.table.item(row, 5)
+                
+                category = category_combo.currentText() if category_combo else ""
+                description = desc_item.text().strip() if desc_item else ""
+                amount_text = amount_item.text().strip() if amount_item else ""
+                account_head_name = account_head_combo.currentText() if account_head_combo else ""
+                reference = ref_item.text().strip() if ref_item else ""
+                notes = notes_item.text().strip() if notes_item else ""
+                
+                # Skip empty rows
+                if not description and not amount_text:
+                    continue
+                
+                # Validate required fields
+                if not description:
+                    errors[row + 1] = "Description is required"
+                    continue
+                
+                if not amount_text:
+                    errors[row + 1] = "Amount is required"
+                    continue
+                
+                try:
+                    amount = float(amount_text)
+                    if amount <= 0:
+                        errors[row + 1] = "Amount must be greater than 0"
+                        continue
+                except ValueError:
+                    errors[row + 1] = "Invalid amount format"
+                    continue
+                
+                # Get account head ID from name
+                account_head_id = None
+                for acc in self.account_heads:
+                    if acc.get('name', '') == account_head_name:
+                        account_head_id = acc.get('id', '')
+                        break
+                
+                if not account_head_id:
+                    errors[row + 1] = "Account Head must be selected"
+                    continue
+                
+                # Create expense record
+                try:
+                    expense_id = str(uuid.uuid4())
+                    
+                    data = {
+                        'id': expense_id,
+                        'category': category,
+                        'description': description,
+                        'amount': amount,
+                        'account_head_id': account_head_id,
+                        'account_head_name': account_head_name,
+                        'reference_number': reference,
+                        'notes': notes,
+                        'expense_date': datetime.now().isoformat(),
+                        'status': 'recorded'
+                    }
 
-            if success:
-                QMessageBox.information(self, "Success", f"Expense recorded successfully!\nExpense ID: {expense_id}\nAmount: Rs. {amount:,.2f}")
-                self.accept()
+                    success, msg = self.db_service.create_document('expenses', expense_id, data)
+
+                    if success:
+                        saved_rows.append(row)
+                    else:
+                        errors[row + 1] = msg
+                except Exception as e:
+                    errors[row + 1] = str(e)
+            
+            # Display results
+            if errors:
+                error_msg = "Errors occurred:\n\n"
+                for row, error in errors.items():
+                    error_msg += f"Row {row}: {error}\n"
+                if saved_rows:
+                    error_msg += f"\n{len(saved_rows)} expense(s) saved successfully."
+                QMessageBox.warning(self, "Validation Errors", error_msg)
             else:
-                QMessageBox.critical(self, "Error", f"Failed to record expense: {msg}")
-
+                QMessageBox.information(self, "Success", f"All {len(saved_rows)} expense(s) saved successfully!")
+                # Reset grid to 1 empty row
+                self.table.setRowCount(0)
+                self.add_empty_rows(1)
+                self.view_expenses_list()
         except Exception as e:
             QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
 
@@ -3217,22 +4646,24 @@ class RecordExpenseDialog(QDialog):
         """View expenses records in grid."""
         try:
             expenses_data = self.db_service.list_documents('expenses')
-            columns = ["ID", "Category", "Description", "Amount (Rs)", "Payment Method", "Reference", "Date"]
+            columns = ["Category", "Description", "Amount (Rs)", "Account Head", "Reference", "Date"]
             data = []
             
             for expense in expenses_data:
+                # Get date from 'expense_date' or 'timestamp' field
+                date_str = expense.get('expense_date', expense.get('timestamp', ''))
+                date_display = date_str[:10] if date_str else ''
                 data.append([
-                    expense.get('id', '')[:8],
                     expense.get('category', ''),
                     expense.get('description', ''),
                     f"{expense.get('amount', 0):.2f}",
-                    expense.get('payment_method', ''),
+                    expense.get('account_head_name', ''),
                     expense.get('reference_number', ''),
-                    expense.get('timestamp', '')[:10]
+                    date_display
                 ])
             
             if not data:
-                data = [["No expenses found", "", "", "", "", "", ""]]
+                data = [["No expenses found", "", "", "", "", ""]]
             
             dialog = DataViewDialog("Expenses", columns, data, self)
             dialog.exec_()

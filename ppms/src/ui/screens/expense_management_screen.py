@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt, pyqtSignal, QDate
 from PyQt5.QtGui import QFont, QColor
-from src.services.database_service import DatabaseService
+from src.services.database_service import DatabaseService, AccountHeadService
 from src.models import Expense
 from src.utils.validators import validate_currency
 from src.config.logger_config import setup_logger
@@ -22,16 +22,18 @@ logger = setup_logger(__name__)
 class ExpenseDialog(QDialog):
     """Dialog for adding/editing expenses."""
 
-    def __init__(self, parent=None, expense=None):
+    def __init__(self, parent=None, expense=None, payment_methods=None):
         """
         Initialize dialog.
 
         Args:
             parent: Parent widget
             expense: Existing Expense to edit (None for new)
+            payment_methods: List of payment method names from account heads
         """
         super().__init__(parent)
         self.expense = expense
+        self.payment_methods = payment_methods if payment_methods is not None else []
         self.setWindowTitle("New Expense" if expense is None else f"Edit Expense #{expense.id}")
         self.setGeometry(200, 200, 500, 400)
         self.init_ui()
@@ -81,9 +83,9 @@ class ExpenseDialog(QDialog):
         )
         layout.addRow("Expense Date:", self.date_input)
 
-        # Payment method
+        # Payment method - loaded from account heads
         self.payment_combo = QComboBox()
-        self.payment_combo.addItems(["Cash", "Check", "Card", "Transfer"])
+        self.payment_combo.addItems(self.payment_methods)
         if self.expense and self.expense.payment_method:
             index = self.payment_combo.findText(self.expense.payment_method)
             self.payment_combo.setCurrentIndex(index if index >= 0 else 0)
@@ -157,11 +159,13 @@ class ExpenseManagementScreen(QWidget):
         super().__init__()
         self.user = user
         self.db_service = DatabaseService()
+        self.account_head_service = AccountHeadService()
 
         self.setWindowTitle("Expense Management")
         self.setGeometry(100, 100, 1200, 700)
 
         self.expenses = []
+        self.payment_methods = []
 
         self.init_ui()
         self.load_data()
@@ -230,6 +234,10 @@ class ExpenseManagementScreen(QWidget):
         try:
             # Get all expenses (can be filtered)
             self.expenses = self.db_service.list_documents("expenses")
+            
+            # Load payment methods from account heads
+            self.payment_methods = self.account_head_service.get_payment_methods()
+            
             self.populate_expense_table(self.expenses)
             self.update_summary()
 
@@ -246,27 +254,41 @@ class ExpenseManagementScreen(QWidget):
 
             # Date
             date_text = expense.expense_date[:10] if expense.expense_date else "---"
-            self.expense_table.setItem(row, 0, QTableWidgetItem(date_text))
+            date_item = QTableWidgetItem(date_text)
+            date_item.setFlags(date_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.expense_table.setItem(row, 0, date_item)
 
             # Category
-            self.expense_table.setItem(row, 1, QTableWidgetItem(expense.category))
+            category_item = QTableWidgetItem(expense.category)
+            category_item.setFlags(category_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.expense_table.setItem(row, 1, category_item)
 
             # Description
-            self.expense_table.setItem(row, 2, QTableWidgetItem(expense.description or "---"))
+            desc_item = QTableWidgetItem(expense.description or "---")
+            desc_item.setFlags(desc_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.expense_table.setItem(row, 2, desc_item)
 
             # Vendor
             vendor_text = expense.vendor_name or "---"
-            self.expense_table.setItem(row, 3, QTableWidgetItem(vendor_text))
+            vendor_item = QTableWidgetItem(vendor_text)
+            vendor_item.setFlags(vendor_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.expense_table.setItem(row, 3, vendor_item)
 
             # Amount
-            self.expense_table.setItem(row, 4, QTableWidgetItem(f"Rs. {expense.amount}"))
+            amount_item = QTableWidgetItem(f"Rs. {expense.amount}")
+            amount_item.setFlags(amount_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.expense_table.setItem(row, 4, amount_item)
 
             # Payment method
-            self.expense_table.setItem(row, 5, QTableWidgetItem(expense.payment_method))
+            payment_item = QTableWidgetItem(expense.payment_method)
+            payment_item.setFlags(payment_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.expense_table.setItem(row, 5, payment_item)
 
             # Notes
             notes_text = expense.notes[:30] + "..." if expense.notes and len(expense.notes) > 30 else (expense.notes or "---")
-            self.expense_table.setItem(row, 6, QTableWidgetItem(notes_text))
+            notes_item = QTableWidgetItem(notes_text)
+            notes_item.setFlags(notes_item.flags() & ~0x2)  # Qt.ItemIsEditable
+            self.expense_table.setItem(row, 6, notes_item)
 
             # Actions
             action_layout = QHBoxLayout()
@@ -335,7 +357,7 @@ class ExpenseManagementScreen(QWidget):
 
     def add_expense(self):
         """Add a new expense."""
-        dialog = ExpenseDialog(self)
+        dialog = ExpenseDialog(self, payment_methods=self.payment_methods)
         if dialog.exec_() == QDialog.Accepted:
             try:
                 expense = dialog.get_expense()
@@ -368,7 +390,7 @@ class ExpenseManagementScreen(QWidget):
 
     def edit_expense(self, expense):
         """Edit an existing expense."""
-        dialog = ExpenseDialog(self, expense)
+        dialog = ExpenseDialog(self, expense, payment_methods=self.payment_methods)
         if dialog.exec_() == QDialog.Accepted:
             try:
                 updated_expense = dialog.get_expense()
