@@ -13,6 +13,7 @@ from PyQt5.QtGui import QFont, QColor
 from src.services.database_service import DatabaseService, AccountHeadService
 from src.models import Expense
 from src.utils.validators import validate_currency
+from src.ui.widgets.custom_widgets import apply_dialog_styling
 from src.config.logger_config import setup_logger
 from datetime import datetime, date
 
@@ -37,6 +38,7 @@ class ExpenseDialog(QDialog):
         self.setWindowTitle("New Expense" if expense is None else f"Edit Expense #{expense.id}")
         self.setGeometry(200, 200, 500, 400)
         self.init_ui()
+        apply_dialog_styling(self)
 
     def init_ui(self):
         """Initialize UI components."""

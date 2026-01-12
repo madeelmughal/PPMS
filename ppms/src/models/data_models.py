@@ -177,30 +177,40 @@ class Reading:
 @dataclass
 class Sale:
     """Sale transaction model."""
-    id: str
-    date: datetime
-    nozzle_id: str
-    fuel_type_id: str
-    quantity: float
-    unit_price: float
-    base_amount: float
-    tax_amount: float
-    total_amount: float
-    payment_method: PaymentMethod
-    operator_id: str
-    shift_id: str
+    id: Optional[str] = None
+    nozzle_id: Optional[str] = None
+    fuel_type_id: Optional[str] = None
+    quantity: Optional[float] = None
+    unit_price: Optional[float] = None
+    total_amount: Optional[float] = None
+    opening_reading: Optional[float] = None
+    closing_reading: Optional[float] = None
+    payment_method: Optional[str] = None
+    customer_name: Optional[str] = None
+    vehicle_number: Optional[str] = None
+    notes: Optional[str] = None
+    date: Optional[datetime] = None
+    base_amount: Optional[float] = None
+    tax_amount: Optional[float] = None
+    operator_id: Optional[str] = None
+    shift_id: Optional[str] = None
     customer_id: Optional[str] = None
-    status: TransactionStatus = TransactionStatus.COMPLETED
-    created_at: datetime = field(default_factory=datetime.now)
+    status: Optional[str] = None
+    sale_date: Optional[str] = None
+    created_at: Optional[datetime] = None
     created_by: str = ""
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for Firebase."""
-        data = asdict(self)
-        data['date'] = self.date.isoformat()
-        data['payment_method'] = self.payment_method.value
-        data['status'] = self.status.value
-        data['created_at'] = self.created_at.isoformat()
+        data = {}
+        for key, value in asdict(self).items():
+            if value is not None:
+                if isinstance(value, datetime):
+                    data[key] = value.isoformat()
+                elif hasattr(value, 'value'):  # Enum
+                    data[key] = value.value
+                else:
+                    data[key] = value
         return data
 
 

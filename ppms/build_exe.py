@@ -23,13 +23,13 @@ APP_NAME = "PPMS"
 MAIN_SCRIPT = "run.py"
 ICON_FILE = None  # Set to "assets/icon.ico" if you have an icon
 ONE_FILE = True   # True = single .exe, False = folder with files
-VERSION = "1.0.0"
+VERSION = "3.0.0"
 
 def check_pyinstaller():
     """Check if PyInstaller is installed, install if not."""
     try:
         import PyInstaller
-        print(f"✓ PyInstaller {PyInstaller.__version__} found")
+        print(f"[OK] PyInstaller {PyInstaller.__version__} found")
         return True
     except ImportError:
         print("PyInstaller not found. Installing...")
@@ -56,22 +56,22 @@ def get_data_files():
     # Firebase service account key (REQUIRED for production)
     if os.path.exists("serviceAccountKey.json"):
         data_files.append(("serviceAccountKey.json", "."))
-        print("✓ serviceAccountKey.json found")
+        print("[OK] serviceAccountKey.json found")
     else:
-        print("⚠ WARNING: serviceAccountKey.json not found - Firebase won't work!")
+        print("[WARN] WARNING: serviceAccountKey.json not found - Firebase won't work!")
     
     # Environment files
     if os.path.exists(".env"):
         data_files.append((".env", "."))
-        print("✓ .env found")
+        print("[OK] .env found")
     if os.path.exists(".env.example"):
         data_files.append((".env.example", "."))
-        print("✓ .env.example found")
+        print("[OK] .env.example found")
     
     # Include data folder structure
     if os.path.exists("data"):
         data_files.append(("data", "data"))
-        print("✓ data folder found")
+        print("[OK] data folder found")
     
     return data_files
 
@@ -204,7 +204,7 @@ def build_exe():
     
     if result.returncode == 0:
         print("\n" + "="*60)
-        print("  ✓ BUILD SUCCESSFUL!")
+        print("  [OK] BUILD SUCCESSFUL!")
         print("="*60)
         
         if ONE_FILE:
@@ -234,7 +234,7 @@ def build_exe():
         return True
     else:
         print("\n" + "="*60)
-        print("  ✗ BUILD FAILED!")
+        print("  [FAILED] BUILD FAILED!")
         print("="*60)
         print("\nCheck the error messages above for details.")
         return False

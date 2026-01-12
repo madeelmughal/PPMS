@@ -446,7 +446,7 @@ class AppConfig:
     """Application-level configuration."""
 
     APP_NAME = os.getenv('APP_NAME', 'Petrol Pump Management System')
-    APP_VERSION = os.getenv('APP_VERSION', '1.0.0')
+    APP_VERSION = os.getenv('APP_VERSION', '3.0.0')
     LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')
     CURRENCY_SYMBOL = os.getenv('CURRENCY_SYMBOL', 'Rs.')
     CURRENCY_CODE = os.getenv('CURRENCY_CODE', 'PKR')

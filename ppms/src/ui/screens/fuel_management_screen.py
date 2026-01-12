@@ -13,6 +13,7 @@ from PyQt5.QtGui import QFont, QColor
 from src.services.database_service import FuelService, TankService, DatabaseService
 from src.models import FuelType, Tank
 from src.utils.validators import validate_currency
+from src.ui.widgets.custom_widgets import apply_dialog_styling
 from src.config.logger_config import setup_logger
 from datetime import datetime
 
@@ -35,6 +36,7 @@ class FuelTypeDialog(QDialog):
         self.setWindowTitle("Fuel Type" if fuel_type is None else f"Edit {fuel_type.name}")
         self.setGeometry(200, 200, 400, 300)
         self.init_ui()
+        apply_dialog_styling(self)
 
     def init_ui(self):
         """Initialize UI components."""
@@ -123,6 +125,7 @@ class TankDialog(QDialog):
         self.setWindowTitle("Tank" if tank is None else f"Edit {tank.tank_id}")
         self.setGeometry(200, 200, 450, 400)
         self.init_ui()
+        apply_dialog_styling(self)
 
     def init_ui(self):
         """Initialize UI components."""

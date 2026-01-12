@@ -137,4 +137,33 @@ class InputDialog(QDialog):
                 widget.addItems([str(opt) for opt in options])
 
 
-__all__ = ['SearchableTable', 'InputDialog']
+def apply_dialog_styling(widget):
+    """
+    Apply consistent styling to dialogs to ensure visibility of input fields.
+    Fixes the issue where fields turn white when focused.
+    
+    Args:
+        widget: QDialog or QWidget to apply styling to
+    """
+    stylesheet = (
+        "QLineEdit { color: black; background-color: white; border: 1px solid #ccc; padding: 3px; }"
+        "QLineEdit:focus { background-color: white; color: black; border: 2px solid #2196F3; }"
+        "QDoubleSpinBox { color: black; background-color: white; border: 1px solid #ccc; padding: 2px; }"
+        "QDoubleSpinBox:focus { background-color: white; color: black; border: 2px solid #2196F3; }"
+        "QSpinBox { color: black; background-color: white; border: 1px solid #ccc; padding: 2px; }"
+        "QSpinBox:focus { background-color: white; color: black; border: 2px solid #2196F3; }"
+        "QComboBox { color: black; background-color: white; border: 1px solid #ccc; padding: 2px; }"
+        "QComboBox:focus { background-color: white; color: black; border: 2px solid #2196F3; }"
+        "QComboBox::drop-down { border: none; width: 20px; }"
+        "QComboBox::down-arrow { image: url(none); }"
+        "QTextEdit { color: black; background-color: white; border: 1px solid #ccc; }"
+        "QTextEdit:focus { background-color: white; color: black; border: 2px solid #2196F3; }"
+        "QDateEdit { color: black; background-color: white; border: 1px solid #ccc; padding: 2px; }"
+        "QDateEdit:focus { background-color: white; color: black; border: 2px solid #2196F3; }"
+        "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: black; background-color: white; }"
+        "QTableWidget::item:focus { background-color: #e3f2fd; color: black; border: 2px solid #2196F3; }"
+    )
+    widget.setStyleSheet(stylesheet)
+
+
+__all__ = ['SearchableTable', 'InputDialog', 'apply_dialog_styling']

@@ -2214,8 +2214,8 @@ class AddFuelTypeDialog(QDialog):
 
         # Create table for data entry
         self.table = QTableWidget()
-        self.table.setColumnCount(3)
-        self.table.setHorizontalHeaderLabels(["Name", "Unit Price (Rs)", "Tax %"])
+        self.table.setColumnCount(4)
+        self.table.setHorizontalHeaderLabels(["Name", "Unit Price (Rs)", "Tax %", "Actions"])
         self.table.setAlternatingRowColors(True)
         self.table.setMinimumHeight(300)
         self.table.setStyleSheet(
@@ -2224,10 +2224,12 @@ class AddFuelTypeDialog(QDialog):
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
         # Set column widths - Name wider, numeric fields narrower
-        self.table.setColumnWidth(0, 300)  # Name
-        self.table.setColumnWidth(1, 150)  # Unit Price
-        self.table.setColumnWidth(2, 100)  # Tax %
-        self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.setColumnWidth(0, 240)  # Name
+        self.table.setColumnWidth(1, 120)  # Unit Price
+        self.table.setColumnWidth(2, 80)   # Tax %
+        self.table.setColumnWidth(3, 100)  # Actions
+        self.table.horizontalHeader().setStretchLastSection(False)
+        self.table.verticalHeader().setDefaultSectionSize(40)
         
         # Add initial single empty row
         self.add_empty_rows(1)
@@ -2288,6 +2290,18 @@ class AddFuelTypeDialog(QDialog):
             tax_item = QTableWidgetItem("10.00")
             tax_item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
             self.table.setItem(i, 2, tax_item)
+            # Delete button
+            delete_btn = QPushButton("Delete")
+            delete_btn.setStyleSheet(
+                "QPushButton { background-color: #f44336; color: white; padding: 4px 10px; border-radius: 3px; font-size: 11px; }"
+                "QPushButton:hover { background-color: #da190b; }"
+            )
+            delete_btn.clicked.connect(lambda: self.delete_row(i))
+            self.table.setCellWidget(i, 3, delete_btn)
+
+    def delete_row(self, row):
+        """Delete a row from the table."""
+        self.table.removeRow(row)
 
     def save_all_fuel_types(self):
         """Save all fuel types from the table."""
@@ -2373,7 +2387,7 @@ class AddTankDialog(QDialog):
         self.fuel_service = fuel_service
         
         self.setWindowTitle("Add Tanks")
-        self.resize(1000, 500)
+        self.resize(1050, 600)
         self._center_on_screen()
         self.init_ui()
 
@@ -2398,7 +2412,8 @@ class AddTankDialog(QDialog):
         # Create table for data entry
         self.table = QTableWidget()
         self.table.setColumnCount(5)
-        self.table.setHorizontalHeaderLabels(["Name", "Fuel Type", "Capacity (L)", "Min Stock (L)", "Location"])
+        self.table.setHorizontalHeaderLabels(["Name", "Fuel Type", "Capacity (L)", "Min Stock (L)", "Location", "Actions"])
+        self.table.setColumnCount(6)
         self.table.setAlternatingRowColors(True)
         self.table.setMinimumHeight(300)
         self.table.setStyleSheet(
@@ -2407,12 +2422,14 @@ class AddTankDialog(QDialog):
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
         # Set column widths - Name/Location wider, numeric fields narrower
-        self.table.setColumnWidth(0, 200)  # Name
-        self.table.setColumnWidth(1, 150)  # Fuel Type
-        self.table.setColumnWidth(2, 120)  # Capacity
-        self.table.setColumnWidth(3, 120)  # Min Stock
-        self.table.setColumnWidth(4, 200)  # Location
-        self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.setColumnWidth(0, 160)  # Name
+        self.table.setColumnWidth(1, 130)  # Fuel Type
+        self.table.setColumnWidth(2, 110)  # Capacity
+        self.table.setColumnWidth(3, 110)  # Min Stock
+        self.table.setColumnWidth(4, 150)  # Location
+        self.table.setColumnWidth(5, 100)  # Actions
+        self.table.horizontalHeader().setStretchLastSection(False)
+        self.table.verticalHeader().setDefaultSectionSize(40)
         
         # Store fuel types for combo boxes
         self.fuel_types_dict = {}
@@ -2488,6 +2505,18 @@ class AddTankDialog(QDialog):
             self.table.setItem(i, 3, min_item)
             # Location
             self.table.setItem(i, 4, QTableWidgetItem(""))
+            # Delete button
+            delete_btn = QPushButton("Delete")
+            delete_btn.setStyleSheet(
+                "QPushButton { background-color: #f44336; color: white; padding: 4px 10px; border-radius: 3px; font-size: 11px; }"
+                "QPushButton:hover { background-color: #da190b; }"
+            )
+            delete_btn.clicked.connect(lambda: self.delete_row(i))
+            self.table.setCellWidget(i, 5, delete_btn)
+
+    def delete_row(self, row):
+        """Delete a row from the table."""
+        self.table.removeRow(row)
 
     def save_all_tanks(self):
         """Save all tanks from the table."""
@@ -2592,7 +2621,7 @@ class AddAccountHeadsDialog(QDialog):
             self.db_service = getattr(parent, 'db_service', None)
         
         self.setWindowTitle("Add Account Heads")
-        self.resize(1000, 500)
+        self.resize(1050, 600)
         self._center_on_screen()
         self.account_types = ["Revenue", "Expense", "Asset", "Liability", "Equity"]
         self.init_ui()
@@ -2618,7 +2647,8 @@ class AddAccountHeadsDialog(QDialog):
         # Create table widget
         self.table = QTableWidget()
         self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels(["Name", "Account Type", "Code", "Opening Balance (Rs)", "Outstanding (Rs)", "Description"])
+        self.table.setHorizontalHeaderLabels(["Name", "Account Type", "Code", "Opening Balance (Rs)", "Outstanding (Rs)", "Description", "Actions"])
+        self.table.setColumnCount(7)
         self.table.setAlternatingRowColors(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
@@ -2626,13 +2656,16 @@ class AddAccountHeadsDialog(QDialog):
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
         # Set column widths
-        self.table.setColumnWidth(0, 150)  # Name
-        self.table.setColumnWidth(1, 120)  # Account Type
-        self.table.setColumnWidth(2, 100)  # Code
-        self.table.setColumnWidth(3, 140)  # Opening Balance
-        self.table.setColumnWidth(4, 140)  # Outstanding
-        self.table.setColumnWidth(5, 250)  # Description
-        self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.setColumnCount(7)
+        self.table.setColumnWidth(0, 130)  # Name
+        self.table.setColumnWidth(1, 110)  # Account Type
+        self.table.setColumnWidth(2, 90)   # Code
+        self.table.setColumnWidth(3, 120)  # Opening Balance
+        self.table.setColumnWidth(4, 120)  # Outstanding
+        self.table.setColumnWidth(5, 140)  # Description
+        self.table.setColumnWidth(6, 100)  # Actions
+        self.table.horizontalHeader().setStretchLastSection(False)
+        self.table.verticalHeader().setDefaultSectionSize(40)
         layout.addWidget(self.table)
         
         # Add initial empty row
@@ -2701,6 +2734,18 @@ class AddAccountHeadsDialog(QDialog):
             
             # Description cell
             self.table.setItem(row, 5, QTableWidgetItem(""))
+            # Delete button
+            delete_btn = QPushButton("Delete")
+            delete_btn.setStyleSheet(
+                "QPushButton { background-color: #f44336; color: white; padding: 4px 10px; border-radius: 3px; font-size: 11px; }"
+                "QPushButton:hover { background-color: #da190b; }"
+            )
+            delete_btn.clicked.connect(lambda: self.delete_row(row))
+            self.table.setCellWidget(row, 6, delete_btn)
+
+    def delete_row(self, row):
+        """Delete a row from the table."""
+        self.table.removeRow(row)
 
     def save_all_account_heads(self):
         """Save all non-empty account heads to database."""
@@ -2823,7 +2868,7 @@ class AddNozzleDialog(QDialog):
             self.db_service = getattr(parent, 'db_service', None)
         
         self.setWindowTitle("Add Nozzles")
-        self.resize(1000, 500)
+        self.resize(1050, 600)
         self._center_on_screen()
         self.fuel_types = []
         self.load_fuel_types()
@@ -2850,7 +2895,8 @@ class AddNozzleDialog(QDialog):
         # Create table widget
         self.table = QTableWidget()
         self.table.setColumnCount(5)
-        self.table.setHorizontalHeaderLabels(["Machine ID", "Nozzle Number", "Fuel Type", "Opening Reading (L)", "Current Reading (L)"])
+        self.table.setHorizontalHeaderLabels(["Machine ID", "Nozzle Number", "Fuel Type", "Opening Reading (L)", "Current Reading (L)", "Actions"])
+        self.table.setColumnCount(6)
         self.table.setAlternatingRowColors(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
@@ -2858,11 +2904,15 @@ class AddNozzleDialog(QDialog):
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
         # Set column widths
-        self.table.setColumnWidth(0, 200)  # Machine ID
-        self.table.setColumnWidth(1, 120)  # Nozzle Number
-        self.table.setColumnWidth(2, 180)  # Fuel Type
-        self.table.setColumnWidth(3, 150)  # Opening Reading
-        self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.setColumnCount(6)
+        self.table.setColumnWidth(0, 160)  # Machine ID
+        self.table.setColumnWidth(1, 110)  # Nozzle Number
+        self.table.setColumnWidth(2, 150)  # Fuel Type
+        self.table.setColumnWidth(3, 130)  # Opening Reading
+        self.table.setColumnWidth(4, 130)  # Current Reading
+        self.table.setColumnWidth(5, 100)  # Actions
+        self.table.horizontalHeader().setStretchLastSection(False)
+        self.table.verticalHeader().setDefaultSectionSize(40)
         layout.addWidget(self.table)
         
         # Add initial empty row
@@ -2935,6 +2985,18 @@ class AddNozzleDialog(QDialog):
             current_item.setFlags(current_item.flags() & ~Qt.ItemIsEditable)  # Make read-only
             current_item.setBackground(QColor(240, 240, 240))  # Light gray background
             self.table.setItem(row, 4, current_item)
+            # Delete button
+            delete_btn = QPushButton("Delete")
+            delete_btn.setStyleSheet(
+                "QPushButton { background-color: #f44336; color: white; padding: 4px 10px; border-radius: 3px; font-size: 11px; }"
+                "QPushButton:hover { background-color: #da190b; }"
+            )
+            delete_btn.clicked.connect(lambda: self.delete_row(row))
+            self.table.setCellWidget(row, 5, delete_btn)
+
+    def delete_row(self, row):
+        """Delete a row from the table."""
+        self.table.removeRow(row)
 
     def load_fuel_types(self):
         """Load fuel types into memory."""
@@ -3081,10 +3143,14 @@ class RecordSaleDialog(QDialog):
         self.payment_methods = payment_methods if payment_methods is not None else []
         
         self.setWindowTitle("Record Sales")
-        self.resize(1200, 550)
+        self.resize(1280, 650)
         self._center_on_screen()
         self.load_data()
         self.init_ui()
+        
+        # Apply dialog styling
+        from src.ui.widgets.custom_widgets import apply_dialog_styling
+        apply_dialog_styling(self)
 
     def _center_on_screen(self):
         """Center dialog on screen."""
@@ -3106,24 +3172,35 @@ class RecordSaleDialog(QDialog):
 
         # Create table widget
         self.table = QTableWidget()
-        self.table.setColumnCount(8)
-        self.table.setHorizontalHeaderLabels(["Nozzle", "Fuel Type", "Opening Reading (L)", "Quantity (L)", "Closing Reading (L)", "Unit Price (Rs)", "Total (Rs)", "Account Head"])
+        self.table.setColumnCount(9)
+        self.table.setHorizontalHeaderLabels(["Nozzle", "Fuel Type", "Opening Reading (L)", "Quantity (L)", "Closing Reading (L)", "Unit Price (Rs)", "Total (Rs)", "Account Head", "Actions"])
         self.table.setAlternatingRowColors(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
             "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
-            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: black; background-color: white; }"
+            "QTableWidget::item:focus { background-color: #e3f2fd; color: black; border: 2px solid #2196F3; }"
+            "QLineEdit { color: black; background-color: white; border: 1px solid #ccc; padding: 2px; }"
+            "QLineEdit:focus { background-color: white; color: black; border: 2px solid #2196F3; }"
+            "QDoubleSpinBox { color: black; background-color: white; border: 1px solid #ccc; }"
+            "QDoubleSpinBox:focus { background-color: white; color: black; border: 2px solid #2196F3; }"
+            "QComboBox { color: black; background-color: white; border: 1px solid #ccc; }"
+            "QComboBox:focus { background-color: white; color: black; border: 2px solid #2196F3; }"
         )
         # Set column widths
-        self.table.setColumnWidth(0, 150)  # Nozzle
+        self.table.setColumnWidth(0, 140)  # Nozzle
         self.table.setColumnWidth(1, 120)  # Fuel Type
         self.table.setColumnWidth(2, 120)  # Opening Reading
-        self.table.setColumnWidth(3, 100)  # Quantity
+        self.table.setColumnWidth(3, 110)  # Quantity
         self.table.setColumnWidth(4, 120)  # Closing Reading
         self.table.setColumnWidth(5, 110)  # Unit Price
         self.table.setColumnWidth(6, 110)  # Total
-        self.table.setColumnWidth(7, 150)  # Account Head
-        self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.setColumnWidth(7, 180)  # Account Head
+        self.table.setColumnWidth(8, 100)  # Actions
+        self.table.horizontalHeader().setStretchLastSection(False)
+        
+        # Set row height for better visibility
+        self.table.verticalHeader().setDefaultSectionSize(40)
         layout.addWidget(self.table)
         
         # Add initial empty row
@@ -3198,6 +3275,7 @@ class RecordSaleDialog(QDialog):
             nozzle_combo.addItem("-- Select Nozzle --", "")
             for nozzle in self.nozzles:
                 nozzle_combo.addItem(f"Nozzle {nozzle.nozzle_number} - {nozzle.machine_id}", nozzle.id)
+            nozzle_combo.setStyleSheet("QComboBox { padding: 4px; font-size: 11px; }")
             nozzle_combo.currentIndexChanged.connect(lambda idx, r=row: self.on_nozzle_changed(r))
             self.table.setCellWidget(row, 0, nozzle_combo)
             
@@ -3207,6 +3285,7 @@ class RecordSaleDialog(QDialog):
             for fuel in self.fuel_types:
                 fuel_combo.addItem(fuel.name, fuel.id)
             fuel_combo.setEnabled(False)
+            fuel_combo.setStyleSheet("QComboBox { padding: 4px; font-size: 11px; }")
             self.table.setCellWidget(row, 1, fuel_combo)
             
             # Opening Reading cell (read-only, auto-fetched from nozzle)
@@ -3215,9 +3294,13 @@ class RecordSaleDialog(QDialog):
             opening_item.setBackground(QColor(240, 240, 240))  # Light gray background
             self.table.setItem(row, 2, opening_item)
             
-            # Quantity cell
-            qty_item = QTableWidgetItem("")
-            self.table.setItem(row, 3, qty_item)
+            # Quantity cell - use spin box for better input
+            qty_spin = QDoubleSpinBox()
+            qty_spin.setRange(0, 100000)
+            qty_spin.setDecimals(2)
+            qty_spin.setStyleSheet("QDoubleSpinBox { padding: 2px; margin: 2px; font-size: 11px; }")
+            qty_spin.valueChanged.connect(lambda: self.on_cell_changed(None))
+            self.table.setCellWidget(row, 3, qty_spin)
             
             # Closing Reading cell (read-only, auto-calculated)
             closing_item = QTableWidgetItem("0.00")
@@ -3225,9 +3308,13 @@ class RecordSaleDialog(QDialog):
             closing_item.setBackground(QColor(240, 240, 240))  # Light gray background
             self.table.setItem(row, 4, closing_item)
             
-            # Unit Price cell
-            price_item = QTableWidgetItem("")
-            self.table.setItem(row, 5, price_item)
+            # Unit Price cell - use spin box for better input
+            price_spin = QDoubleSpinBox()
+            price_spin.setRange(0, 100000)
+            price_spin.setDecimals(2)
+            price_spin.setStyleSheet("QDoubleSpinBox { padding: 2px; margin: 2px; font-size: 11px; }")
+            price_spin.valueChanged.connect(lambda: self.on_cell_changed(None))
+            self.table.setCellWidget(row, 5, price_spin)
             
             # Total cell (read-only, calculated)
             total_item = QTableWidgetItem("0.00")
@@ -3241,7 +3328,17 @@ class RecordSaleDialog(QDialog):
                 head_id = head.get('id', '')
                 head_name = head.get('name', '')
                 account_head_combo.addItem(head_name, head_id)
+            account_head_combo.setStyleSheet("QComboBox { padding: 4px; font-size: 11px; }")
             self.table.setCellWidget(row, 7, account_head_combo)
+            
+            # Delete button for the row
+            delete_btn = QPushButton("Delete")
+            delete_btn.setStyleSheet(
+                "QPushButton { background-color: #f44336; color: white; padding: 4px 10px; border-radius: 3px; font-size: 11px; }"
+                "QPushButton:hover { background-color: #da190b; }"
+            )
+            delete_btn.clicked.connect(lambda: self.delete_row(row))
+            self.table.setCellWidget(row, 8, delete_btn)
 
     def on_nozzle_changed(self, row):
         """Update fuel type and opening reading when nozzle changes."""
@@ -3261,28 +3358,83 @@ class RecordSaleDialog(QDialog):
                 try:
                     nozzle = self.nozzle_service.get_nozzle(nozzle_id)
                     if nozzle and opening_item:
-                        # Current reading = closing_reading if set, else opening_reading
-                        current_reading = nozzle.closing_reading if nozzle.closing_reading > 0 else nozzle.opening_reading
-                        opening_item.setText(f"{float(current_reading):.2f}")
+                        # Check if there's a previous row with the same nozzle
+                        previous_row = row - 1
+                        opening_reading = nozzle.closing_reading if nozzle.closing_reading > 0 else nozzle.opening_reading
+                        
+                        # If there's a previous row, use its closing reading as this row's opening reading
+                        if previous_row >= 0:
+                            prev_nozzle_combo = self.table.cellWidget(previous_row, 0)
+                            prev_closing_item = self.table.item(previous_row, 4)
+                            if prev_nozzle_combo and prev_nozzle_combo.currentData() == nozzle_id and prev_closing_item:
+                                prev_closing_text = prev_closing_item.text().strip()
+                                if prev_closing_text and prev_closing_text != "0.00":
+                                    try:
+                                        opening_reading = float(prev_closing_text)
+                                    except ValueError:
+                                        pass
+                        
+                        opening_item.setText(f"{float(opening_reading):.2f}")
                 except Exception as e:
                     print(f"Error fetching nozzle reading: {str(e)}")
 
+    def delete_row(self, row):
+        """Delete a row from the table and recalculate opening readings for remaining rows."""
+        self.table.removeRow(row)
+        # Recalculate opening readings for all rows after deletion
+        self.recalculate_all_opening_readings()
+
+    def recalculate_all_opening_readings(self):
+        """Recalculate opening readings for all rows after a row is deleted."""
+        for row in range(self.table.rowCount()):
+            nozzle_combo = self.table.cellWidget(row, 0)
+            opening_item = self.table.item(row, 2)
+            
+            if nozzle_combo and opening_item:
+                nozzle_id = nozzle_combo.currentData()
+                if nozzle_id and nozzle_id in self.nozzle_fuel_map:
+                    try:
+                        nozzle = self.nozzle_service.get_nozzle(nozzle_id)
+                        if nozzle:
+                            # Start with nozzle's current reading
+                            opening_reading = nozzle.closing_reading if nozzle.closing_reading > 0 else nozzle.opening_reading
+                            
+                            # If there's a previous row with the same nozzle, use its closing reading
+                            previous_row = row - 1
+                            if previous_row >= 0:
+                                prev_nozzle_combo = self.table.cellWidget(previous_row, 0)
+                                prev_closing_item = self.table.item(previous_row, 4)
+                                if prev_nozzle_combo and prev_nozzle_combo.currentData() == nozzle_id and prev_closing_item:
+                                    prev_closing_text = prev_closing_item.text().strip()
+                                    if prev_closing_text and prev_closing_text != "0.00":
+                                        try:
+                                            opening_reading = float(prev_closing_text)
+                                        except ValueError:
+                                            pass
+                            
+                            opening_item.setText(f"{float(opening_reading):.2f}")
+                    except Exception as e:
+                        print(f"Error recalculating opening reading: {str(e)}")
+
     def on_cell_changed(self, item):
         """Handle cell changes for calculations."""
-        self.table.itemChanged.disconnect(self.on_cell_changed)
+        try:
+            self.table.itemChanged.disconnect(self.on_cell_changed)
+        except:
+            pass
         
         # Calculate totals and closing readings for all rows
         for row in range(self.table.rowCount()):
             opening_item = self.table.item(row, 2)
-            qty_item = self.table.item(row, 3)
+            qty_widget = self.table.cellWidget(row, 3)
             closing_item = self.table.item(row, 4)
-            price_item = self.table.item(row, 5)
+            price_widget = self.table.cellWidget(row, 5)
             total_item = self.table.item(row, 6)
             
             try:
                 opening = float(opening_item.text()) if opening_item and opening_item.text() else 0
-                qty = float(qty_item.text()) if qty_item and qty_item.text() else 0
-                price = float(price_item.text()) if price_item and price_item.text() else 0
+                qty = qty_widget.value() if qty_widget and isinstance(qty_widget, QDoubleSpinBox) else 0
+                price = price_widget.value() if price_widget and isinstance(price_widget, QDoubleSpinBox) else 0
                 
                 # Calculate closing reading = opening + quantity
                 closing = opening + qty
@@ -3296,7 +3448,10 @@ class RecordSaleDialog(QDialog):
             except ValueError:
                 pass
         
-        self.table.itemChanged.connect(self.on_cell_changed)
+        try:
+            self.table.itemChanged.connect(self.on_cell_changed)
+        except:
+            pass
 
     def save_all_sales(self):
         """Save all non-empty sales to database."""
@@ -3310,16 +3465,16 @@ class RecordSaleDialog(QDialog):
                 nozzle_combo = self.table.cellWidget(row, 0)
                 fuel_combo = self.table.cellWidget(row, 1)
                 opening_item = self.table.item(row, 2)
-                qty_item = self.table.item(row, 3)
+                qty_widget = self.table.cellWidget(row, 3)
                 closing_item = self.table.item(row, 4)
-                price_item = self.table.item(row, 5)
+                price_widget = self.table.cellWidget(row, 5)
                 account_head_combo = self.table.cellWidget(row, 7)
                 
                 nozzle_id = nozzle_combo.currentData() if nozzle_combo else ""
                 opening_text = opening_item.text().strip() if opening_item else ""
-                qty_text = qty_item.text().strip() if qty_item else ""
+                qty_text = str(qty_widget.value()) if qty_widget and isinstance(qty_widget, QDoubleSpinBox) else ""
                 closing_text = closing_item.text().strip() if closing_item else ""
-                price_text = price_item.text().strip() if price_item else ""
+                price_text = str(price_widget.value()) if price_widget and isinstance(price_widget, QDoubleSpinBox) else ""
                 account_head_id = account_head_combo.currentData() if account_head_combo else ""
                 
                 # Skip empty rows
@@ -3656,7 +3811,7 @@ class AddCustomerDialog(QDialog):
         self.customer_types = ["Retail", "Wholesale", "Commercial"]
         
         self.setWindowTitle("Add Customers")
-        self.resize(1000, 500)
+        self.resize(1050, 600)
         self._center_on_screen()
         self.init_ui()
 
@@ -3681,7 +3836,8 @@ class AddCustomerDialog(QDialog):
         # Create table widget
         self.table = QTableWidget()
         self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels(["Name", "Phone", "Email", "Address", "Credit Limit (Rs)", "Type"])
+        self.table.setHorizontalHeaderLabels(["Name", "Phone", "Email", "Address", "Credit Limit (Rs)", "Type", "Actions"])
+        self.table.setColumnCount(7)
         self.table.setAlternatingRowColors(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
@@ -3689,13 +3845,16 @@ class AddCustomerDialog(QDialog):
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
         # Set column widths - Name/Address/Email wider, numeric fields narrower
-        self.table.setColumnWidth(0, 180)  # Name
-        self.table.setColumnWidth(1, 120)  # Phone
-        self.table.setColumnWidth(2, 180)  # Email
-        self.table.setColumnWidth(3, 200)  # Address
+        self.table.setColumnCount(7)
+        self.table.setColumnWidth(0, 140)  # Name
+        self.table.setColumnWidth(1, 110)  # Phone
+        self.table.setColumnWidth(2, 150)  # Email
+        self.table.setColumnWidth(3, 160)  # Address
         self.table.setColumnWidth(4, 120)  # Credit Limit
-        self.table.setColumnWidth(5, 100)  # Type
-        self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.setColumnWidth(5, 90)   # Type
+        self.table.setColumnWidth(6, 100)  # Actions
+        self.table.horizontalHeader().setStretchLastSection(False)
+        self.table.verticalHeader().setDefaultSectionSize(40)
         layout.addWidget(self.table)
         
         # Add initial empty row
@@ -3764,6 +3923,18 @@ class AddCustomerDialog(QDialog):
             type_combo = QComboBox()
             type_combo.addItems(self.customer_types)
             self.table.setCellWidget(row, 5, type_combo)
+            # Delete button
+            delete_btn = QPushButton("Delete")
+            delete_btn.setStyleSheet(
+                "QPushButton { background-color: #f44336; color: white; padding: 4px 10px; border-radius: 3px; font-size: 11px; }"
+                "QPushButton:hover { background-color: #da190b; }"
+            )
+            delete_btn.clicked.connect(lambda: self.delete_row(row))
+            self.table.setCellWidget(row, 6, delete_btn)
+
+    def delete_row(self, row):
+        """Delete a row from the table."""
+        self.table.removeRow(row)
 
     def save_all_customers(self):
         """Save all non-empty customers to database."""
@@ -3890,7 +4061,7 @@ class RecordPurchaseDialog(QDialog):
         self.account_head_balances = {}  # Store current balances for account heads
         
         self.setWindowTitle("Record Purchases")
-        self.resize(1100, 550)
+        self.resize(1180, 650)
         self._center_on_screen()
         self.load_tanks()
         self.load_account_heads()
@@ -3917,7 +4088,8 @@ class RecordPurchaseDialog(QDialog):
         # Create table widget
         self.table = QTableWidget()
         self.table.setColumnCount(7)
-        self.table.setHorizontalHeaderLabels(["Tank", "Supplier Name", "Quantity (L)", "Unit Cost (Rs)", "Total (Rs)", "Account Head", "Invoice Number"])
+        self.table.setHorizontalHeaderLabels(["Tank", "Supplier Name", "Quantity (L)", "Unit Cost (Rs)", "Total (Rs)", "Account Head", "Invoice Number", "Actions"])
+        self.table.setColumnCount(8)
         self.table.setAlternatingRowColors(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
@@ -3925,13 +4097,17 @@ class RecordPurchaseDialog(QDialog):
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
         # Set column widths - Supplier wider, numeric fields narrower
-        self.table.setColumnWidth(0, 150)  # Tank
-        self.table.setColumnWidth(1, 200)  # Supplier Name
+        self.table.setColumnCount(8)
+        self.table.setColumnWidth(0, 110)  # Tank
+        self.table.setColumnWidth(1, 130)  # Supplier Name
         self.table.setColumnWidth(2, 100)  # Quantity
-        self.table.setColumnWidth(3, 120)  # Unit Cost
-        self.table.setColumnWidth(4, 120)  # Total
-        self.table.setColumnWidth(5, 150)  # Account Head
-        self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.setColumnWidth(3, 100)  # Unit Cost
+        self.table.setColumnWidth(4, 100)  # Total
+        self.table.setColumnWidth(5, 160)  # Account Head
+        self.table.setColumnWidth(6, 110)  # Invoice Number
+        self.table.setColumnWidth(7, 100)  # Actions
+        self.table.horizontalHeader().setStretchLastSection(False)
+        self.table.verticalHeader().setDefaultSectionSize(40)
         layout.addWidget(self.table)
         
         # Add initial empty row
@@ -4055,6 +4231,18 @@ class RecordPurchaseDialog(QDialog):
             
             # Invoice Number cell
             self.table.setItem(row, 6, QTableWidgetItem(""))
+            # Delete button
+            delete_btn = QPushButton("Delete")
+            delete_btn.setStyleSheet(
+                "QPushButton { background-color: #f44336; color: white; padding: 4px 10px; border-radius: 3px; font-size: 11px; }"
+                "QPushButton:hover { background-color: #da190b; }"
+            )
+            delete_btn.clicked.connect(lambda: self.delete_row(row))
+            self.table.setCellWidget(row, 7, delete_btn)
+
+    def delete_row(self, row):
+        """Delete a row from the table."""
+        self.table.removeRow(row)
 
     def on_account_head_changed(self, row):
         """Handle account head selection changes and display projected balance."""
@@ -4432,7 +4620,7 @@ class RecordExpenseDialog(QDialog):
         self.account_head_names = [acc.get('name', '') for acc in self.account_heads]
         
         self.setWindowTitle("Record Expenses")
-        self.resize(1200, 500)
+        self.resize(1000, 650)
         self._center_on_screen()
         self.init_ui()
 
@@ -4457,7 +4645,8 @@ class RecordExpenseDialog(QDialog):
         # Create table widget
         self.table = QTableWidget()
         self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels(["Category", "Description", "Amount (Rs)", "Account Head", "Reference No.", "Notes"])
+        self.table.setHorizontalHeaderLabels(["Category", "Description", "Amount (Rs)", "Account Head", "Reference No.", "Notes", "Actions"])
+        self.table.setColumnCount(7)
         self.table.setAlternatingRowColors(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
@@ -4465,13 +4654,16 @@ class RecordExpenseDialog(QDialog):
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
         # Set column widths
-        self.table.setColumnWidth(0, 130)  # Category
-        self.table.setColumnWidth(1, 200)  # Description
+        self.table.setColumnCount(7)
+        self.table.setColumnWidth(0, 100)  # Category
+        self.table.setColumnWidth(1, 140)  # Description
         self.table.setColumnWidth(2, 100)  # Amount
-        self.table.setColumnWidth(3, 150)  # Account Head
-        self.table.setColumnWidth(4, 110)  # Reference No.
-        self.table.setColumnWidth(5, 200)  # Notes
-        self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.setColumnWidth(3, 160)  # Account Head
+        self.table.setColumnWidth(4, 100)  # Reference No.
+        self.table.setColumnWidth(5, 140)  # Notes
+        self.table.setColumnWidth(6, 100)  # Actions
+        self.table.horizontalHeader().setStretchLastSection(False)
+        self.table.verticalHeader().setDefaultSectionSize(40)
         layout.addWidget(self.table)
         
         # Add initial empty row
@@ -4542,6 +4734,18 @@ class RecordExpenseDialog(QDialog):
             
             # Notes cell
             self.table.setItem(row, 5, QTableWidgetItem(""))
+            # Delete button
+            delete_btn = QPushButton("Delete")
+            delete_btn.setStyleSheet(
+                "QPushButton { background-color: #f44336; color: white; padding: 4px 10px; border-radius: 3px; font-size: 11px; }"
+                "QPushButton:hover { background-color: #da190b; }"
+            )
+            delete_btn.clicked.connect(lambda: self.delete_row(row))
+            self.table.setCellWidget(row, 6, delete_btn)
+
+    def delete_row(self, row):
+        """Delete a row from the table."""
+        self.table.removeRow(row)
 
     def save_all_expenses(self):
         """Save all non-empty expenses to database."""
