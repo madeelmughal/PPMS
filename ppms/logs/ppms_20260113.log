@@ -1,0 +1,508 @@
+2026-01-13 13:18:40 - src.main - INFO - Firebase initialized successfully
+2026-01-13 13:18:42 - src.main - INFO - PPMS Application initialized
+2026-01-13 13:18:47 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-13 13:18:47 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-13 13:18:48 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:19:18 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:19:48 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:20:18 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:20:48 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:21:18 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:21:48 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:22:18 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:22:48 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:23:18 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:23:48 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:24:18 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:24:48 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:25:18 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:25:48 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:26:18 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:42:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:43:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:43:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:44:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:44:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:45:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:45:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:46:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:46:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:47:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:47:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:48:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:48:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:49:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:49:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:50:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:50:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:51:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:51:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:52:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:52:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:53:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:53:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:54:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:54:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:55:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:55:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:56:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:56:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:57:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:57:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:58:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:58:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:59:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 13:59:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:00:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:00:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:01:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:01:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:02:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:02:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:03:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:03:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:04:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:04:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:05:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:05:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:06:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:06:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:07:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:07:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:08:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:08:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:09:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:09:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:10:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:10:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:11:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:11:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:12:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:12:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:13:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:13:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:14:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:14:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:15:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:15:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:16:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:16:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:17:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:17:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:18:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:18:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:19:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:19:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:20:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:20:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:21:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:21:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:22:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:22:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:23:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:23:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:24:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:24:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:25:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:25:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:26:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:26:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:27:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:27:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:28:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:28:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:29:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:29:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:30:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:30:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:31:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:31:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:32:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:32:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:33:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:33:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:34:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:34:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:35:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:35:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:36:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:36:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:37:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:37:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:38:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:38:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:39:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:39:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:40:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:40:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:41:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:41:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:42:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:42:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:43:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:43:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:44:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:44:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:45:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:45:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:46:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:46:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:47:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:47:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:48:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:48:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:49:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:49:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:50:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:50:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:51:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:51:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:52:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:52:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:53:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:53:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:54:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:54:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:55:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:55:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:56:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:56:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:57:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:57:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:58:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:58:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:59:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 14:59:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:00:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:00:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:01:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:01:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:02:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:02:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:03:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:03:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:04:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:04:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:05:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:05:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:06:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:06:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:07:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:07:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:08:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:08:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:09:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:09:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:10:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:10:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:11:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:11:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:12:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:12:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:13:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:13:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:14:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:14:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:15:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:15:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:16:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:16:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:17:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:17:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:18:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:18:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:19:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:19:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:20:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:20:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:21:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:21:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:22:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:22:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:23:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:23:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:24:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:24:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:25:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:25:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:26:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:26:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:27:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:27:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:28:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:28:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:29:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:29:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:30:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:30:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:31:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:31:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:32:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:32:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:33:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:33:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:34:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:34:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:35:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:35:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:36:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:36:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:37:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:37:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:38:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:38:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:39:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:39:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:40:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:40:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:41:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:41:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:42:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:42:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:43:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:43:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:44:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:44:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:45:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:45:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:46:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:46:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:47:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:47:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:48:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:48:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:49:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:49:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:50:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:50:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:51:04 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:51:34 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:51:59 - src.main - INFO - Application closing
+2026-01-13 15:54:55 - src.main - INFO - Firebase initialized successfully
+2026-01-13 15:54:57 - src.main - INFO - PPMS Application initialized
+2026-01-13 15:55:03 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-13 15:55:03 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-13 15:55:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:55:32 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2026-01-13 15:55:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:56:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:56:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:57:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:57:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:58:02 - src.main - INFO - Application closing
+2026-01-13 15:58:20 - src.main - INFO - Firebase initialized successfully
+2026-01-13 15:58:21 - src.main - INFO - PPMS Application initialized
+2026-01-13 15:58:39 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-13 15:58:39 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-13 15:58:39 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 3
+2026-01-13 15:58:39 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed 0 sales for monthly chart
+2026-01-13 15:58:39 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Monthly sales: {'01': 0, '12': 0, '11': 0, '10': 0, '09': 0, '08': 0, '07': 0, '06': 0, '05': 0, '04': 0, '03': 0, '02': 0}
+2026-01-13 15:58:39 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 15:58:53 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2026-01-13 15:59:07 - src.services.database_service - INFO - Document created: sales/56d9f5bb-3f18-48cd-aaf1-6d52471c8c18
+2026-01-13 15:59:07 - src.services.database_service - INFO - Document updated: tanks/af3d13b1-2330-4062-be7b-9c096e643c82
+2026-01-13 15:59:07 - src.services.database_service - INFO - Document updated: nozzles/d7e097a7-5ecb-49e2-a311-0bd3dfcae1ab
+2026-01-13 15:59:09 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:01:09 - src.main - INFO - Firebase initialized successfully
+2026-01-13 16:01:10 - src.main - INFO - PPMS Application initialized
+2026-01-13 16:01:15 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-13 16:01:15 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-13 16:01:15 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 4
+2026-01-13 16:01:15 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed 4 sales for monthly chart
+2026-01-13 16:01:15 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Monthly sales: {'01': 1140000.0, '12': 0, '11': 0, '10': 0, '09': 0, '08': 0, '07': 0, '06': 0, '05': 0, '04': 0, '03': 0, '02': 0}
+2026-01-13 16:01:16 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:01:46 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:02:16 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:02:46 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:03:16 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:03:46 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:04:08 - src.main - INFO - Application closing
+2026-01-13 16:06:54 - src.main - INFO - Firebase initialized successfully
+2026-01-13 16:06:55 - src.main - INFO - PPMS Application initialized
+2026-01-13 16:07:01 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-13 16:07:01 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-13 16:07:01 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 4, purchases: 2, expenses: 1
+2026-01-13 16:07:01 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 4, Purchases: 2, Expenses: 1
+2026-01-13 16:07:01 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:07:24 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-13 16:07:31 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:07:41 - src.services.database_service - INFO - Document created: expenses/1484af71-31de-4568-a045-1ac2cc920a2a
+2026-01-13 16:08:01 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:08:31 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:08:39 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2026-01-13 16:13:51 - src.main - INFO - Firebase initialized successfully
+2026-01-13 16:13:52 - src.main - INFO - PPMS Application initialized
+2026-01-13 16:13:56 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-13 16:13:56 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-13 16:13:56 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 4, purchases: 2, expenses: 2
+2026-01-13 16:13:56 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 4, Purchases: 2, Expenses: 2
+2026-01-13 16:13:56 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:14:25 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2026-01-13 16:14:26 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:14:38 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-13 16:14:56 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:17:09 - src.main - INFO - Firebase initialized successfully
+2026-01-13 16:17:09 - src.main - INFO - PPMS Application initialized
+2026-01-13 16:17:17 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-13 16:17:17 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-13 16:17:17 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 4, purchases: 2, expenses: 2
+2026-01-13 16:17:17 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 4, Purchases: 2, Expenses: 2
+2026-01-13 16:17:17 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:17:31 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2026-01-13 16:17:39 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-13 16:17:47 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:17:52 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-13 16:18:00 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2026-01-13 16:18:17 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:19:22 - src.main - INFO - Firebase initialized successfully
+2026-01-13 16:19:23 - src.main - INFO - PPMS Application initialized
+2026-01-13 16:19:28 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-13 16:19:28 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-13 16:19:28 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 4, purchases: 2, expenses: 2
+2026-01-13 16:19:28 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 4, Purchases: 2, Expenses: 2
+2026-01-13 16:19:28 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:19:58 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:20:28 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:20:58 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:21:28 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:21:58 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:22:28 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:22:46 - src.main - INFO - Application closing
+2026-01-13 16:25:27 - src.main - INFO - Firebase initialized successfully
+2026-01-13 16:25:28 - src.main - INFO - PPMS Application initialized
+2026-01-13 16:25:33 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-13 16:25:33 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-13 16:25:33 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 4, purchases: 2, expenses: 2
+2026-01-13 16:25:33 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 4, Purchases: 2, Expenses: 2
+2026-01-13 16:25:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:25:54 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-13 16:25:57 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2026-01-13 16:26:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:26:04 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-13 16:26:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:27:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:27:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:28:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:28:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:29:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:29:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:30:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:30:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:31:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:31:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:32:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:32:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:33:03 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:33:33 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:33:46 - src.main - INFO - Application closing
+2026-01-13 16:42:43 - src.main - INFO - Firebase initialized successfully
+2026-01-13 16:42:44 - src.main - INFO - PPMS Application initialized
+2026-01-13 16:42:51 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-13 16:42:51 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-13 16:42:51 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 4, purchases: 2, expenses: 2
+2026-01-13 16:42:51 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 4, Purchases: 2, Expenses: 2
+2026-01-13 16:42:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:43:03 - src.services.database_service - INFO - Loaded 2 payment methods from account heads
+2026-01-13 16:43:10 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-13 16:43:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:43:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:44:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:44:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:45:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:45:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:46:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:46:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:47:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:47:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:48:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:48:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:49:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:49:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:50:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:50:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:51:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:51:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:52:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:52:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:53:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:53:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:54:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:54:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:55:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:55:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:56:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:56:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:57:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:57:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:58:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:58:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:59:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 16:59:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:00:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:00:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:01:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:01:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:02:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:02:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:03:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:03:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:04:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:04:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:05:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:05:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:06:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:06:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:07:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:07:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:08:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:08:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:09:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:09:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:10:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:10:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:11:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:11:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:12:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:12:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:13:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:13:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:14:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:14:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:15:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:15:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:16:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:16:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:17:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:17:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:18:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:18:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:19:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:19:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:20:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:20:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:21:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:21:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:22:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:22:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:23:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:23:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:24:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:24:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:25:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:25:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:26:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:26:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:27:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:27:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:28:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:28:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:29:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:29:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:30:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:30:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:31:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:31:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:32:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:32:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:33:21 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-13 17:33:51 - src.services.database_service - INFO - Loaded 3 payment methods from account heads

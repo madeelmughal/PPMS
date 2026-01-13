@@ -369,7 +369,7 @@ Notes: {customer.notes or 'No notes'}
         reply = QMessageBox.question(
             self,
             "Confirm Delete",
-            f"Are you sure you want to delete '{customer.name}'?",
+            f"Delete Customer #{customer.id}?\nName: {customer.name}",
             QMessageBox.Yes | QMessageBox.No
         )
 

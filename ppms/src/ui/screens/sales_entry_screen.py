@@ -491,7 +491,7 @@ class SalesEntryScreen(QWidget):
         reply = QMessageBox.question(
             self,
             "Confirm Delete",
-            f"Are you sure you want to delete this sale (Rs. {sale.total_amount})?\nInventory will be restored.",
+            f"Delete Sale #{sale.id}?\nAmount: Rs. {sale.total_amount}\nInventory will be restored.",
             QMessageBox.Yes | QMessageBox.No
         )
 

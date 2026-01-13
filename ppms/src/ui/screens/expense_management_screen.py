@@ -426,7 +426,7 @@ class ExpenseManagementScreen(QWidget):
         reply = QMessageBox.question(
             self,
             "Confirm Delete",
-            f"Are you sure you want to delete this expense (Rs. {expense.amount})?",
+            f"Delete Expense #{expense.id}?\nCategory: {expense.category}\nAmount: Rs. {expense.amount}",
             QMessageBox.Yes | QMessageBox.No
         )
 

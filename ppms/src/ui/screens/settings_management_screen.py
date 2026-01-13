@@ -600,7 +600,7 @@ class SettingsManagementScreen(QWidget):
         reply = QMessageBox.question(
             self,
             "Confirm Delete",
-            f"Are you sure you want to delete '{user.name}'?",
+            f"Delete User #{user.id}?\nName: {user.name}\nRole: {user.role}",
             QMessageBox.Yes | QMessageBox.No
         )
 
@@ -744,7 +744,7 @@ class SettingsManagementScreen(QWidget):
         reply = QMessageBox.question(
             self,
             "Confirm Delete",
-            f"Are you sure you want to delete payment method '{account_head.get('name')}'?",
+            f"Delete Payment Method #{account_head.get('id')}?\nName: {account_head.get('name')}\nType: {account_head.get('head_type')}",
             QMessageBox.Yes | QMessageBox.No
         )
 

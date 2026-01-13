@@ -489,7 +489,7 @@ Notes: {shift.notes or 'No notes'}
         reply = QMessageBox.question(
             self,
             "Confirm Delete",
-            f"Are you sure you want to delete this shift?",
+            f"Delete Shift #{shift.id}?\nThis will permanently delete the shift record.",
             QMessageBox.Yes | QMessageBox.No
         )
 

@@ -813,43 +813,191 @@ class DashboardScreen(QMainWindow):
         self.setCentralWidget(central_widget)
 
     def create_demo_bar_chart(self, title, height):
-        """Create a professional bar chart using matplotlib."""
+        """Create a professional bar chart with real monthly sales, purchases, and expenses from database."""
+        from collections import defaultdict
+        from datetime import datetime, timedelta
+        
+        try:
+            # Get all sales, purchases, and expenses data
+            all_sales = self.sales_service.list_documents('sales')
+            all_purchases = self.sales_service.list_documents('purchases')
+            all_expenses = self.sales_service.list_documents('expenses')
+            
+            logger.info(f"[DEBUG] Total sales fetched: {len(all_sales)}, purchases: {len(all_purchases)}, expenses: {len(all_expenses)}")
+            
+            # Initialize months data for the last 12 months
+            months_map = {
+                0: "Jan", 1: "Feb", 2: "Mar", 3: "Apr", 4: "May", 5: "Jun",
+                6: "Jul", 7: "Aug", 8: "Sep", 9: "Oct", 10: "Nov", 11: "Dec"
+            }
+            
+            # Get last 12 months data
+            today = datetime.now()
+            monthly_sales = defaultdict(float)
+            monthly_purchases = defaultdict(float)
+            monthly_expenses = defaultdict(float)
+            
+            for i in range(12):
+                # Calculate date 12 months back
+                target_date = today - timedelta(days=i*30)
+                month_key = target_date.strftime("%m")  # "01", "02", etc
+                monthly_sales[month_key] = 0
+                monthly_purchases[month_key] = 0
+                monthly_expenses[month_key] = 0
+            
+            # Helper function to parse date
+            def parse_date_str(date_str):
+                """Parse date string in various formats."""
+                if not date_str:
+                    return None
+                try:
+                    if 'T' in date_str:
+                        date_part = date_str.split('T')[0]
+                        return datetime.strptime(date_part, "%Y-%m-%d")
+                    else:
+                        return datetime.strptime(date_str, "%Y-%m-%d")
+                except:
+                    try:
+                        return datetime.strptime(date_str, "%d/%m/%Y")
+                    except:
+                        return None
+            
+            # Aggregate sales by month
+            sales_count = 0
+            for sale in all_sales:
+                try:
+                    if isinstance(sale, dict):
+                        date_str = sale.get('date') or sale.get('sale_date', '')
+                        total_amount = float(sale.get('total_amount', 0))
+                        
+                        sale_date = parse_date_str(date_str)
+                        if sale_date:
+                            month_key = sale_date.strftime("%m")
+                            year_key = sale_date.strftime("%Y")
+                            current_year = today.year
+                            if int(year_key) >= current_year - 1:
+                                if month_key in monthly_sales:
+                                    monthly_sales[month_key] += total_amount
+                                    sales_count += 1
+                except Exception as e:
+                    logger.warning(f"Error processing sale: {e}")
+                    continue
+            
+            # Aggregate purchases by month
+            purchases_count = 0
+            for purchase in all_purchases:
+                try:
+                    if isinstance(purchase, dict):
+                        date_str = purchase.get('date') or purchase.get('purchase_date', '')
+                        total_cost = float(purchase.get('total_cost', 0))
+                        
+                        purchase_date = parse_date_str(date_str)
+                        if purchase_date:
+                            month_key = purchase_date.strftime("%m")
+                            year_key = purchase_date.strftime("%Y")
+                            current_year = today.year
+                            if int(year_key) >= current_year - 1:
+                                if month_key in monthly_purchases:
+                                    monthly_purchases[month_key] += total_cost
+                                    purchases_count += 1
+                except Exception as e:
+                    logger.warning(f"Error processing purchase: {e}")
+                    continue
+            
+            # Aggregate expenses by month
+            expenses_count = 0
+            for expense in all_expenses:
+                try:
+                    if isinstance(expense, dict):
+                        date_str = expense.get('date') or expense.get('expense_date', '')
+                        amount = float(expense.get('amount', 0))
+                        
+                        expense_date = parse_date_str(date_str)
+                        if expense_date:
+                            month_key = expense_date.strftime("%m")
+                            year_key = expense_date.strftime("%Y")
+                            current_year = today.year
+                            if int(year_key) >= current_year - 1:
+                                if month_key in monthly_expenses:
+                                    monthly_expenses[month_key] += amount
+                                    expenses_count += 1
+                except Exception as e:
+                    logger.warning(f"Error processing expense: {e}")
+                    continue
+            
+            logger.info(f"[DEBUG] Processed - Sales: {sales_count}, Purchases: {purchases_count}, Expenses: {expenses_count}")
+            
+            # Prepare data for chart (last 12 months in order)
+            months = []
+            vendas = []
+            compras = []
+            despesas = []
+            
+            for i in range(11, -1, -1):
+                target_date = today - timedelta(days=i*30)
+                month_num = target_date.month - 1
+                month_name = months_map[month_num]
+                months.append(month_name)
+                
+                month_key = target_date.strftime("%m")
+                vendas.append(monthly_sales.get(month_key, 0))
+                compras.append(monthly_purchases.get(month_key, 0))
+                despesas.append(monthly_expenses.get(month_key, 0))
+            
+        except Exception as e:
+            logger.error(f"Error fetching financial data: {e}")
+            # Fallback to empty data
+            months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            vendas = [0] * 12
+            compras = [0] * 12
+            despesas = [0] * 12
+        
         # Create figure and axis
         fig = Figure(figsize=(12, 3.5), dpi=100, facecolor='white')
         ax = fig.add_subplot(111)
         
-        # Data
-        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
-        vendas = [3, 3, 5, 2, 5, 7, 0, 0, 0, 0, 0, 0]
-        meta = [3, 3, 5, 2, 5, 7, 0, 0, 0, 0, 0, 0]
-        
         # Position for bars
         x = np.arange(len(months))
-        width = 0.35
+        width = 0.25
         
         # Create bars
-        bars1 = ax.bar(x - width/2, vendas, width, label='Vendas', color='#FFC107', edgecolor='none')
-        bars2 = ax.bar(x + width/2, meta, width, label='Meta', color='#FFB74D', edgecolor='none')
+        bars1 = ax.bar(x - width, vendas, width, label='Sales (PKR)', color='#27AE60', edgecolor='none')
+        bars2 = ax.bar(x, compras, width, label='Purchases (PKR)', color='#E67E22', edgecolor='none')
+        bars3 = ax.bar(x + width, despesas, width, label='Expenses (PKR)', color='#E74C3C', edgecolor='none')
         
         # Add value labels on top of bars
         for bar in bars1:
             height_bar = bar.get_height()
             if height_bar > 0:
                 ax.text(bar.get_x() + bar.get_width()/2., height_bar,
-                        f'{int(height_bar)}', ha='center', va='bottom', fontsize=9, fontweight='bold', color='#FFC107')
+                        f'₨{height_bar/100000:.1f}L', ha='center', va='bottom', fontsize=7, fontweight='bold', color='#27AE60')
         
         for bar in bars2:
             height_bar = bar.get_height()
             if height_bar > 0:
                 ax.text(bar.get_x() + bar.get_width()/2., height_bar,
-                        f'{int(height_bar)}', ha='center', va='bottom', fontsize=9, fontweight='bold', color='#FFB74D')
+                        f'₨{height_bar/100000:.1f}L', ha='center', va='bottom', fontsize=7, fontweight='bold', color='#E67E22')
+        
+        for bar in bars3:
+            height_bar = bar.get_height()
+            if height_bar > 0:
+                ax.text(bar.get_x() + bar.get_width()/2., height_bar,
+                        f'₨{height_bar/100000:.1f}L', ha='center', va='bottom', fontsize=7, fontweight='bold', color='#E74C3C')
         
         # Customize chart
-        ax.set_ylabel('', fontsize=10)
+        ax.set_ylabel('Amount (PKR)', fontsize=10)
         ax.set_xticks(x)
         ax.set_xticklabels(months, fontsize=10, fontweight='bold')
-        ax.set_ylim(0, 8)
-        ax.legend(loc='upper left', fontsize=10, frameon=False)
+        
+        # Set y-axis limit based on actual data
+        max_val = max(
+            max(vendas) if vendas else 0, 
+            max(compras) if compras else 0,
+            max(despesas) if despesas else 0
+        )
+        ax.set_ylim(0, max_val * 1.15 if max_val > 0 else 1000000)
+        
+        ax.legend(loc='upper left', fontsize=9, frameon=False)
         ax.grid(axis='y', alpha=0.3, linestyle='--')
         ax.set_axisbelow(True)
         
@@ -867,26 +1015,60 @@ class DashboardScreen(QMainWindow):
         return canvas
 
     def create_demo_customer_list(self, title, height):
-        """Create a professional bar chart for top customers using matplotlib."""
+        """Create a professional bar chart for top customers with real data from database."""
+        from collections import defaultdict
+        
+        try:
+            # Get all sales data
+            all_sales = self.sales_service.list_documents('sales')
+            
+            # Aggregate sales by customer
+            customer_totals = defaultdict(float)
+            
+            for sale in all_sales:
+                try:
+                    if isinstance(sale, dict):
+                        customer_name = sale.get('customer_name', 'Unknown')
+                        total_amount = float(sale.get('total_amount', 0))
+                        
+                        if customer_name and customer_name != 'Unknown':
+                            customer_totals[customer_name] += total_amount
+                except Exception as e:
+                    logger.warning(f"Error processing sale: {e}")
+                    continue
+            
+            # Sort by amount and get top 5
+            sorted_customers = sorted(customer_totals.items(), key=lambda x: x[1], reverse=True)[:5]
+            
+            if sorted_customers:
+                customers = [name for name, _ in sorted_customers]
+                amounts = [amount for _, amount in sorted_customers]
+            else:
+                # No customer data
+                customers = ["No Data"]
+                amounts = [0]
+            
+        except Exception as e:
+            logger.error(f"Error fetching customer data: {e}")
+            # Fallback to empty data
+            customers = ["No Data"]
+            amounts = [0]
+        
         # Create figure and axis
         fig = Figure(figsize=(5, 3.5), dpi=100, facecolor='white')
         ax = fig.add_subplot(111)
         
-        # Data
-        customers = ["Petrol Corp", "Fuel Systems", "Energy Solutions", "Transport Hub", "Commercial Fleet"]
-        amounts = [45250, 38900, 32150, 28500, 24300]
-        
-        # Create horizontal bars
-        colors = ['#2196F3', '#1976D2', '#1565C0', '#0D47A1', '#0A3F7B']
+        # Create horizontal bars with color gradient
+        colors = ['#2196F3', '#1976D2', '#1565C0', '#0D47A1', '#0A3F7B'][:len(customers)]
         bars = ax.barh(customers, amounts, color=colors, edgecolor='none')
         
         # Add value labels
         for i, (bar, amount) in enumerate(zip(bars, amounts)):
-            ax.text(amount, bar.get_y() + bar.get_height()/2, f'₹ {amount:,}',
-                    ha='left', va='center', fontsize=10, fontweight='bold', color='#1a2332')
+            ax.text(amount, bar.get_y() + bar.get_height()/2, f'₹ {amount:,.0f}',
+                    ha='left', va='center', fontsize=9, fontweight='bold', color='#1a2332')
         
         # Customize chart
-        ax.set_xlabel('', fontsize=10)
+        ax.set_xlabel('Amount (₹)', fontsize=10)
         ax.set_ylim(-0.5, len(customers) - 0.5)
         ax.grid(axis='x', alpha=0.3, linestyle='--')
         ax.set_axisbelow(True)
@@ -906,43 +1088,97 @@ class DashboardScreen(QMainWindow):
         return canvas
 
     def create_demo_fuel_chart(self, title, height):
-        """Create a line chart for fuel type distribution using matplotlib."""
+        """Create a pie chart for fuel type distribution with real data from database."""
+        from collections import defaultdict
+        
+        try:
+            # Get all sales data
+            all_sales = self.sales_service.list_documents('sales')
+            
+            # Get fuel types mapping
+            fuel_types = {}
+            try:
+                all_fuels = self.fuel_service.list_documents('fuel_types')
+                for fuel in all_fuels:
+                    if isinstance(fuel, dict):
+                        fuel_id = fuel.get('id') or fuel.get('fuel_type_id')
+                        fuel_name = fuel.get('fuel_type', fuel.get('name', 'Unknown'))
+                        fuel_types[fuel_id] = fuel_name
+            except:
+                pass
+            
+            # Aggregate quantities by fuel type
+            fuel_distribution = defaultdict(float)
+            
+            for sale in all_sales:
+                try:
+                    if isinstance(sale, dict):
+                        fuel_id = sale.get('fuel_type_id')
+                        quantity = float(sale.get('quantity', 0))
+                        
+                        if fuel_id and quantity > 0:
+                            fuel_name = fuel_types.get(fuel_id, fuel_id)
+                            fuel_distribution[fuel_name] += quantity
+                except Exception as e:
+                    logger.warning(f"Error processing sale: {e}")
+                    continue
+            
+            # Prepare data for pie chart
+            if fuel_distribution:
+                labels = list(fuel_distribution.keys())
+                sizes = list(fuel_distribution.values())
+            else:
+                # No fuel data
+                labels = ["No Data"]
+                sizes = [1]
+        
+        except Exception as e:
+            logger.error(f"Error fetching fuel data: {e}")
+            # Fallback to empty data
+            labels = ["No Data"]
+            sizes = [1]
+        
         # Create figure and axis
         fig = Figure(figsize=(5, 3.5), dpi=100, facecolor='white')
         ax = fig.add_subplot(111)
         
-        # Data - Fuel types and their monthly distribution
-        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-        petrol = [45, 48, 42, 50, 55, 60]
-        diesel = [35, 32, 38, 30, 28, 25]
-        cng = [15, 16, 15, 14, 12, 10]
-        lpg = [5, 4, 5, 6, 5, 5]
+        # Define colors for different fuel types
+        colors_map = {
+            'Petrol': '#FFC107',
+            'Diesel': '#FF9800',
+            'CNG': '#2196F3',
+            'LPG': '#9C27B0',
+            'E10': '#4CAF50',
+            'E20': '#00BCD4'
+        }
         
-        # Create line chart
-        ax.plot(months, petrol, marker='o', linewidth=2.5, markersize=6, 
-                label='Petrol', color='#FFC107', markerfacecolor='#FFD54F')
-        ax.plot(months, diesel, marker='s', linewidth=2.5, markersize=6,
-                label='Diesel', color='#FF9800', markerfacecolor='#FFB74D')
-        ax.plot(months, cng, marker='^', linewidth=2.5, markersize=6,
-                label='CNG', color='#2196F3', markerfacecolor='#64B5F6')
-        ax.plot(months, lpg, marker='D', linewidth=2.5, markersize=6,
-                label='LPG', color='#9C27B0', markerfacecolor='#CE93D8')
+        # Create color list
+        colors = []
+        color_palette = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2']
+        for i, label in enumerate(labels):
+            # Use mapped color if available, otherwise use palette
+            colors.append(colors_map.get(label, color_palette[i % len(color_palette)]))
         
-        # Customize chart
-        ax.set_ylabel('Distribution %', fontsize=10, color='#1a2332')
-        ax.set_ylim(0, 70)
-        ax.grid(True, alpha=0.3, linestyle='--')
-        ax.set_axisbelow(True)
+        # Create pie chart
+        wedges, texts, autotexts = ax.pie(
+            sizes,
+            labels=labels,
+            colors=colors,
+            autopct='%1.1f%%',
+            startangle=90,
+            textprops={'fontsize': 9, 'fontweight': 'bold'}
+        )
         
-        # Legend
-        ax.legend(loc='upper left', fontsize=9, frameon=True, fancybox=False, 
-                  edgecolor='#e0e0e0', framealpha=0.95)
+        # Customize autotext (percentage labels)
+        for autotext in autotexts:
+            autotext.set_color('white')
+            autotext.set_fontweight('bold')
+            autotext.set_fontsize(8)
         
-        # Remove spines
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_color('#ddd')
-        ax.spines['bottom'].set_color('#ddd')
+        # Customize text labels
+        for text in texts:
+            text.set_fontsize(9)
+            text.set_fontweight('bold')
         
         fig.suptitle(title, fontsize=12, fontweight='bold', color='#1a2332', y=0.98)
         fig.tight_layout(rect=[0, 0, 1, 0.96])
@@ -2755,9 +2991,8 @@ class AddTankDialog(QDialog):
 
         # Create table for data entry
         self.table = QTableWidget()
-        self.table.setColumnCount(5)
-        self.table.setHorizontalHeaderLabels(["Name", "Fuel Type", "Capacity (L)", "Min Stock (L)", "Location", "Actions"])
         self.table.setColumnCount(6)
+        self.table.setHorizontalHeaderLabels(["Name", "Fuel Type", "Capacity (L)", "Min Stock (L)", "Location", "Actions"])
         self.table.setAlternatingRowColors(True)
         self.table.setMinimumHeight(300)
         self.table.setStyleSheet(
@@ -3238,9 +3473,8 @@ class AddNozzleDialog(QDialog):
 
         # Create table widget
         self.table = QTableWidget()
-        self.table.setColumnCount(5)
-        self.table.setHorizontalHeaderLabels(["Machine ID", "Nozzle Number", "Fuel Type", "Opening Reading (L)", "Current Reading (L)", "Actions"])
         self.table.setColumnCount(6)
+        self.table.setHorizontalHeaderLabels(["Machine ID", "Nozzle Number", "Fuel Type", "Opening Reading (L)", "Current Reading (L)", "Actions"])
         self.table.setAlternatingRowColors(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
@@ -3248,7 +3482,6 @@ class AddNozzleDialog(QDialog):
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
         # Set column widths
-        self.table.setColumnCount(6)
         self.table.setColumnWidth(0, 160)  # Machine ID
         self.table.setColumnWidth(1, 110)  # Nozzle Number
         self.table.setColumnWidth(2, 150)  # Fuel Type
@@ -3486,7 +3719,7 @@ class RecordSaleDialog(QDialog):
         self.nozzle_fuel_map = {}
         self.payment_methods = payment_methods if payment_methods is not None else []
         
-        self.setWindowTitle("Record Sales")
+        self.setWindowTitle("Add Sales Transactions")
         self.resize(1280, 650)
         self._center_on_screen()
         self.load_data()
@@ -4404,7 +4637,7 @@ class RecordPurchaseDialog(QDialog):
         self.account_heads = []
         self.account_head_balances = {}  # Store current balances for account heads
         
-        self.setWindowTitle("Record Purchases")
+        self.setWindowTitle("Add Fuel Purchases")
         self.resize(1180, 650)
         self._center_on_screen()
         self.load_tanks()
@@ -4431,9 +4664,8 @@ class RecordPurchaseDialog(QDialog):
 
         # Create table widget
         self.table = QTableWidget()
-        self.table.setColumnCount(7)
-        self.table.setHorizontalHeaderLabels(["Tank", "Supplier Name", "Quantity (L)", "Unit Cost (Rs)", "Total (Rs)", "Account Head", "Invoice Number", "Actions"])
         self.table.setColumnCount(8)
+        self.table.setHorizontalHeaderLabels(["Tank", "Supplier Name", "Quantity (L)", "Unit Cost (Rs)", "Total (Rs)", "Account Head", "Invoice Number", "Actions"])
         self.table.setAlternatingRowColors(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
@@ -4441,7 +4673,6 @@ class RecordPurchaseDialog(QDialog):
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
         # Set column widths - Supplier wider, numeric fields narrower
-        self.table.setColumnCount(8)
         self.table.setColumnWidth(0, 110)  # Tank
         self.table.setColumnWidth(1, 130)  # Supplier Name
         self.table.setColumnWidth(2, 100)  # Quantity
@@ -4963,7 +5194,7 @@ class RecordExpenseDialog(QDialog):
         self.account_head_map = {acc.get('id', ''): acc.get('name', '') for acc in self.account_heads}
         self.account_head_names = [acc.get('name', '') for acc in self.account_heads]
         
-        self.setWindowTitle("Record Expenses")
+        self.setWindowTitle("Add Expenses")
         self.resize(1000, 650)
         self._center_on_screen()
         self.init_ui()
@@ -4988,9 +5219,8 @@ class RecordExpenseDialog(QDialog):
 
         # Create table widget
         self.table = QTableWidget()
-        self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels(["Category", "Description", "Amount (Rs)", "Account Head", "Reference No.", "Notes", "Actions"])
         self.table.setColumnCount(7)
+        self.table.setHorizontalHeaderLabels(["Category", "Description", "Amount (Rs)", "Account Head", "Reference No.", "Notes", "Actions"])
         self.table.setAlternatingRowColors(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
@@ -4998,7 +5228,6 @@ class RecordExpenseDialog(QDialog):
             "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; }"
         )
         # Set column widths
-        self.table.setColumnCount(7)
         self.table.setColumnWidth(0, 100)  # Category
         self.table.setColumnWidth(1, 140)  # Description
         self.table.setColumnWidth(2, 100)  # Amount

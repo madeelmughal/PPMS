@@ -466,7 +466,7 @@ class FuelManagementScreen(QWidget):
         reply = QMessageBox.question(
             self,
             "Confirm Delete",
-            f"Are you sure you want to delete '{fuel.name}'?",
+            f"Delete Fuel Type #{fuel.id}?\nName: {fuel.name}",
             QMessageBox.Yes | QMessageBox.No
         )
 
@@ -525,7 +525,7 @@ class FuelManagementScreen(QWidget):
         reply = QMessageBox.question(
             self,
             "Confirm Delete",
-            f"Are you sure you want to delete tank '{tank.tank_id}'?",
+            f"Delete Tank #{tank.id}?\nName: {tank.tank_id}",
             QMessageBox.Yes | QMessageBox.No
         )
 
