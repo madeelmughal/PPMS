@@ -156,6 +156,19 @@ class DatabaseService:
             logger.error(f"Error listing documents: {str(e)}")
             return []
 
+    def get_all_inventory(self) -> List[Dict[str, Any]]:
+        """Get all inventory items."""
+        try:
+            docs = self.firestore.collection('inventory').stream()
+            items = []
+            for doc in docs:
+                data = doc.to_dict()
+                items.append(data)
+            return items
+        except Exception as e:
+            logger.error(f"Error getting all inventory: {str(e)}")
+            return []
+
     def batch_write(
         self, operations: List[tuple]
     ) -> tuple[bool, str]:
@@ -449,6 +462,39 @@ class SalesService(DatabaseService):
             logger.error(f"Error listing daily sales: {str(e)}")
             return []
 
+    def get_sales_by_date_range(self, start_date: str, end_date: str) -> List[Sale]:
+        """Get all sales for a specific date range (format: YYYY-MM-DD)."""
+        try:
+            docs = self.firestore.collection('sales').where(
+                'date', '>=', f"{start_date}T00:00:00"
+            ).where(
+                'date', '<=', f"{end_date}T23:59:59"
+            ).stream()
+
+            sales = []
+            for doc in docs:
+                data = doc.to_dict()
+                sale = Sale(
+                    id=data.get('id'),
+                    nozzle_id=data.get('nozzle_id'),
+                    fuel_type_id=data.get('fuel_type_id'),
+                    quantity=data.get('quantity'),
+                    unit_price=data.get('unit_price'),
+                    total_amount=data.get('total_amount'),
+                    payment_method=data.get('payment_method'),
+                    customer_name=data.get('customer_name'),
+                    vehicle_number=data.get('vehicle_number'),
+                    notes=data.get('notes'),
+                    sale_date=data.get('sale_date'),
+                    created_at=data.get('created_at'),
+                    created_by=data.get('created_by')
+                )
+                sales.append(sale)
+            return sales
+        except Exception as e:
+            logger.error(f"Error getting sales by date range: {str(e)}")
+            return []
+
 
 class CustomerService(DatabaseService):
     """Service for customer-related operations."""
@@ -501,6 +547,19 @@ class CustomerService(DatabaseService):
             return customers
         except Exception as e:
             logger.error(f"Error listing customers: {str(e)}")
+            return []
+
+    def get_all_customers(self) -> List[Dict[str, Any]]:
+        """Get all customers as dictionaries."""
+        try:
+            docs = self.firestore.collection('customers').stream()
+            customers = []
+            for doc in docs:
+                data = doc.to_dict()
+                customers.append(data)
+            return customers
+        except Exception as e:
+            logger.error(f"Error getting all customers: {str(e)}")
             return []
 
 

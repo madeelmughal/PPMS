@@ -6,9 +6,9 @@ from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QGridLayout, QFrame, QScrollArea, QMenuBar, QMenu, QDialog, QLineEdit,
     QDoubleSpinBox, QSpinBox, QComboBox, QMessageBox, QFormLayout, QTableWidget,
-    QTableWidgetItem, QHeaderView, QTabWidget, QFileDialog
+    QTableWidgetItem, QHeaderView, QTabWidget, QFileDialog, QDateEdit
 )
-from PyQt5.QtCore import Qt, QTimer, pyqtSignal
+from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QDate
 from PyQt5.QtGui import QFont, QColor
 from src.services.database_service import (
     FuelService, TankService, SalesService, DatabaseService, NozzleService, CustomerService, AccountHeadService
@@ -26,16 +26,331 @@ import numpy as np
 logger = setup_logger(__name__)
 
 
-class DataViewDialog(QDialog):
-    """Professional data view dialog with table grid."""
+class DailyTransactionsReportDialog(QDialog):
+    """Dialog for daily transactions report with date range filtering and dynamic stats calculation."""
 
-    def __init__(self, title, columns, data, parent=None):
-        """Initialize data view dialog."""
+    def __init__(self, parent, all_sales, all_purchases, all_expenses, nozzle_service, tank_service, fuel_service):
+        """Initialize dialog."""
         super().__init__(parent)
-        self.setWindowTitle(title)
-        self.resize(1000, 600)
+        self.all_sales = all_sales
+        self.all_purchases = all_purchases
+        self.all_expenses = all_expenses
+        self.nozzle_service = nozzle_service
+        self.tank_service = tank_service
+        self.fuel_service = fuel_service
+        
+        self.setWindowTitle("Daily Transactions Report")
+        self.resize(1300, 750)
+        self.setStyleSheet(
+            "QDialog { background-color: #f5f5f5; }"
+            "QLabel { color: #333; }"
+            "QDateEdit { padding: 5px; border: 1px solid #ddd; border-radius: 3px; }"
+        )
+        
         # Center on screen
         from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
+        
+        self.init_ui()
+        self.apply_date_filter()  # Load initial data
+
+    def init_ui(self):
+        """Initialize UI components."""
+        layout = QVBoxLayout()
+        
+        # Header
+        header = QLabel("Daily Transactions Report")
+        header.setFont(QFont("Arial", 14, QFont.Bold))
+        layout.addWidget(header)
+        
+        # Date filter controls
+        filter_layout = QHBoxLayout()
+        filter_layout.addWidget(QLabel("Date Range:"))
+        
+        self.start_date_filter = QDateEdit()
+        self.start_date_filter.setDate(QDate.currentDate().addDays(-30))
+        self.start_date_filter.setCalendarPopup(True)
+        self.start_date_filter.dateChanged.connect(self.apply_date_filter)
+        filter_layout.addWidget(self.start_date_filter)
+        
+        filter_layout.addWidget(QLabel("To:"))
+        self.end_date_filter = QDateEdit()
+        self.end_date_filter.setDate(QDate.currentDate())
+        self.end_date_filter.setCalendarPopup(True)
+        self.end_date_filter.dateChanged.connect(self.apply_date_filter)
+        filter_layout.addWidget(self.end_date_filter)
+        
+        reset_btn = QPushButton("Reset Filter")
+        reset_btn.setMaximumWidth(100)
+        reset_btn.clicked.connect(self.reset_filter)
+        filter_layout.addWidget(reset_btn)
+        filter_layout.addStretch()
+        
+        layout.addLayout(filter_layout)
+        
+        # Summary stats section
+        self.summary_layout = QHBoxLayout()
+        layout.addLayout(self.summary_layout)
+        
+        # Create tabs for different transaction types
+        self.tabs = QTabWidget()
+        layout.addWidget(self.tabs)
+        
+        # Export and Close buttons
+        button_layout = QHBoxLayout()
+        pdf_btn = QPushButton("📄 Export to PDF")
+        pdf_btn.clicked.connect(self.export_to_pdf)
+        button_layout.addWidget(pdf_btn)
+        button_layout.addStretch()
+        close_btn = QPushButton("Close")
+        close_btn.clicked.connect(self.accept)
+        button_layout.addWidget(close_btn)
+        layout.addLayout(button_layout)
+        
+        self.setLayout(layout)
+
+    def apply_date_filter(self):
+        """Apply date filter and refresh stats and tables."""
+        start_date = self.start_date_filter.date().toString("yyyy-MM-dd")
+        end_date = self.end_date_filter.date().toString("yyyy-MM-dd")
+        
+        # Filter transactions by date range
+        filtered_sales = [s for s in self.all_sales 
+                         if self._check_date_in_range(s.get('date', ''), start_date, end_date)]
+        filtered_purchases = [p for p in self.all_purchases 
+                             if self._check_date_in_range(p.get('purchase_date', p.get('date', '')), start_date, end_date)]
+        filtered_expenses = [e for e in self.all_expenses 
+                            if self._check_date_in_range(e.get('expense_date', e.get('date', '')), start_date, end_date)]
+        
+        # Calculate stats based on filtered data
+        total_sales = sum(float(s.get('total_amount', 0)) for s in filtered_sales)
+        total_sale_qty = sum(float(s.get('quantity', 0)) for s in filtered_sales)
+        total_purchases = sum(float(p.get('total_cost', 0)) for p in filtered_purchases)
+        total_expenses = sum(float(e.get('amount', 0)) for e in filtered_expenses)
+        net_profit = total_sales - total_purchases - total_expenses
+        
+        # Update summary stats
+        self._update_summary_stats(total_sales, total_sale_qty, total_purchases, total_expenses, net_profit)
+        
+        # Update tabs with filtered data
+        self._update_tables(filtered_sales, filtered_purchases, filtered_expenses)
+
+    def reset_filter(self):
+        """Reset date filter to default."""
+        self.start_date_filter.setDate(QDate.currentDate().addDays(-30))
+        self.end_date_filter.setDate(QDate.currentDate())
+
+    def _check_date_in_range(self, date_str, start_date, end_date):
+        """Check if date string is within range."""
+        if not date_str:
+            return False
+        date_part = date_str[:10]  # Extract YYYY-MM-DD
+        return start_date <= date_part <= end_date
+
+    def _update_summary_stats(self, total_sales, total_sale_qty, total_purchases, total_expenses, net_profit):
+        """Update summary statistics display."""
+        # Clear existing stats
+        while self.summary_layout.count():
+            self.summary_layout.takeAt(0).widget().deleteLater()
+        
+        # Add new stats with improved color scheme
+        self.summary_layout.addWidget(self._create_stat_card("Total Sales", f"Rs. {total_sales:,.2f}", "#27AE60"))
+        self.summary_layout.addWidget(self._create_stat_card("Fuel Sold", f"{total_sale_qty:,.2f} L", "#3498DB"))
+        self.summary_layout.addWidget(self._create_stat_card("Purchases", f"Rs. {total_purchases:,.2f}", "#E67E22"))
+        self.summary_layout.addWidget(self._create_stat_card("Expenses", f"Rs. {total_expenses:,.2f}", "#E74C3C"))
+        # Net Profit always uses purple/violet color
+        self.summary_layout.addWidget(self._create_stat_card("Net Profit", f"Rs. {net_profit:,.2f}", "#8E44AD"))
+
+    def _create_stat_card(self, label, value, color):
+        """Create a statistics card with improved styling."""
+        card = QFrame()
+        card.setStyleSheet(f"""
+            QFrame {{
+                background-color: white;
+                border-left: 5px solid {color};
+                border-radius: 4px;
+                padding: 15px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }}
+        """)
+        
+        layout = QVBoxLayout()
+        layout.setContentsMargins(10, 10, 10, 10)
+        layout.setSpacing(5)
+        
+        label_widget = QLabel(label)
+        label_widget.setFont(QFont("Arial", 10, QFont.Bold))
+        label_widget.setStyleSheet(f"color: {color}; font-weight: bold;")
+        
+        value_widget = QLabel(value)
+        value_widget.setFont(QFont("Arial", 13, QFont.Bold))
+        value_widget.setStyleSheet("color: #2C3E50; font-weight: bold;")
+        
+        layout.addWidget(label_widget)
+        layout.addWidget(value_widget)
+        card.setLayout(layout)
+        
+        return card
+
+    def _update_tables(self, sales_data, purchases_data, expenses_data):
+        """Update transaction tables."""
+        # Clear existing tabs
+        while self.tabs.count():
+            self.tabs.removeTab(0)
+        
+        # Sales Tab
+        sales_table = self._create_sales_table(sales_data)
+        self.tabs.addTab(sales_table, f"Sales ({len(sales_data)})")
+        
+        # Purchases Tab
+        purchases_table = self._create_purchases_table(purchases_data)
+        self.tabs.addTab(purchases_table, f"Purchases ({len(purchases_data)})")
+        
+        # Expenses Tab
+        expenses_table = self._create_expenses_table(expenses_data)
+        self.tabs.addTab(expenses_table, f"Expenses ({len(expenses_data)})")
+
+    def _create_sales_table(self, sales_data):
+        """Create sales transactions table."""
+        table = QTableWidget()
+        table.setColumnCount(11)
+        table.setHorizontalHeaderLabels([
+            "Nozzle", "Fuel Type", "Open Reading", "Quantity (L)", "Close Reading",
+            "Unit Price (Rs)", "Total (Rs)", "Payment Method", "Customer", "Date", "Time"
+        ])
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        table.setRowCount(len(sales_data))
+        
+        # Get lookup data
+        nozzles = {n.id: f"M{n.machine_id}-N{n.nozzle_number}" for n in self.nozzle_service.list_nozzles()}
+        fuels = {f.id: f.name for f in self.fuel_service.list_fuel_types()}
+        
+        for row, sale in enumerate(sales_data):
+            nozzle_name = nozzles.get(sale.get('nozzle_id', ''), 'Unknown')
+            fuel_name = fuels.get(sale.get('fuel_type_id', ''), 'Unknown')
+            
+            date_str = sale.get('date', '')
+            date_display = date_str[:10] if len(date_str) > 10 else ''
+            time_str = date_str[11:19] if len(date_str) > 11 else ''
+            
+            items = [
+                QTableWidgetItem(nozzle_name),
+                QTableWidgetItem(fuel_name),
+                QTableWidgetItem(f"{float(sale.get('opening_reading', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(sale.get('quantity', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(sale.get('closing_reading', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(sale.get('unit_price', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(sale.get('total_amount', 0)):,.2f}"),
+                QTableWidgetItem(sale.get('payment_method', 'Cash')),
+                QTableWidgetItem(sale.get('customer_name', 'Walk-in')),
+                QTableWidgetItem(date_display),
+                QTableWidgetItem(time_str)
+            ]
+            
+            for col_idx, item in enumerate(items):
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, col_idx, item)
+        
+        return table
+
+    def _create_purchases_table(self, purchases_data):
+        """Create purchases transactions table."""
+        table = QTableWidget()
+        table.setColumnCount(8)
+        table.setHorizontalHeaderLabels([
+            "Tank", "Fuel Type", "Quantity (L)", "Unit Cost (Rs)", 
+            "Total Cost (Rs)", "Account Head", "Supplier", "Date"
+        ])
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        table.setRowCount(len(purchases_data))
+        
+        # Get lookup data
+        tanks = {t.id: {'name': t.name, 'fuel_type_id': t.fuel_type_id} for t in self.tank_service.list_tanks()}
+        fuels = {f.id: f.name for f in self.fuel_service.list_fuel_types()}
+        
+        for row, purchase in enumerate(purchases_data):
+            tank_id = purchase.get('tank_id', '')
+            tank_info = tanks.get(tank_id, {})
+            tank_name = tank_info.get('name', 'Unknown')
+            
+            tank_fuel_type_id = tank_info.get('fuel_type_id', '')
+            fuel_name = fuels.get(tank_fuel_type_id, 'Unknown')
+            
+            date_str = purchase.get('purchase_date', purchase.get('date', ''))
+            date_display = date_str[:10] if date_str else ''
+            
+            items = [
+                QTableWidgetItem(tank_name),
+                QTableWidgetItem(fuel_name),
+                QTableWidgetItem(f"{float(purchase.get('quantity', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(purchase.get('unit_cost', 0)):,.2f}"),
+                QTableWidgetItem(f"{float(purchase.get('total_cost', 0)):,.2f}"),
+                QTableWidgetItem(purchase.get('account_head_name', '')),
+                QTableWidgetItem(purchase.get('supplier_name', 'Unknown')),
+                QTableWidgetItem(date_display)
+            ]
+            
+            for col_idx, item in enumerate(items):
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, col_idx, item)
+        
+        return table
+
+    def _create_expenses_table(self, expenses_data):
+        """Create expenses transactions table."""
+        table = QTableWidget()
+        table.setColumnCount(6)
+        table.setHorizontalHeaderLabels([
+            "Description", "Category", "Amount (Rs)", "Payment Method", "Notes", "Date"
+        ])
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        table.setRowCount(len(expenses_data))
+        
+        for row, expense in enumerate(expenses_data):
+            date_str = expense.get('expense_date', expense.get('date', ''))
+            date_display = date_str[:10] if date_str else ''
+            
+            items = [
+                QTableWidgetItem(expense.get('description', '')),
+                QTableWidgetItem(expense.get('category', '')),
+                QTableWidgetItem(f"{float(expense.get('amount', 0)):,.2f}"),
+                QTableWidgetItem(expense.get('payment_method', '')),
+                QTableWidgetItem(expense.get('notes', '')),
+                QTableWidgetItem(date_display)
+            ]
+            
+            for col_idx, item in enumerate(items):
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                table.setItem(row, col_idx, item)
+        
+        return table
+
+    def export_to_pdf(self):
+        """Export filtered transactions to PDF."""
+        QMessageBox.information(self, "Export", "PDF export feature coming soon!")
+
+
+class DataViewDialog(QDialog):
+    """Professional data view dialog with table grid and date filtering."""
+
+    def __init__(self, title, columns, data, parent=None, date_field=None, raw_data=None):
+        """Initialize data view dialog.
+        
+        Args:
+            title: Dialog title
+            columns: List of column names
+            data: List of lists with display data
+            parent: Parent widget
+            date_field: Name of the date field in raw_data for filtering
+            raw_data: Original data dictionaries for filtering purposes
+        """
+        super().__init__(parent)
+        self.setWindowTitle(title)
+        self.resize(1200, 700)
+        # Center on screen
+        from PyQt5.QtWidgets import QDesktopWidget, QDateEdit
         screen = QDesktopWidget().screenGeometry()
         size = self.geometry()
         self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
@@ -47,7 +362,15 @@ class DataViewDialog(QDialog):
             "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
             "QPushButton { background-color: #4CAF50; color: white; padding: 8px 20px; border-radius: 5px; font-weight: bold; }"
             "QPushButton:hover { background-color: #45a049; }"
+            "QDateEdit { padding: 5px; border: 1px solid #ddd; border-radius: 3px; }"
+            "QLabel { color: #333; font-weight: bold; }"
         )
+        
+        # Store data for filtering
+        self.date_field = date_field
+        self.raw_data = raw_data or []
+        self.all_data = data  # Original data
+        self.display_columns = columns
         
         # Layout
         layout = QVBoxLayout()
@@ -56,6 +379,31 @@ class DataViewDialog(QDialog):
         title_label = QLabel(title)
         title_label.setFont(QFont("Arial", 14, QFont.Bold))
         layout.addWidget(title_label)
+        
+        # Date filter section (if date field is available)
+        if date_field and raw_data:
+            filter_layout = QHBoxLayout()
+            filter_layout.addWidget(QLabel("Date Filter:"))
+            
+            self.filter_start_date = QDateEdit()
+            self.filter_start_date.setDate(QDate.currentDate().addMonths(-1))
+            self.filter_start_date.setCalendarPopup(True)
+            self.filter_start_date.dateChanged.connect(self.apply_date_filter)
+            filter_layout.addWidget(self.filter_start_date)
+            
+            filter_layout.addWidget(QLabel("To:"))
+            self.filter_end_date = QDateEdit()
+            self.filter_end_date.setDate(QDate.currentDate())
+            self.filter_end_date.setCalendarPopup(True)
+            self.filter_end_date.dateChanged.connect(self.apply_date_filter)
+            filter_layout.addWidget(self.filter_end_date)
+            
+            self.reset_filter_btn = QPushButton("Reset Filter")
+            self.reset_filter_btn.clicked.connect(self.reset_filter)
+            filter_layout.addWidget(self.reset_filter_btn)
+            
+            filter_layout.addStretch()
+            layout.addLayout(filter_layout)
         
         # Create table
         self.table = QTableWidget()
@@ -67,13 +415,9 @@ class DataViewDialog(QDialog):
         # Set column widths based on column type
         self._set_column_widths(columns)
         
-        # Add data to table
-        self.table.setRowCount(len(data))
-        for row_idx, row_data in enumerate(data):
-            for col_idx, cell_value in enumerate(row_data):
-                item = QTableWidgetItem(str(cell_value))
-                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
-                self.table.setItem(row_idx, col_idx, item)
+        # Store table data and fill it
+        self.table_data = data
+        self.populate_table(data)
         
         layout.addWidget(self.table)
         
@@ -88,6 +432,56 @@ class DataViewDialog(QDialog):
         layout.addLayout(btn_layout)
         
         self.setLayout(layout)
+
+    def populate_table(self, data):
+        """Populate table with data."""
+        self.table.setRowCount(len(data))
+        for row_idx, row_data in enumerate(data):
+            for col_idx, cell_value in enumerate(row_data):
+                item = QTableWidgetItem(str(cell_value))
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                self.table.setItem(row_idx, col_idx, item)
+
+    def apply_date_filter(self):
+        """Apply date filter to table data."""
+        if not self.date_field or not self.raw_data:
+            return
+        
+        start_date = self.filter_start_date.date().toString("yyyy-MM-dd")
+        end_date = self.filter_end_date.date().toString("yyyy-MM-dd")
+        
+        filtered_data = []
+        for idx, raw_item in enumerate(self.raw_data):
+            if idx >= len(self.all_data):
+                break
+            
+            # Extract date from raw data
+            date_str = self._extract_date(raw_item)
+            
+            if date_str and start_date <= date_str <= end_date:
+                filtered_data.append(self.all_data[idx])
+        
+        if not filtered_data:
+            filtered_data = [["No records found for selected date range"] + [""] * (len(self.display_columns) - 1)]
+        
+        self.populate_table(filtered_data)
+
+    def reset_filter(self):
+        """Reset date filter."""
+        self.filter_start_date.setDate(QDate.currentDate().addMonths(-1))
+        self.filter_end_date.setDate(QDate.currentDate())
+        self.populate_table(self.all_data)
+
+    def _extract_date(self, raw_item):
+        """Extract date from raw item."""
+        if isinstance(raw_item, dict):
+            # Try multiple date field names
+            for field in [self.date_field, 'date', 'timestamp', 'created_at', 'purchase_date', 'expense_date', 'sale_date']:
+                if field in raw_item:
+                    date_val = raw_item[field]
+                    if isinstance(date_val, str):
+                        return date_val[:10]  # Get YYYY-MM-DD format
+        return None
 
     def _set_column_widths(self, columns):
         """Set column widths based on column names - wider for text, narrower for numbers."""
@@ -730,80 +1124,24 @@ class DashboardScreen(QMainWindow):
         QMessageBox.information(self, "Daily Summary", "Daily summary report coming soon!")
 
     def daily_transactions_report(self):
-        """Daily transactions report."""
+        """Daily transactions report with date filtering."""
         try:
-            from datetime import date
-            today = date.today().isoformat()
-            
-            # Get all transactions for today
+            # Get all transactions
             sales = self.db_service.list_documents('sales')
             purchases = self.db_service.list_documents('purchases')
             expenses = self.db_service.list_documents('expenses')
             
-            # Filter for today (check for date, purchase_date, or expense_date fields)
-            today_sales = [s for s in sales if s.get('date', '').startswith(today)]
-            today_purchases = [p for p in purchases if p.get('purchase_date', '').startswith(today) or p.get('date', '').startswith(today)]
-            today_expenses = [e for e in expenses if e.get('expense_date', '').startswith(today) or e.get('date', '').startswith(today)]
-            
-            # Create dialog
-            dialog = QDialog(self)
-            dialog.setWindowTitle(f"Daily Transactions Report - {today}")
-            dialog.setGeometry(100, 100, 1200, 700)
+            # Create dialog with date filtering
+            dialog = DailyTransactionsReportDialog(
+                self, 
+                sales, 
+                purchases, 
+                expenses,
+                self.nozzle_service,
+                self.tank_service,
+                self.fuel_service
+            )
             self._center_dialog_on_screen(dialog)
-            
-            layout = QVBoxLayout()
-            
-            # Header
-            header = QLabel(f"Daily Transactions Report - {today}")
-            header.setFont(QFont("Arial", 16, QFont.Bold))
-            layout.addWidget(header)
-            
-            # Summary stats
-            summary_layout = QHBoxLayout()
-            
-            total_sales = sum(float(s.get('total_amount', 0)) for s in today_sales)
-            total_sale_qty = sum(float(s.get('quantity', 0)) for s in today_sales)
-            total_purchases = sum(float(p.get('total_cost', 0)) for p in today_purchases)
-            total_expenses = sum(float(e.get('amount', 0)) for e in today_expenses)
-            net_profit = total_sales - total_purchases - total_expenses
-            
-            summary_layout.addWidget(self.create_stat_card("Total Sales", f"Rs. {total_sales:,.2f}", "#4CAF50"))
-            summary_layout.addWidget(self.create_stat_card("Fuel Sold", f"{total_sale_qty:,.2f} L", "#2196F3"))
-            summary_layout.addWidget(self.create_stat_card("Purchases", f"Rs. {total_purchases:,.2f}", "#FF9800"))
-            summary_layout.addWidget(self.create_stat_card("Expenses", f"Rs. {total_expenses:,.2f}", "#f44336"))
-            summary_layout.addWidget(self.create_stat_card("Net Profit", f"Rs. {net_profit:,.2f}", "#9C27B0"))
-            
-            layout.addLayout(summary_layout)
-            
-            # Create tabs for different transaction types
-            tabs = QTabWidget()
-            
-            # Sales Tab
-            sales_table = self._create_sales_table(today_sales)
-            tabs.addTab(sales_table, f"Sales ({len(today_sales)})")
-            
-            # Purchases Tab
-            purchases_table = self._create_purchases_table(today_purchases)
-            tabs.addTab(purchases_table, f"Purchases ({len(today_purchases)})")
-            
-            # Expenses Tab
-            expenses_table = self._create_expenses_table(today_expenses)
-            tabs.addTab(expenses_table, f"Expenses ({len(today_expenses)})")
-            
-            layout.addWidget(tabs)
-            
-            # Export and Close buttons
-            button_layout = QHBoxLayout()
-            pdf_btn = QPushButton("📄 Export to PDF")
-            pdf_btn.clicked.connect(lambda: self._export_transactions_to_pdf(today, total_sales, total_sale_qty, total_purchases, total_expenses, net_profit, today_sales, today_purchases, today_expenses))
-            button_layout.addWidget(pdf_btn)
-            button_layout.addStretch()
-            close_btn = QPushButton("Close")
-            close_btn.clicked.connect(dialog.accept)
-            button_layout.addWidget(close_btn)
-            layout.addLayout(button_layout)
-            
-            dialog.setLayout(layout)
             dialog.exec_()
             
         except Exception as e:
@@ -940,7 +1278,7 @@ class DashboardScreen(QMainWindow):
             account_heads = self.db_service.list_documents('account_heads')
             account_head_map = {a.get('id'): a.get('name', '') for a in account_heads}
             
-            columns = ["Nozzle", "Fuel Type", "Opening (L)", "Quantity (L)", "Closing (L)", "Unit Price (Rs)", "Total (Rs)", "Account Head"]
+            columns = ["Date", "Nozzle", "Fuel Type", "Opening (L)", "Quantity (L)", "Closing (L)", "Unit Price (Rs)", "Total (Rs)", "Account Head"]
             data = []
             
             for sale in sales_data:
@@ -952,7 +1290,11 @@ class DashboardScreen(QMainWindow):
                 account_head_id = sale.get('account_head_id', '')
                 account_head_name = account_head_map.get(account_head_id, sale.get('account_head_name', ''))
                 
+                # Extract date
+                date_str = sale.get('date', sale.get('timestamp', sale.get('created_at', '')))[:10] if sale.get('date') or sale.get('timestamp') or sale.get('created_at') else ''
+                
                 data.append([
+                    date_str,
                     nozzle_name,
                     fuel_name,
                     f"{sale.get('opening_reading', 0):.2f}",
@@ -964,9 +1306,9 @@ class DashboardScreen(QMainWindow):
                 ])
             
             if not data:
-                data = [["No sales records found", "", "", "", "", "", "", ""]]
+                data = [["No sales records found", "", "", "", "", "", "", "", ""]]
             
-            dialog = DataViewDialog("Sales Records", columns, data, self)
+            dialog = DataViewDialog("Sales Records", columns, data, self, date_field='date', raw_data=sales_data)
             dialog.exec_()
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Failed to load sales: {str(e)}")
@@ -979,29 +1321,28 @@ class DashboardScreen(QMainWindow):
             tanks = self.tank_service.list_tanks()
             tank_map = {t.id: t.name for t in tanks}
             
-            columns = ["Tank", "Supplier", "Quantity (L)", "Unit Cost", "Total (Rs)", "Invoice", "Date"]
+            columns = ["Date", "Tank", "Supplier", "Quantity (L)", "Unit Cost", "Total (Rs)", "Invoice"]
             data = []
             
             for purchase in purchases_data:
                 tank_id = purchase.get('tank_id', '')
                 tank_name = tank_map.get(tank_id, tank_id)
                 # Get date from 'purchase_date' or 'timestamp' field
-                date_str = purchase.get('purchase_date', purchase.get('timestamp', ''))
-                date_display = date_str[:10] if date_str else ''
+                date_str = purchase.get('purchase_date', purchase.get('timestamp', purchase.get('created_at', '')))[:10] if purchase.get('purchase_date') or purchase.get('timestamp') or purchase.get('created_at') else ''
                 data.append([
+                    date_str,
                     tank_name,
                     purchase.get('supplier_name', ''),
                     f"{purchase.get('quantity', 0):.2f}",
                     f"{purchase.get('unit_cost', 0):.2f}",
                     f"{purchase.get('total_cost', 0):.2f}",
-                    purchase.get('invoice_number', ''),
-                    date_display
+                    purchase.get('invoice_number', '')
                 ])
             
             if not data:
                 data = [["No purchase records found", "", "", "", "", "", ""]]
             
-            dialog = DataViewDialog("Purchase Records", columns, data, self)
+            dialog = DataViewDialog("Purchase Records", columns, data, self, date_field='purchase_date', raw_data=purchases_data)
             dialog.exec_()
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Failed to load purchases: {str(e)}")
@@ -1010,23 +1351,25 @@ class DashboardScreen(QMainWindow):
         """View customers."""
         try:
             customers_data = self.db_service.list_documents('customers')
-            columns = ["Name", "Phone", "Email", "Address", "Credit Limit (Rs)", "Type"]
+            columns = ["Name", "Phone", "Email", "Address", "Credit Limit (Rs)", "Type", "Created Date"]
             data = []
             
             for customer in customers_data:
+                created_date = customer.get('created_at', '')[:10] if customer.get('created_at') else ''
                 data.append([
                     customer.get('name', ''),
                     customer.get('phone', ''),
                     customer.get('email', ''),
                     customer.get('address', ''),
                     f"{customer.get('credit_limit', 0):.2f}",
-                    customer.get('customer_type', '')
+                    customer.get('customer_type', ''),
+                    created_date
                 ])
             
             if not data:
-                data = [["No customers found", "", "", "", "", ""]]
+                data = [["No customers found", "", "", "", "", "", ""]]
             
-            dialog = DataViewDialog("Customers", columns, data, self)
+            dialog = DataViewDialog("Customers", columns, data, self, date_field='created_at', raw_data=customers_data)
             dialog.exec_()
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Failed to load customers: {str(e)}")
@@ -1035,26 +1378,25 @@ class DashboardScreen(QMainWindow):
         """View expenses."""
         try:
             expenses_data = self.db_service.list_documents('expenses')
-            columns = ["Category", "Description", "Amount (Rs)", "Payment Method", "Reference", "Date"]
+            columns = ["Date", "Category", "Description", "Amount (Rs)", "Payment Method", "Reference"]
             data = []
             
             for expense in expenses_data:
                 # Get date from 'expense_date' or 'timestamp' field
-                date_str = expense.get('expense_date', expense.get('timestamp', ''))
-                date_display = date_str[:10] if date_str else ''
+                date_str = expense.get('expense_date', expense.get('timestamp', expense.get('created_at', '')))[:10] if expense.get('expense_date') or expense.get('timestamp') or expense.get('created_at') else ''
                 data.append([
+                    date_str,
                     expense.get('category', ''),
                     expense.get('description', ''),
                     f"{expense.get('amount', 0):.2f}",
                     expense.get('payment_method', ''),
-                    expense.get('reference_number', ''),
-                    date_display
+                    expense.get('reference_number', '')
                 ])
             
             if not data:
                 data = [["No expenses found", "", "", "", "", ""]]
             
-            dialog = DataViewDialog("Expenses", columns, data, self)
+            dialog = DataViewDialog("Expenses", columns, data, self, date_field='expense_date', raw_data=expenses_data)
             dialog.exec_()
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Failed to load expenses: {str(e)}")
@@ -1165,22 +1507,24 @@ class DashboardScreen(QMainWindow):
         """View account heads."""
         try:
             accounts = self.db_service.list_documents('account_heads')
-            columns = ["Name", "Type", "Code", "Description"]
+            columns = ["Name", "Type", "Code", "Description", "Created Date"]
             data = []
             
             for account in accounts:
                 account_type = account.get('account_type', '') or account.get('head_type', '')
+                created_date = account.get('created_at', '')[:10] if account.get('created_at') else ''
                 data.append([
                     account.get('name', ''),
                     account_type,
                     account.get('code', ''),
-                    account.get('description', '')
+                    account.get('description', ''),
+                    created_date
                 ])
             
             if not data:
-                data = [["No account heads found", "", "", ""]]
+                data = [["No account heads found", "", "", "", ""]]
             
-            dialog = DataViewDialog("Account Heads", columns, data, self)
+            dialog = DataViewDialog("Account Heads", columns, data, self, date_field='created_at', raw_data=accounts)
             dialog.exec_()
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Failed to load account heads: {str(e)}")

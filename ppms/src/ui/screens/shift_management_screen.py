@@ -68,6 +68,7 @@ class ShiftDialog(QDialog):
 
             # Opening time
             self.opening_time_input = QDateTimeEdit()
+            self.opening_time_input.setCalendarPopup(True)
             if self.shift and self.shift.shift_start:
                 self.opening_time_input.setDateTime(
                     QDateTime.fromString(self.shift.shift_start, "yyyy-MM-dd HH:mm:ss")
@@ -86,6 +87,7 @@ class ShiftDialog(QDialog):
         else:
             # Closing time
             self.closing_time_input = QDateTimeEdit()
+            self.closing_time_input.setCalendarPopup(True)
             self.closing_time_input.setDateTime(QDateTime.currentDateTime())
             layout.addRow("Closing Time:", self.closing_time_input)
 
