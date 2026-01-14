@@ -1,0 +1,300 @@
+{
+  "users": {
+    "admin123": {
+      "id": "admin123",
+      "email": "admin@ppms.com",
+      "name": "Admin User",
+      "role": "admin",
+      "status": "active",
+      "department": "Management",
+      "created_at": "2024-01-01T00:00:00"
+    },
+    "operator123": {
+      "id": "operator123",
+      "email": "operator@ppms.com",
+      "name": "Operator User",
+      "role": "operator",
+      "status": "active",
+      "department": "Operations",
+      "created_at": "2024-01-01T00:00:00"
+    },
+    "manager123": {
+      "id": "manager123",
+      "email": "manager@ppms.com",
+      "name": "Manager User",
+      "role": "manager",
+      "status": "active",
+      "department": "Management",
+      "created_at": "2024-01-01T00:00:00"
+    }
+  },
+  "sales": {
+    "f692f08f-ee53-46fb-9a05-ed8e1dec00f7": {
+      "id": "f692f08f-ee53-46fb-9a05-ed8e1dec00f7",
+      "date": "2026-01-14T17:57:09.970685",
+      "nozzle_id": "9533c566-6b03-47df-b056-a10c8e4bbb6b",
+      "fuel_type_id": "917e4a1b-af1a-4c4f-81ac-306714de6e36",
+      "quantity": 10000.0,
+      "unit_price": 260.0,
+      "base_amount": 2600000.0,
+      "tax_amount": 0.0,
+      "total_amount": 2600000.0,
+      "opening_reading": 0.0,
+      "closing_reading": 10000.0,
+      "account_head_id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "account_head_name": "Cash",
+      "payment_method": "Asset",
+      "status": "completed",
+      "created_at": "2026-01-14T17:57:09.980685"
+    },
+    "081af228-c65e-4a51-92ff-14a3584c7c5c": {
+      "id": "081af228-c65e-4a51-92ff-14a3584c7c5c",
+      "date": "2026-01-14T17:57:09.980685",
+      "nozzle_id": "ba2e839b-245a-4703-8e32-9fe168d03075",
+      "fuel_type_id": "a6240f7b-2014-4974-8be6-bab19aff9154",
+      "quantity": 10000.0,
+      "unit_price": 250.0,
+      "base_amount": 2500000.0,
+      "tax_amount": 0.0,
+      "total_amount": 2500000.0,
+      "opening_reading": 0.0,
+      "closing_reading": 10000.0,
+      "account_head_id": "20fb5f28-d508-4b25-a174-325e34d5722f",
+      "account_head_name": "Account",
+      "payment_method": "Asset",
+      "status": "completed",
+      "created_at": "2026-01-14T17:57:09.980685"
+    }
+  },
+  "purchases": {
+    "01bb527c-2899-4617-96a0-991b8a6609f8": {
+      "id": "01bb527c-2899-4617-96a0-991b8a6609f8",
+      "tank_id": "de1df6e6-6809-444d-8a6c-4222c72898dd",
+      "supplier_name": "PSO",
+      "quantity": 10000.0,
+      "unit_cost": 250.0,
+      "total_cost": 2500000.0,
+      "account_head_id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "account_head_name": "Cash",
+      "payment_method": "Asset",
+      "invoice_number": "1234",
+      "purchase_date": "2026-01-14T17:55:10.204717",
+      "status": "completed",
+      "created_at": "2026-01-14T17:55:10.204717"
+    },
+    "3cdd9552-3c41-49e6-926b-f16aaa584687": {
+      "id": "3cdd9552-3c41-49e6-926b-f16aaa584687",
+      "tank_id": "4c95a753-7f0e-469c-a2c3-787d89cf91c0",
+      "supplier_name": "PSO",
+      "quantity": 10000.0,
+      "unit_cost": 230.0,
+      "total_cost": 2300000.0,
+      "account_head_id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "account_head_name": "Cash",
+      "payment_method": "Asset",
+      "invoice_number": "1234",
+      "purchase_date": "2026-01-14T17:55:35.992141",
+      "status": "completed",
+      "created_at": "2026-01-14T17:55:35.992141"
+    }
+  },
+  "expenses": {},
+  "fuel_types": {
+    "917e4a1b-af1a-4c4f-81ac-306714de6e36": {
+      "id": "917e4a1b-af1a-4c4f-81ac-306714de6e36",
+      "name": "P",
+      "unit_price": 250.0,
+      "tax_percentage": 0.0,
+      "status": "active",
+      "created_at": "2026-01-14T17:50:58.932306"
+    },
+    "a6240f7b-2014-4974-8be6-bab19aff9154": {
+      "id": "a6240f7b-2014-4974-8be6-bab19aff9154",
+      "name": "D",
+      "unit_price": 230.0,
+      "tax_percentage": 0.0,
+      "status": "active",
+      "created_at": "2026-01-14T17:50:58.932306"
+    }
+  },
+  "account_heads": {
+    "b4352b0b-953f-41fc-b54e-871da7629285": {
+      "id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "name": "Cash",
+      "head_type": "Asset",
+      "account_type": "Asset",
+      "code": "A001",
+      "description": "Cash in hand",
+      "opening_balance": 0.0,
+      "outstanding_balance": 0.0,
+      "status": "active",
+      "is_active": true,
+      "created_at": "2026-01-14T17:53:35.338581"
+    },
+    "20fb5f28-d508-4b25-a174-325e34d5722f": {
+      "id": "20fb5f28-d508-4b25-a174-325e34d5722f",
+      "name": "Account",
+      "head_type": "Asset",
+      "account_type": "Asset",
+      "code": "A002",
+      "description": "Bank Account",
+      "opening_balance": 0.0,
+      "outstanding_balance": 0.0,
+      "status": "active",
+      "is_active": true,
+      "created_at": "2026-01-14T17:54:35.010224"
+    },
+    "edc5aaf7-57de-4103-ada4-253dfd965d0c": {
+      "id": "edc5aaf7-57de-4103-ada4-253dfd965d0c",
+      "name": "Expense",
+      "head_type": "Expense",
+      "account_type": "Expense",
+      "code": "E001",
+      "description": "Expense",
+      "opening_balance": 0.0,
+      "outstanding_balance": 0.0,
+      "status": "active",
+      "is_active": true,
+      "created_at": "2026-01-14T17:54:35.010224"
+    }
+  },
+  "customers": {},
+  "tanks": {
+    "de1df6e6-6809-444d-8a6c-4222c72898dd": {
+      "id": "de1df6e6-6809-444d-8a6c-4222c72898dd",
+      "name": "T1",
+      "fuel_type_id": "917e4a1b-af1a-4c4f-81ac-306714de6e36",
+      "capacity": 50000.0,
+      "current_stock": 0.0,
+      "minimum_stock": 1000.0,
+      "location": "",
+      "created_at": "2026-01-14T17:52:13.037861",
+      "last_reading_date": "2026-01-14T17:57:09.980685",
+      "updated_at": "2026-01-14T17:57:09.980685"
+    },
+    "4c95a753-7f0e-469c-a2c3-787d89cf91c0": {
+      "id": "4c95a753-7f0e-469c-a2c3-787d89cf91c0",
+      "name": "T2",
+      "fuel_type_id": "a6240f7b-2014-4974-8be6-bab19aff9154",
+      "capacity": 50000.0,
+      "current_stock": 0.0,
+      "minimum_stock": 1000.0,
+      "location": "",
+      "created_at": "2026-01-14T17:52:13.047730",
+      "last_reading_date": "2026-01-14T17:57:09.980685",
+      "updated_at": "2026-01-14T17:57:09.980685"
+    }
+  },
+  "nozzles": {
+    "9533c566-6b03-47df-b056-a10c8e4bbb6b": {
+      "id": "9533c566-6b03-47df-b056-a10c8e4bbb6b",
+      "machine_id": "M1",
+      "nozzle_number": 1,
+      "fuel_type_id": "917e4a1b-af1a-4c4f-81ac-306714de6e36",
+      "opening_reading": 0.0,
+      "current_reading": 10000.0,
+      "closing_reading": 10000.0,
+      "assigned_operator_id": "",
+      "status": "active",
+      "created_at": "2026-01-14T17:52:42.583786",
+      "updated_at": "2026-01-14T17:57:09.990686"
+    },
+    "ba2e839b-245a-4703-8e32-9fe168d03075": {
+      "id": "ba2e839b-245a-4703-8e32-9fe168d03075",
+      "machine_id": "M2",
+      "nozzle_number": 1,
+      "fuel_type_id": "a6240f7b-2014-4974-8be6-bab19aff9154",
+      "opening_reading": 0.0,
+      "current_reading": 10000.0,
+      "closing_reading": 10000.0,
+      "assigned_operator_id": "",
+      "status": "active",
+      "created_at": "2026-01-14T17:52:42.583786",
+      "updated_at": "2026-01-14T17:57:09.990686"
+    }
+  },
+  "account_balances": {
+    "d03ce60b-c7f4-41ad-be31-78605c9f8204": {
+      "account_head_id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "account_head_name": "Cash",
+      "balance": -2500000.0,
+      "created_at": "2026-01-14T17:55:10.204717",
+      "last_updated": "2026-01-14T17:55:10.204717"
+    },
+    "b92fbff7-ff65-4343-ab4e-611e1148cbe1": {
+      "account_head_id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "account_head_name": "Cash",
+      "balance": -2300000.0,
+      "created_at": "2026-01-14T17:55:35.992141",
+      "last_updated": "2026-01-14T17:55:35.992141"
+    },
+    "e8d25dcd-ceb4-499c-9a22-83c593ef1055": {
+      "account_head_id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "account_head_name": "Cash",
+      "balance": 2600000.0,
+      "created_at": "2026-01-14T17:57:09.980685",
+      "last_updated": "2026-01-14T17:57:09.980685"
+    },
+    "a6c9e84e-eb70-4c34-884a-76f1b4d92dc3": {
+      "account_head_id": "20fb5f28-d508-4b25-a174-325e34d5722f",
+      "account_head_name": "Account",
+      "balance": 2500000.0,
+      "created_at": "2026-01-14T17:57:09.980685",
+      "last_updated": "2026-01-14T17:57:09.980685"
+    },
+    "cefdbcd0-5999-450f-a657-56bf0910f32d": {
+      "account_head_id": "20fb5f28-d508-4b25-a174-325e34d5722f",
+      "account_head_name": "Account",
+      "balance": -300000.0,
+      "created_at": "2026-01-14T17:59:04.056397",
+      "last_updated": "2026-01-14T17:59:04.056397"
+    },
+    "fa28cc3b-0c56-4154-bd9d-7393c3bce1a7": {
+      "account_head_id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "account_head_name": "Cash",
+      "balance": 300000.0,
+      "created_at": "2026-01-14T17:59:04.064436",
+      "last_updated": "2026-01-14T17:59:04.064436"
+    },
+    "fdf98ddb-6945-426a-b31f-695404eb01aa": {
+      "account_head_id": "20fb5f28-d508-4b25-a174-325e34d5722f",
+      "account_head_name": "Account",
+      "balance": -1900000.0,
+      "created_at": "2026-01-14T18:00:15.731925",
+      "last_updated": "2026-01-14T18:00:15.731925"
+    },
+    "8205f17a-480c-4d72-a39f-9566a6eef5f1": {
+      "account_head_id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "account_head_name": "Cash",
+      "balance": 1900000.0,
+      "created_at": "2026-01-14T18:00:15.731925",
+      "last_updated": "2026-01-14T18:00:15.731925"
+    }
+  },
+  "head_to_head_movements": {
+    "9e490e7a-785a-4f84-ab9c-447c9d04059c": {
+      "transaction_id": "9e490e7a-785a-4f84-ab9c-447c9d04059c",
+      "from_account_head_id": "20fb5f28-d508-4b25-a174-325e34d5722f",
+      "from_account_head_name": "Account",
+      "to_account_head_id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "to_account_head_name": "Cash",
+      "amount": 300000.0,
+      "reference": "",
+      "transaction_date": "2026-01-14T17:59:04.056397",
+      "type": "head_to_head_transfer",
+      "created_at": "2026-01-14T17:59:04.056397"
+    },
+    "98ee6872-070a-426d-b40c-13aa2b37f8dd": {
+      "transaction_id": "98ee6872-070a-426d-b40c-13aa2b37f8dd",
+      "from_account_head_id": "20fb5f28-d508-4b25-a174-325e34d5722f",
+      "from_account_head_name": "Account",
+      "to_account_head_id": "b4352b0b-953f-41fc-b54e-871da7629285",
+      "to_account_head_name": "Cash",
+      "amount": 1900000.0,
+      "reference": "",
+      "transaction_date": "2026-01-14T18:00:15.731925",
+      "type": "head_to_head_transfer",
+      "created_at": "2026-01-14T18:00:15.731925"
+    }
+  }
+}

@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QGridLayout, QFrame, QScrollArea, QMenuBar, QMenu, QDialog, QLineEdit,
     QDoubleSpinBox, QSpinBox, QComboBox, QMessageBox, QFormLayout, QTableWidget,
-    QTableWidgetItem, QHeaderView, QTabWidget, QFileDialog, QDateEdit
+    QTableWidgetItem, QHeaderView, QTabWidget, QFileDialog, QDateEdit, QGroupBox
 )
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QDate
 from PyQt5.QtGui import QFont, QColor, QPixmap, QPainter, QPen, QBrush
@@ -754,16 +754,16 @@ class DashboardScreen(QMainWindow):
         charts_layout.setSpacing(12)
 
         # Chart 1: Monthly Sales Trend (Bar Chart)
-        chart_1 = self.create_demo_bar_chart("📈 Monthly Sales Trend", 250)
-        charts_layout.addWidget(chart_1, 0, 0, 1, 2)
+        self.chart_1 = self.create_demo_bar_chart("📈 Monthly Sales Trend", 250)
+        charts_layout.addWidget(self.chart_1, 0, 0, 1, 2)
 
         # Chart 2: Top 5 Customers (List)
-        chart_2 = self.create_demo_customer_list("👥 Top 5 Customers", 220)
-        charts_layout.addWidget(chart_2, 1, 0)
+        self.chart_2 = self.create_demo_customer_list("👥 Top 5 Customers", 220)
+        charts_layout.addWidget(self.chart_2, 1, 0)
 
         # Chart 3: Fuel Type Distribution (Pie Chart)
-        chart_3 = self.create_demo_fuel_chart("⛽ Fuel Type Distribution", 220)
-        charts_layout.addWidget(chart_3, 1, 1)
+        self.chart_3 = self.create_demo_fuel_chart("⛽ Fuel Type Distribution", 220)
+        charts_layout.addWidget(self.chart_3, 1, 1)
 
         scroll_layout.addLayout(charts_layout)
 
@@ -1526,6 +1526,7 @@ class DashboardScreen(QMainWindow):
         #view_menu.addAction("View Exchange Rates", self.view_exchange_rates)
         view_menu.addAction("View Account Heads", self.view_account_heads)
         view_menu.addAction("Account Position Report", self.view_account_position_report)
+        view_menu.addAction("Account Head Balances", self.view_account_head_balances)
         view_menu.addSeparator()
         view_menu.addAction("View Daily Summary", self.view_daily_summary)
         view_menu.addAction("Daily Transactions Report", self.daily_transactions_report)
@@ -1539,6 +1540,8 @@ class DashboardScreen(QMainWindow):
         daily_menu.addSeparator()
         #daily_menu.addAction("Add New Customer", self.add_customer_dialog)
         daily_menu.addAction("Record Customer Payment", self.customer_payments_dialog)
+        daily_menu.addSeparator()
+        daily_menu.addAction("Head to Head Movement", self.head_to_head_movement_dialog)
         
         # Setup Menu (One-time settings)
         setup_menu = menubar.addMenu("Setup")
@@ -1575,18 +1578,24 @@ class DashboardScreen(QMainWindow):
         self._center_dialog_on_screen(dialog)
         if dialog.exec_() == QDialog.Accepted:
             QMessageBox.information(self, "Success", "Sale recorded successfully!")
+            # Refresh dashboard data immediately to show updated stats and reports
+            self.load_dashboard_data()
 
     def record_purchase_dialog(self):
         """Open dialog to record a fuel purchase."""
         dialog = RecordPurchaseDialog(self.fuel_service, self.tank_service, self.db_service, self.account_head_service)
         if dialog.exec_() == QDialog.Accepted:
             QMessageBox.information(self, "Success", "Fuel purchase recorded successfully!")
+            # Refresh dashboard data immediately to show updated stats and reports
+            self.load_dashboard_data()
 
     def update_exchange_rate_dialog(self):
         """Open dialog to update exchange rate."""
         dialog = UpdateExchangeRateDialog(self.db_service)
         if dialog.exec_() == QDialog.Accepted:
             QMessageBox.information(self, "Success", "Exchange rate updated successfully!")
+            # Refresh dashboard data immediately to show updated stats and reports
+            self.load_dashboard_data()
 
     def record_expense_dialog(self):
         """Open dialog to record an expense."""
@@ -1595,6 +1604,8 @@ class DashboardScreen(QMainWindow):
         dialog = RecordExpenseDialog(self.db_service, expense_payment_methods)
         if dialog.exec_() == QDialog.Accepted:
             QMessageBox.information(self, "Success", "Expense recorded successfully!")
+            # Refresh dashboard data immediately to show updated stats and reports
+            self.load_dashboard_data()
 
     def add_customer_dialog(self):
         """Open dialog to add a new customer."""
@@ -1605,6 +1616,19 @@ class DashboardScreen(QMainWindow):
     def customer_payments_dialog(self):
         """Open dialog for customer payments."""
         QMessageBox.information(self, "Customer Payments", "Customer payments feature coming soon!")
+
+    def head_to_head_movement_dialog(self):
+        """Open dialog for head to head movement (transfer between account heads)."""
+        try:
+            dialog = HeadToHeadMovementDialog(self.db_service, self.account_head_service)
+            self._center_dialog_on_screen(dialog)
+            if dialog.exec_() == QDialog.Accepted:
+                QMessageBox.information(self, "Success", "Head to Head Movement recorded successfully!")
+                # Refresh dashboard data immediately to show updated stats and reports
+                self.load_dashboard_data()
+        except Exception as e:
+            logger.error(f"Error opening head to head movement dialog: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to open head to head movement dialog: {str(e)}")
 
     def view_daily_summary(self):
         """View daily summary."""
@@ -2352,6 +2376,281 @@ class DashboardScreen(QMainWindow):
         """Update stock levels."""
         dialog = UpdateStockLevelDialog(self.tank_service, self.fuel_service, self.db_service, self)
         dialog.exec_()
+
+    def view_account_head_balances(self):
+        """View account head balances with real-time transaction impact breakdown."""
+        try:
+            # Get all account heads
+            accounts = self.db_service.list_documents('account_heads')
+            if not accounts:
+                QMessageBox.information(self, "Account Head Balances", "No account heads found.")
+                return
+            
+            # Get all transactions for impact calculation
+            sales = self.db_service.list_documents('sales')
+            purchases = self.db_service.list_documents('purchases')
+            expenses = self.db_service.list_documents('expenses')
+            head_to_head_movements = self.db_service.list_documents('head_to_head_movements')
+            
+            # Calculate transaction impacts per account head
+            transaction_impacts = {}
+            for account in accounts:
+                account_id = account.get('id', '')
+                opening_balance = float(account.get('opening_balance', 0))
+                transaction_impacts[account_id] = {
+                    'opening_balance': opening_balance,
+                    'sales_credit': 0.0,
+                    'purchases_debit': 0.0,
+                    'expenses_debit': 0.0,
+                    'htm_movements': 0.0  # Head-to-head movements net impact
+                }
+            
+            # Calculate sales impact (CREDIT)
+            for sale in sales:
+                account_head_id = sale.get('account_head_id', '')
+                if account_head_id in transaction_impacts:
+                    transaction_impacts[account_head_id]['sales_credit'] += float(sale.get('total_amount', 0))
+            
+            # Calculate purchases impact (DEBIT)
+            for purchase in purchases:
+                account_head_id = purchase.get('account_head_id', '')
+                if account_head_id in transaction_impacts:
+                    transaction_impacts[account_head_id]['purchases_debit'] += float(purchase.get('total_cost', 0))
+            
+            # Calculate expenses impact (DEBIT)
+            for expense in expenses:
+                account_head_id = expense.get('account_head_id', '')
+                if account_head_id in transaction_impacts:
+                    transaction_impacts[account_head_id]['expenses_debit'] += float(expense.get('amount', 0))
+            
+            # Calculate head-to-head movements impact
+            for movement in head_to_head_movements:
+                from_account_id = movement.get('from_account_head_id', '')
+                to_account_id = movement.get('to_account_head_id', '')
+                amount = float(movement.get('amount', 0))
+                
+                # FROM account: DEBIT (negative/outgoing)
+                if from_account_id in transaction_impacts:
+                    transaction_impacts[from_account_id]['htm_movements'] -= amount
+                
+                # TO account: CREDIT (positive/incoming)
+                if to_account_id in transaction_impacts:
+                    transaction_impacts[to_account_id]['htm_movements'] += amount
+            
+            # Create dialog
+            dialog = QDialog(self)
+            dialog.setWindowTitle("Account Head Balances - Real Time")
+            dialog.resize(1000, 600)
+            
+            layout = QVBoxLayout()
+            
+            # Header
+            header = QLabel("Account Head Balances - Real-Time Impact Analysis")
+            header.setFont(QFont("Arial", 14, QFont.Bold))
+            header.setStyleSheet("color: #1a2332; padding: 10px;")
+            layout.addWidget(header)
+            
+            # Info label
+            info = QLabel("Shows current balance with breakdown of Sales (CREDIT), Purchases (DEBIT), and Expenses (DEBIT)")
+            info.setStyleSheet("color: #666; padding: 5px 10px;")
+            layout.addWidget(info)
+            
+            # Create table with detailed breakdown
+            table = QTableWidget()
+            table.setColumnCount(9)
+            table.setHorizontalHeaderLabels([
+                "Account Head", "Type", "Sales (+)", "Purchases (-)", "Expenses (-)", 
+                "Movements", "Total Impact", "Balance", "Status"
+            ])
+            table.setRowCount(len(accounts))
+            
+            # Apply professional blue theme
+            table.setStyleSheet(
+                "QTableWidget { background-color: white; gridline-color: #ddd; }"
+                "QHeaderView::section { background-color: #2196F3; color: white; padding: 8px; border: none; font-weight: bold; }"
+                "QTableWidget::item { padding: 8px; border-bottom: 1px solid #f0f0f0; }"
+                "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+                "QTableWidget::item:alternate { background-color: #f9f9f9; }"
+            )
+            table.setAlternatingRowColors(True)
+            table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            
+            total_balance = 0
+            total_sales = 0
+            total_purchases = 0
+            total_expenses = 0
+            total_movements = 0
+            
+            for row, account in enumerate(accounts):
+                account_id = account.get('id', '')
+                name = account.get('name', '')
+                head_type = account.get('head_type', account.get('account_type', ''))
+                
+                # Get transaction breakdown
+                impacts = transaction_impacts.get(account_id, {})
+                opening_balance = impacts.get('opening_balance', 0.0)
+                sales_credit = impacts.get('sales_credit', 0.0)
+                purchases_debit = impacts.get('purchases_debit', 0.0)
+                expenses_debit = impacts.get('expenses_debit', 0.0)
+                htm_movements = impacts.get('htm_movements', 0.0)
+                
+                # Calculate balance as: Opening Balance + Sales - Purchases - Expenses + Movements
+                # (Movements are already signed: negative for outgoing, positive for incoming)
+                total_impact = sales_credit - purchases_debit - expenses_debit + htm_movements
+                balance = opening_balance + total_impact
+                
+                total_balance += balance
+                total_sales += sales_credit
+                total_purchases += purchases_debit
+                total_expenses += expenses_debit
+                total_movements += htm_movements
+                
+                # Determine status based on balance
+                if balance > 0:
+                    status = "Credit"
+                    status_color = "#4CAF50"  # Green
+                elif balance < 0:
+                    status = "Debit"
+                    status_color = "#F44336"  # Red
+                else:
+                    status = "Settled"
+                    status_color = "#9E9E9E"  # Grey
+                
+                # Set items
+                name_item = QTableWidgetItem(name)
+                name_item.setFont(QFont("Arial", 9))
+                table.setItem(row, 0, name_item)
+                
+                type_item = QTableWidgetItem(head_type)
+                type_item.setFont(QFont("Arial", 9))
+                table.setItem(row, 1, type_item)
+                
+                sales_item = QTableWidgetItem(f"+{sales_credit:,.2f}")
+                sales_item.setFont(QFont("Arial", 9))
+                sales_item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+                sales_item.setForeground(QColor("#4CAF50"))
+                table.setItem(row, 2, sales_item)
+                
+                purchases_item = QTableWidgetItem(f"-{purchases_debit:,.2f}")
+                purchases_item.setFont(QFont("Arial", 9))
+                purchases_item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+                purchases_item.setForeground(QColor("#F44336"))
+                table.setItem(row, 3, purchases_item)
+                
+                expenses_item = QTableWidgetItem(f"-{expenses_debit:,.2f}")
+                expenses_item.setFont(QFont("Arial", 9))
+                expenses_item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+                expenses_item.setForeground(QColor("#F44336"))
+                table.setItem(row, 4, expenses_item)
+                
+                # Head-to-Head Movements column
+                movements_item = QTableWidgetItem(f"{htm_movements:,.2f}")
+                movements_item.setFont(QFont("Arial", 9))
+                movements_item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+                if htm_movements > 0:
+                    movements_item.setForeground(QColor("#4CAF50"))  # Incoming
+                elif htm_movements < 0:
+                    movements_item.setForeground(QColor("#F44336"))  # Outgoing
+                table.setItem(row, 5, movements_item)
+                
+                # Total Impact column
+                impact_item = QTableWidgetItem(f"{total_impact:,.2f}")
+                impact_item.setFont(QFont("Arial", 9, QFont.Bold))
+                impact_item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+                if total_impact > 0:
+                    impact_item.setForeground(QColor("#4CAF50"))
+                elif total_impact < 0:
+                    impact_item.setForeground(QColor("#F44336"))
+                table.setItem(row, 6, impact_item)
+                
+                balance_item = QTableWidgetItem(f"{balance:,.2f}")
+                balance_item.setFont(QFont("Arial", 9, QFont.Bold))
+                balance_item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+                if balance > 0:
+                    balance_item.setForeground(QColor("#4CAF50"))
+                elif balance < 0:
+                    balance_item.setForeground(QColor("#F44336"))
+                table.setItem(row, 7, balance_item)
+                
+                status_item = QTableWidgetItem(status)
+                status_item.setFont(QFont("Arial", 9))
+                status_item.setForeground(QColor(status_color))
+                table.setItem(row, 8, status_item)
+            
+            layout.addWidget(table)
+            
+            # Summary box with transaction breakdown
+            summary_box = QGroupBox("Transaction Summary")
+            summary_box.setStyleSheet(
+                "QGroupBox { border: 1px solid #ddd; border-radius: 5px; margin-top: 5px; padding-top: 10px; }"
+                "QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; }"
+            )
+            summary_layout = QVBoxLayout()
+            
+            sales_label = QLabel(f"Total Sales Credit: +Rs. {total_sales:,.2f}")
+            sales_label.setFont(QFont("Arial", 10, QFont.Bold))
+            sales_label.setStyleSheet("color: #4CAF50;")
+            summary_layout.addWidget(sales_label)
+            
+            purchases_label = QLabel(f"Total Purchases Debit: -Rs. {total_purchases:,.2f}")
+            purchases_label.setFont(QFont("Arial", 10, QFont.Bold))
+            purchases_label.setStyleSheet("color: #F44336;")
+            summary_layout.addWidget(purchases_label)
+            
+            expenses_label = QLabel(f"Total Expenses Debit: -Rs. {total_expenses:,.2f}")
+            expenses_label.setFont(QFont("Arial", 10, QFont.Bold))
+            expenses_label.setStyleSheet("color: #FF9800;")
+            summary_layout.addWidget(expenses_label)
+            
+            movements_label = QLabel(f"Total Movements: {total_movements:+,.2f}")
+            movements_label.setFont(QFont("Arial", 10, QFont.Bold))
+            if total_movements >= 0:
+                movements_label.setStyleSheet("color: #4CAF50;")
+            else:
+                movements_label.setStyleSheet("color: #F44336;")
+            summary_layout.addWidget(movements_label)
+            
+            summary_box.setLayout(summary_layout)
+            layout.addWidget(summary_box)
+            
+            # Total balance box
+            total_box = QGroupBox("Overall Position")
+            total_box.setStyleSheet(
+                "QGroupBox { border: 2px solid #2196F3; border-radius: 5px; margin-top: 5px; padding-top: 10px; }"
+                "QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; }"
+            )
+            total_layout = QVBoxLayout()
+            
+            total_label = QLabel(f"Total Account Head Balance: Rs. {total_balance:,.2f}")
+            total_label.setFont(QFont("Arial", 12, QFont.Bold))
+            if total_balance >= 0:
+                total_label.setStyleSheet("color: #4CAF50;")
+            else:
+                total_label.setStyleSheet("color: #F44336;")
+            total_layout.addWidget(total_label)
+            
+            total_box.setLayout(total_layout)
+            layout.addWidget(total_box)
+            
+            # Buttons
+            button_layout = QHBoxLayout()
+            refresh_btn = QPushButton("🔄 Refresh")
+            refresh_btn.clicked.connect(lambda: self.view_account_head_balances())
+            button_layout.addWidget(refresh_btn)
+            button_layout.addStretch()
+            
+            close_btn = QPushButton("Close")
+            close_btn.clicked.connect(dialog.accept)
+            button_layout.addWidget(close_btn)
+            
+            layout.addLayout(button_layout)
+            
+            dialog.setLayout(layout)
+            dialog.exec_()
+            
+        except Exception as e:
+            logger.error(f"Error viewing account head balances: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to load account head balances: {str(e)}")
 
     def view_inventory_report(self):
         """View inventory report."""
@@ -4568,6 +4867,38 @@ class RecordSaleDialog(QDialog):
                             saved_rows.append(row)
                             # Track nozzle for update - update current_reading to closing_reading
                             nozzles_to_update.append((nozzle_id, closing_reading))
+                            
+                            # Update account head balance (CREDIT - received payment)
+                            try:
+                                account_balances = self.db_service.list_documents('account_balances')
+                                balance_id = None
+                                for bal in account_balances:
+                                    if bal.get('account_head_id') == account_head_id:
+                                        balance_id = bal.get('id')
+                                        break
+                                
+                                if balance_id:
+                                    # Update existing balance
+                                    bal_doc = self.db_service.read_document('account_balances', balance_id)
+                                    if bal_doc:
+                                        current_balance = float(bal_doc.get('balance', 0))
+                                        new_balance = current_balance + total_amount
+                                        self.db_service.update_document('account_balances', balance_id, {
+                                            'balance': new_balance,
+                                            'last_updated': datetime.now().isoformat()
+                                        })
+                                else:
+                                    # Create new balance record
+                                    new_balance_id = str(uuid.uuid4())
+                                    self.db_service.create_document('account_balances', new_balance_id, {
+                                        'account_head_id': account_head_id,
+                                        'account_head_name': account_head_name,
+                                        'balance': total_amount,
+                                        'created_at': datetime.now().isoformat(),
+                                        'last_updated': datetime.now().isoformat()
+                                    })
+                            except Exception as e:
+                                print(f"Warning: Failed to update account balance for sale: {str(e)}")
                         else:
                             errors[row + 1] = f"Sale saved but inventory update failed: {stock_msg}"
                     else:
@@ -5371,6 +5702,38 @@ class RecordPurchaseDialog(QDialog):
                         saved_rows.append(row)
                         # Update account head balance in memory
                         self.account_head_balances[account_head_id] = self.account_head_balances.get(account_head_id, 0.0) + total_cost
+                        
+                        # Update account head balance in database (DEBIT - paid money)
+                        try:
+                            account_balances = self.db_service.list_documents('account_balances')
+                            balance_id = None
+                            for bal in account_balances:
+                                if bal.get('account_head_id') == account_head_id:
+                                    balance_id = bal.get('id')
+                                    break
+                            
+                            if balance_id:
+                                # Update existing balance
+                                bal_doc = self.db_service.read_document('account_balances', balance_id)
+                                if bal_doc:
+                                    current_balance = float(bal_doc.get('balance', 0))
+                                    new_balance = current_balance - total_cost
+                                    self.db_service.update_document('account_balances', balance_id, {
+                                        'balance': new_balance,
+                                        'last_updated': datetime.now().isoformat()
+                                    })
+                            else:
+                                # Create new balance record
+                                new_balance_id = str(uuid.uuid4())
+                                self.db_service.create_document('account_balances', new_balance_id, {
+                                    'account_head_id': account_head_id,
+                                    'account_head_name': account_head_name,
+                                    'balance': -total_cost,
+                                    'created_at': datetime.now().isoformat(),
+                                    'last_updated': datetime.now().isoformat()
+                                })
+                        except Exception as e:
+                            print(f"Warning: Failed to update account balance for purchase: {str(e)}")
                     else:
                         errors[row + 1] = msg
                 except Exception as e:
@@ -5802,6 +6165,38 @@ class RecordExpenseDialog(QDialog):
 
                     if success:
                         saved_rows.append(row)
+                        
+                        # Update account head balance in database (DEBIT - paid money)
+                        try:
+                            account_balances = self.db_service.list_documents('account_balances')
+                            balance_id = None
+                            for bal in account_balances:
+                                if bal.get('account_head_id') == account_head_id:
+                                    balance_id = bal.get('id')
+                                    break
+                            
+                            if balance_id:
+                                # Update existing balance
+                                bal_doc = self.db_service.read_document('account_balances', balance_id)
+                                if bal_doc:
+                                    current_balance = float(bal_doc.get('balance', 0))
+                                    new_balance = current_balance - amount
+                                    self.db_service.update_document('account_balances', balance_id, {
+                                        'balance': new_balance,
+                                        'last_updated': datetime.now().isoformat()
+                                    })
+                            else:
+                                # Create new balance record
+                                new_balance_id = str(uuid.uuid4())
+                                self.db_service.create_document('account_balances', new_balance_id, {
+                                    'account_head_id': account_head_id,
+                                    'account_head_name': account_head_name,
+                                    'balance': -amount,
+                                    'created_at': datetime.now().isoformat(),
+                                    'last_updated': datetime.now().isoformat()
+                                })
+                        except Exception as e:
+                            print(f"Warning: Failed to update account balance for expense: {str(e)}")
                     else:
                         errors[row + 1] = msg
                 except Exception as e:
@@ -5851,3 +6246,254 @@ class RecordExpenseDialog(QDialog):
             dialog.exec_()
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Failed to load expenses: {str(e)}")
+
+class HeadToHeadMovementDialog(QDialog):
+    """Dialog for transferring/settling amounts between account heads."""
+
+    def __init__(self, db_service, account_head_service):
+        """Initialize dialog."""
+        super().__init__()
+        self.db_service = db_service
+        self.account_head_service = account_head_service
+        
+        self.setWindowTitle("Head to Head Movement")
+        self.resize(500, 400)
+        self.setStyleSheet(
+            "QDialog { background-color: #f5f5f5; }"
+            "QLabel { color: #333; font-weight: bold; }"
+            "QLineEdit { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }"
+            "QComboBox { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }"
+            "QPushButton { background-color: #2196F3; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold; border: none; }"
+            "QPushButton:hover { background-color: #1976D2; }"
+        )
+        
+        # Center on screen
+        from PyQt5.QtWidgets import QDesktopWidget
+        screen = QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) // 2, (screen.height() - size.height()) // 2)
+        
+        self.init_ui()
+
+    def init_ui(self):
+        """Initialize UI components."""
+        layout = QVBoxLayout()
+        
+        # Header
+        header = QLabel("Head to Head Movement")
+        header.setFont(QFont("Arial", 14, QFont.Bold))
+        header.setStyleSheet("color: #1a2332;")
+        layout.addWidget(header)
+        
+        # Info label
+        info = QLabel("Transfer/Settle amount between different account heads")
+        info.setStyleSheet("color: #666; font-weight: normal;")
+        layout.addWidget(info)
+        
+        layout.addSpacing(15)
+        
+        # From Account Head
+        from_label = QLabel("From Account Head:")
+        layout.addWidget(from_label)
+        self.from_account_combo = QComboBox()
+        layout.addWidget(self.from_account_combo)
+        
+        layout.addSpacing(10)
+        
+        # To Account Head
+        to_label = QLabel("To Account Head:")
+        layout.addWidget(to_label)
+        self.to_account_combo = QComboBox()
+        layout.addWidget(self.to_account_combo)
+        
+        layout.addSpacing(10)
+        
+        # Amount
+        amount_label = QLabel("Amount (Rs):")
+        layout.addWidget(amount_label)
+        self.amount_input = QLineEdit()
+        self.amount_input.setPlaceholderText("Enter amount to transfer")
+        layout.addWidget(self.amount_input)
+        
+        layout.addSpacing(10)
+        
+        # Reference
+        ref_label = QLabel("Reference/Notes:")
+        layout.addWidget(ref_label)
+        self.reference_input = QLineEdit()
+        self.reference_input.setPlaceholderText("Optional: Enter reference or notes")
+        layout.addWidget(self.reference_input)
+        
+        layout.addSpacing(20)
+        layout.addStretch()
+        
+        # Buttons
+        button_layout = QHBoxLayout()
+        
+        save_btn = QPushButton("Record Movement")
+        save_btn.setMinimumWidth(150)
+        save_btn.clicked.connect(self.save_movement)
+        button_layout.addWidget(save_btn)
+        
+        button_layout.addStretch()
+        
+        cancel_btn = QPushButton("Cancel")
+        cancel_btn.setMinimumWidth(100)
+        cancel_btn.setStyleSheet(
+            "QPushButton { background-color: #999; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold; border: none; }"
+            "QPushButton:hover { background-color: #777; }"
+        )
+        cancel_btn.clicked.connect(self.reject)
+        button_layout.addWidget(cancel_btn)
+        
+        layout.addLayout(button_layout)
+        
+        self.setLayout(layout)
+        
+        # Load account heads
+        self.load_account_heads()
+
+    def load_account_heads(self):
+        """Load account heads from database."""
+        try:
+            account_heads = self.db_service.list_documents('account_heads')
+            self.account_heads = {ah.get('id'): ah for ah in account_heads}
+            account_names = [ah.get('name', '') for ah in account_heads]
+            
+            self.from_account_combo.addItems(account_names)
+            self.to_account_combo.addItems(account_names)
+            
+            # Set different defaults
+            if len(account_names) > 1:
+                self.to_account_combo.setCurrentIndex(1)
+        except Exception as e:
+            logger.error(f"Error loading account heads: {str(e)}")
+            QMessageBox.warning(self, "Error", f"Failed to load account heads: {str(e)}")
+
+    def save_movement(self):
+        """Save head to head movement with proper debit/credit accounting."""
+        try:
+            from_name = self.from_account_combo.currentText()
+            to_name = self.to_account_combo.currentText()
+            amount_str = self.amount_input.text().strip()
+            reference = self.reference_input.text().strip()
+            
+            # Validation
+            if not from_name or not to_name:
+                QMessageBox.warning(self, "Validation Error", "Please select both From and To account heads")
+                return
+            
+            if from_name == to_name:
+                QMessageBox.warning(self, "Validation Error", "From and To account heads must be different")
+                return
+            
+            if not amount_str:
+                QMessageBox.warning(self, "Validation Error", "Please enter an amount")
+                return
+            
+            try:
+                amount = float(amount_str)
+                if amount <= 0:
+                    raise ValueError("Amount must be greater than 0")
+            except ValueError as e:
+                QMessageBox.warning(self, "Validation Error", f"Invalid amount: {str(e)}")
+                return
+            
+            # Get account head IDs
+            from_id = None
+            to_id = None
+            for ah_id, ah_data in self.account_heads.items():
+                if ah_data.get('name') == from_name:
+                    from_id = ah_id
+                if ah_data.get('name') == to_name:
+                    to_id = ah_id
+            
+            if not from_id or not to_id:
+                QMessageBox.warning(self, "Error", "Selected account heads not found")
+                return
+            
+            # Create double-entry bookkeeping transaction
+            import uuid
+            from datetime import datetime
+            
+            transaction_id = str(uuid.uuid4())
+            
+            # Create the head-to-head movement record
+            movement = {
+                'transaction_id': transaction_id,
+                'from_account_head_id': from_id,
+                'from_account_head_name': from_name,
+                'to_account_head_id': to_id,
+                'to_account_head_name': to_name,
+                'amount': amount,
+                'reference': reference,
+                'transaction_date': datetime.now().isoformat(),
+                'type': 'head_to_head_transfer'
+            }
+            
+            # Save movement to database
+            success, message = self.db_service.create_document('head_to_head_movements', transaction_id, movement)
+            if not success:
+                QMessageBox.critical(self, "Error", f"Failed to save movement: {message}")
+                return
+            
+            # Get or initialize account balance records
+            account_balances = self.db_service.list_documents('account_balances')
+            from_balance_id = None
+            to_balance_id = None
+            
+            for bal in account_balances:
+                if bal.get('account_head_id') == from_id:
+                    from_balance_id = bal.get('id')
+                if bal.get('account_head_id') == to_id:
+                    to_balance_id = bal.get('id')
+            
+            # Update "From" account balance (debit - decrease)
+            if from_balance_id:
+                from_bal_doc = self.db_service.read_document('account_balances', from_balance_id)
+                if from_bal_doc:
+                    current_balance = float(from_bal_doc.get('balance', 0))
+                    new_balance = current_balance - amount
+                    self.db_service.update_document('account_balances', from_balance_id, {
+                        'balance': new_balance,
+                        'last_updated': datetime.now().isoformat()
+                    })
+            else:
+                # Create new balance record for "From" account (debit)
+                from_balance_id = str(uuid.uuid4())
+                self.db_service.create_document('account_balances', from_balance_id, {
+                    'account_head_id': from_id,
+                    'account_head_name': from_name,
+                    'balance': -amount,
+                    'created_at': datetime.now().isoformat(),
+                    'last_updated': datetime.now().isoformat()
+                })
+            
+            # Update "To" account balance (credit - increase)
+            if to_balance_id:
+                to_bal_doc = self.db_service.read_document('account_balances', to_balance_id)
+                if to_bal_doc:
+                    current_balance = float(to_bal_doc.get('balance', 0))
+                    new_balance = current_balance + amount
+                    self.db_service.update_document('account_balances', to_balance_id, {
+                        'balance': new_balance,
+                        'last_updated': datetime.now().isoformat()
+                    })
+            else:
+                # Create new balance record for "To" account (credit)
+                to_balance_id = str(uuid.uuid4())
+                self.db_service.create_document('account_balances', to_balance_id, {
+                    'account_head_id': to_id,
+                    'account_head_name': to_name,
+                    'balance': amount,
+                    'created_at': datetime.now().isoformat(),
+                    'last_updated': datetime.now().isoformat()
+                })
+            
+            logger.info(f"Head to Head Movement recorded with double-entry: {from_name} (DEBIT {amount}) -> {to_name} (CREDIT {amount})")
+            QMessageBox.information(self, "Success", f"Settlement recorded:\n\n{from_name} -Rs. {amount:.2f} (Debit)\n{to_name} +Rs. {amount:.2f} (Credit)")
+            self.accept()
+            
+        except Exception as e:
+            logger.error(f"Error saving head to head movement: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to save movement: {str(e)}")
