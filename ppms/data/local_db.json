@@ -85,6 +85,14 @@
       "tax_percentage": 0.0,
       "status": "active",
       "created_at": "2026-01-01T01:23:57.123107"
+    },
+    "0acf7d2d-b536-4b86-8697-1bc9264f7e98": {
+      "id": "0acf7d2d-b536-4b86-8697-1bc9264f7e98",
+      "name": "Oil",
+      "unit_price": 100.0,
+      "tax_percentage": 0.0,
+      "status": "active",
+      "created_at": "2026-01-13T19:30:17.738900"
     }
   },
   "tanks": {
@@ -99,6 +107,18 @@
       "created_at": "2026-01-01T01:24:21.335746",
       "last_reading_date": "2026-01-13T15:59:07.559384",
       "updated_at": "2026-01-13T15:59:07.559384"
+    },
+    "d3ea8da1-513c-4ed8-b4d5-a263cea3cf10": {
+      "id": "d3ea8da1-513c-4ed8-b4d5-a263cea3cf10",
+      "name": "T2",
+      "fuel_type_id": "2025df1c-bb8b-4e03-b652-f5f55cb8cd3f",
+      "capacity": 500000.0,
+      "current_stock": 1000.0,
+      "minimum_stock": 1000.0,
+      "location": "",
+      "created_at": "2026-01-13T19:31:51.682737",
+      "last_reading_date": "2026-01-13T19:56:59.764895",
+      "updated_at": "2026-01-13T19:56:59.764895"
     }
   },
   "nozzles": {
@@ -114,6 +134,18 @@
       "status": "active",
       "created_at": "2026-01-01T01:24:41.924461",
       "updated_at": "2026-01-13T15:59:07.561380"
+    },
+    "d541387b-5161-48d5-9e40-f0f325624ac0": {
+      "id": "d541387b-5161-48d5-9e40-f0f325624ac0",
+      "machine_id": "M1",
+      "nozzle_number": 1,
+      "fuel_type_id": "2025df1c-bb8b-4e03-b652-f5f55cb8cd3f",
+      "opening_reading": 0.0,
+      "current_reading": 0.0,
+      "closing_reading": 0.0,
+      "assigned_operator_id": "",
+      "status": "active",
+      "created_at": "2026-01-13T19:31:05.780264"
     }
   },
   "sales": {
@@ -220,6 +252,21 @@
       "purchase_date": "2026-01-12T17:25:48.334414",
       "status": "completed",
       "created_at": "2026-01-12T17:25:48.334414"
+    },
+    "486844ba-9c0b-4766-b834-65bb056de433": {
+      "id": "486844ba-9c0b-4766-b834-65bb056de433",
+      "tank_id": "d3ea8da1-513c-4ed8-b4d5-a263cea3cf10",
+      "supplier_name": "PSO",
+      "quantity": 1000.0,
+      "unit_cost": 250.0,
+      "total_cost": 250000.0,
+      "account_head_id": "24f923e0-8056-406b-a27a-b156a6eba199",
+      "account_head_name": "Cash1",
+      "payment_method": "Asset",
+      "invoice_number": "",
+      "purchase_date": "2026-01-13T19:57:23.465094",
+      "status": "completed",
+      "created_at": "2026-01-13T19:57:23.465094"
     }
   },
   "expenses": {

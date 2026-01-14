@@ -230,6 +230,13 @@ class ShiftManagementScreen(QWidget):
             "Operator", "Opening Time", "Closing Time", "Status",
             "Opening Cash (Rs)", "Closing Cash (Rs)", "Hours", "Sales (Rs)", "Actions"
         ])
+        self.shifts_table.setStyleSheet(
+            "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+            "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: #333333; }"
+            "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+        )
+        self.shifts_table.setAlternatingRowColors(True)
         self.shifts_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         main_layout.addWidget(self.shifts_table)
 

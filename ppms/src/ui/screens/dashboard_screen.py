@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem, QHeaderView, QTabWidget, QFileDialog, QDateEdit
 )
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QDate
-from PyQt5.QtGui import QFont, QColor
+from PyQt5.QtGui import QFont, QColor, QPixmap, QPainter, QPen, QBrush
 from src.services.database_service import (
     FuelService, TankService, SalesService, DatabaseService, NozzleService, CustomerService, AccountHeadService
 )
@@ -17,6 +17,7 @@ from src.config.firebase_config import AppConfig
 from src.config.logger_config import setup_logger
 from src.ui.screens.inventory_screen import UpdateStockLevelDialog
 from datetime import datetime
+import math
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -164,32 +165,37 @@ class DailyTransactionsReportDialog(QDialog):
         self.summary_layout.addWidget(self._create_stat_card("Net Profit", f"Rs. {net_profit:,.2f}", "#8E44AD"))
 
     def _create_stat_card(self, label, value, color):
-        """Create a statistics card with improved styling."""
+        """Create a statistics card with dashboard theme styling."""
         card = QFrame()
         card.setStyleSheet(f"""
             QFrame {{
-                background-color: white;
-                border-left: 5px solid {color};
-                border-radius: 4px;
-                padding: 15px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                background-color: {color};
+                border-radius: 12px;
+                padding: 0px;
+                border: none;
             }}
         """)
         
+        card.setMinimumHeight(50)
+        card.setMaximumHeight(55)
+        card.setMinimumWidth(150)
+        
         layout = QVBoxLayout()
-        layout.setContentsMargins(10, 10, 10, 10)
-        layout.setSpacing(5)
+        layout.setContentsMargins(12, 6, 12, 6)
+        layout.setSpacing(2)
         
         label_widget = QLabel(label)
-        label_widget.setFont(QFont("Arial", 10, QFont.Bold))
-        label_widget.setStyleSheet(f"color: {color}; font-weight: bold;")
+        label_widget.setFont(QFont("Arial", 8, QFont.Bold))
+        label_widget.setStyleSheet("color: rgba(255, 255, 255, 0.8); font-weight: bold;")
         
         value_widget = QLabel(value)
-        value_widget.setFont(QFont("Arial", 13, QFont.Bold))
-        value_widget.setStyleSheet("color: #2C3E50; font-weight: bold;")
+        value_widget.setFont(QFont("Arial", 12, QFont.Bold))
+        value_widget.setStyleSheet("color: white; font-weight: bold;")
+        value_widget.setWordWrap(True)
         
         layout.addWidget(label_widget)
         layout.addWidget(value_widget)
+        layout.addStretch()
         card.setLayout(layout)
         
         return card
@@ -220,6 +226,13 @@ class DailyTransactionsReportDialog(QDialog):
             "Nozzle", "Fuel Type", "Open Reading", "Quantity (L)", "Close Reading",
             "Unit Price (Rs)", "Total (Rs)", "Payment Method", "Customer", "Date", "Time"
         ])
+        table.setStyleSheet(
+            "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+            "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: #333333; }"
+            "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+        )
+        table.setAlternatingRowColors(True)
         table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         table.setRowCount(len(sales_data))
         
@@ -263,6 +276,13 @@ class DailyTransactionsReportDialog(QDialog):
             "Tank", "Fuel Type", "Quantity (L)", "Unit Cost (Rs)", 
             "Total Cost (Rs)", "Account Head", "Supplier", "Date"
         ])
+        table.setStyleSheet(
+            "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+            "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: #333333; }"
+            "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+        )
+        table.setAlternatingRowColors(True)
         table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         table.setRowCount(len(purchases_data))
         
@@ -305,6 +325,13 @@ class DailyTransactionsReportDialog(QDialog):
         table.setHorizontalHeaderLabels([
             "Description", "Category", "Amount (Rs)", "Payment Method", "Notes", "Date"
         ])
+        table.setStyleSheet(
+            "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+            "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: #333333; }"
+            "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+        )
+        table.setAlternatingRowColors(True)
         table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         table.setRowCount(len(expenses_data))
         
@@ -667,72 +694,53 @@ class DashboardScreen(QMainWindow):
         kpi_layout.setColumnStretch(0, 1)
         kpi_layout.setColumnStretch(1, 1)
         kpi_layout.setColumnStretch(2, 1)
+        kpi_layout.setColumnStretch(3, 1)
 
-        # Card 1: Total Sales (Yellow)
-        sales_card, sales_label = self.create_kpi_card(
-            "Total Sales",
-            "0",
-            "0",
-            "#FFC107",
-            "Units"
-        )
+        # Card 1: Total Sales with Month-wise and Daily breakdown (Blue)
+        sales_card, sales_label, month_label, daily_label = self.create_sales_breakdown_card()
         self.kpi_labels['total_sales'] = sales_label
+        self.kpi_labels['total_sales_month'] = month_label
+        self.kpi_labels['total_sales_daily'] = daily_label
         kpi_layout.addWidget(sales_card, 0, 0)
 
-        # Card 2: Total Revenue (Green) - Net Revenue = Sales - Purchases
-        revenue_card, revenue_label = self.create_kpi_card(
-            "Net Revenue",
+        # Card 2: Total Purchases (Green)
+        customers_card, customers_label, customers_monthly_label, customers_daily_label = self.create_kpi_card_new(
+            "Total Purchases",
             "0",
-            "0",
-            "#4CAF50",
+            "+0",
+            "#1DC780",
             "PKR"
         )
-        self.kpi_labels['total_revenue'] = revenue_label
-        kpi_layout.addWidget(revenue_card, 0, 1)
+        self.kpi_labels['total_customers'] = customers_label
+        self.kpi_labels['total_customers_daily'] = customers_daily_label
+        self.kpi_labels['total_customers_monthly'] = customers_monthly_label
+        kpi_layout.addWidget(customers_card, 0, 1)
 
-        # Card 3: Average Ticket (Blue)
-        ticket_card, ticket_label = self.create_kpi_card(
-            "Average Ticket",
+        # Card 3: Total Expenses (Orange)
+        ticket_card, ticket_label, ticket_monthly_label, ticket_daily_label = self.create_kpi_card_new(
+            "Total Expenses",
             "0",
-            "0",
-            "#2196F3",
+            "+0",
+            "#FF9800",
             "PKR"
         )
         self.kpi_labels['average_ticket'] = ticket_label
+        self.kpi_labels['average_ticket_daily'] = ticket_daily_label
+        self.kpi_labels['average_ticket_monthly'] = ticket_monthly_label
         kpi_layout.addWidget(ticket_card, 0, 2)
 
-        # Card 4: Daily Fuel Sold (Orange)
-        fuel_card, fuel_label = self.create_kpi_card(
-            "Daily Fuel Sold",
+        # Card 4: Total Revenue (Pink/Red)
+        revenue_card, revenue_label, revenue_monthly_label, revenue_daily_label = self.create_kpi_card_new(
+            "Net Revenue",
             "0",
-            "0",
-            "#FF9800",
-            "Liters"
+            "+0",
+            "#E91E63",
+            "PKR"
         )
-        self.kpi_labels['daily_fuel'] = fuel_label
-        kpi_layout.addWidget(fuel_card, 1, 0)
-
-        # Card 5: Total Customers (Purple)
-        customers_card, customers_label = self.create_kpi_card(
-            "Total Customers",
-            "0",
-            "0",
-            "#9C27B0",
-            "Count"
-        )
-        self.kpi_labels['total_customers'] = customers_label
-        kpi_layout.addWidget(customers_card, 1, 1)
-
-        # Card 6: Conversion Rate (Red)
-        conversion_card, conversion_label = self.create_kpi_card(
-            "Inventory Status",
-            "0",
-            "0",
-            "#F44336",
-            "Liters"
-        )
-        self.kpi_labels['inventory_status'] = conversion_label
-        kpi_layout.addWidget(conversion_card, 1, 2)
+        self.kpi_labels['total_revenue'] = revenue_label
+        self.kpi_labels['total_revenue_daily'] = revenue_daily_label
+        self.kpi_labels['total_revenue_monthly'] = revenue_monthly_label
+        kpi_layout.addWidget(revenue_card, 0, 3)
 
         scroll_layout.addLayout(kpi_layout)
 
@@ -803,6 +811,7 @@ class DashboardScreen(QMainWindow):
             actions_layout.addWidget(btn)
 
         scroll_layout.addLayout(actions_layout)
+
         scroll_layout.addSpacing(20)
         scroll_layout.addStretch()
 
@@ -927,19 +936,18 @@ class DashboardScreen(QMainWindow):
             
             logger.info(f"[DEBUG] Processed - Sales: {sales_count}, Purchases: {purchases_count}, Expenses: {expenses_count}")
             
-            # Prepare data for chart (last 12 months in order)
+            # Prepare data for chart (last 12 months in chronological order: Jan to Dec)
             months = []
             vendas = []
             compras = []
             despesas = []
             
-            for i in range(11, -1, -1):
-                target_date = today - timedelta(days=i*30)
-                month_num = target_date.month - 1
-                month_name = months_map[month_num]
+            # Create sorted months from 01 to 12 for proper chronological display
+            for month_num in range(1, 13):
+                month_key = f"{month_num:02d}"  # "01", "02", ... "12"
+                month_name = months_map[month_num - 1]
                 months.append(month_name)
                 
-                month_key = target_date.strftime("%m")
                 vendas.append(monthly_sales.get(month_key, 0))
                 compras.append(monthly_purchases.get(month_key, 0))
                 despesas.append(monthly_expenses.get(month_key, 0))
@@ -989,15 +997,15 @@ class DashboardScreen(QMainWindow):
         ax.set_xticks(x)
         ax.set_xticklabels(months, fontsize=10, fontweight='bold')
         
-        # Set y-axis limit based on actual data
+        # Set y-axis limit based on actual data (add extra space for labels)
         max_val = max(
             max(vendas) if vendas else 0, 
             max(compras) if compras else 0,
             max(despesas) if despesas else 0
         )
-        ax.set_ylim(0, max_val * 1.15 if max_val > 0 else 1000000)
+        ax.set_ylim(0, max_val * 1.25 if max_val > 0 else 1000000)
         
-        ax.legend(loc='upper left', fontsize=9, frameon=False)
+        ax.legend(loc='upper center', fontsize=9, frameon=False, ncol=3, bbox_to_anchor=(0.5, 1.12))
         ax.grid(axis='y', alpha=0.3, linestyle='--')
         ax.set_axisbelow(True)
         
@@ -1006,7 +1014,7 @@ class DashboardScreen(QMainWindow):
         ax.spines['right'].set_visible(False)
         
         fig.suptitle(title, fontsize=12, fontweight='bold', color='#1a2332', y=0.98)
-        fig.tight_layout(rect=[0, 0, 1, 0.96])
+        fig.tight_layout(rect=[0, 0.05, 1, 0.92])
         
         # Create canvas
         canvas = FigureCanvas(fig)
@@ -1188,6 +1196,249 @@ class DashboardScreen(QMainWindow):
         canvas.setMinimumHeight(height)
         
         return canvas
+
+    def create_sales_breakdown_card(self):
+        """Create a sales card with 75%-25% layout."""
+        card = QFrame()
+        card.setStyleSheet("""
+            QFrame {
+                background-color: #2196F3;
+                border-radius: 12px;
+                padding: 0px;
+            }
+        """)
+        # Card size
+        card.setMinimumHeight(180)
+        card.setMinimumWidth(280)
+        card.setCursor(Qt.PointingHandCursor)
+
+        main_layout = QVBoxLayout()
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
+
+        # Upper section: 75% of card (with 80% content area)
+        upper_container = QFrame()
+        upper_container.setStyleSheet("background-color: transparent;")
+        upper_layout = QVBoxLayout()
+        upper_layout.setContentsMargins(16, 16, 16, 12)
+        upper_layout.setSpacing(0)
+        
+        # Title
+        title_label = QLabel("Total Sales Revenue")
+        title_label.setFont(QFont("Arial", 10, QFont.Bold))
+        title_label.setAlignment(Qt.AlignLeft)
+        title_label.setStyleSheet("color: white;")
+        upper_layout.addWidget(title_label)
+        
+        # Horizontal layout for indicator and value (80% of upper area)
+        h_layout = QHBoxLayout()
+        h_layout.setSpacing(12)
+        
+        # Indicator
+        icon_label = QLabel()
+        icon_pixmap = self.create_indicator_icon("S", 36)
+        icon_label.setPixmap(icon_pixmap)
+        icon_label.setStyleSheet("background-color: transparent;")
+        h_layout.addWidget(icon_label, 0, Qt.AlignLeft | Qt.AlignVCenter)
+        
+        # Main value
+        sales_label = QLabel("0")
+        sales_label.setFont(QFont("Arial", 32, QFont.Bold))
+        sales_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        sales_label.setStyleSheet("color: white; background-color: transparent;")
+        h_layout.addWidget(sales_label, 1, Qt.AlignRight)
+        
+        upper_layout.addLayout(h_layout, 1)
+        upper_container.setLayout(upper_layout)
+        main_layout.addWidget(upper_container, 3)  # 75% of space
+        
+        # Lower section: 25% of card - Horizontal 50%-50% split
+        lower_container = QFrame()
+        lower_container.setStyleSheet("background-color: rgba(0, 0, 0, 0.1);")
+        lower_layout = QHBoxLayout()
+        lower_layout.setContentsMargins(8, 4, 8, 4)
+        lower_layout.setSpacing(0)
+        
+        # Left side: Daily stats (50%)
+        daily_container = QFrame()
+        daily_container.setStyleSheet("background-color: transparent;")
+        daily_layout = QVBoxLayout()
+        daily_layout.setContentsMargins(0, 0, 4, 0)
+        daily_layout.setSpacing(2)
+        
+        daily_label_title = QLabel("Daily")
+        daily_label_title.setFont(QFont("Arial", 7, QFont.Bold))
+        daily_label_title.setAlignment(Qt.AlignCenter)
+        daily_label_title.setStyleSheet("color: rgba(255, 255, 255, 0.7);")
+        daily_layout.addWidget(daily_label_title)
+        
+        daily_value_label = QLabel("0")
+        daily_value_label.setFont(QFont("Arial", 9, QFont.Bold))
+        daily_value_label.setAlignment(Qt.AlignCenter)
+        daily_value_label.setStyleSheet("color: white; background-color: transparent;")
+        daily_layout.addWidget(daily_value_label)
+        
+        daily_container.setLayout(daily_layout)
+        lower_layout.addWidget(daily_container, 1)
+        
+        # Divider
+        divider = QFrame()
+        divider.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
+        divider.setMinimumWidth(1)
+        lower_layout.addWidget(divider)
+        
+        # Right side: Monthly stats (50%)
+        monthly_container = QFrame()
+        monthly_container.setStyleSheet("background-color: transparent;")
+        monthly_layout = QVBoxLayout()
+        monthly_layout.setContentsMargins(4, 0, 0, 0)
+        monthly_layout.setSpacing(2)
+        
+        monthly_label_title = QLabel("Monthly")
+        monthly_label_title.setFont(QFont("Arial", 7, QFont.Bold))
+        monthly_label_title.setAlignment(Qt.AlignCenter)
+        monthly_label_title.setStyleSheet("color: rgba(255, 255, 255, 0.7);")
+        monthly_layout.addWidget(monthly_label_title)
+        
+        monthly_value_label = QLabel("0")
+        monthly_value_label.setFont(QFont("Arial", 9, QFont.Bold))
+        monthly_value_label.setAlignment(Qt.AlignCenter)
+        monthly_value_label.setStyleSheet("color: white; background-color: transparent;")
+        monthly_layout.addWidget(monthly_value_label)
+        
+        monthly_container.setLayout(monthly_layout)
+        lower_layout.addWidget(monthly_container, 1)
+        
+        lower_container.setLayout(lower_layout)
+        main_layout.addWidget(lower_container, 1)  # 25% of space
+        
+        card.setLayout(main_layout)
+        return card, sales_label, monthly_value_label, daily_value_label
+
+    def create_kpi_card_new(self, title, value, growth, color, unit):
+        """Create a KPI card with 75%-25% layout."""
+        card = QFrame()
+        card.setStyleSheet(f"""
+            QFrame {{
+                background-color: {color};
+                border-radius: 12px;
+                padding: 0px;
+            }}
+        """)
+        # Card size
+        card.setMinimumHeight(180)
+        card.setMinimumWidth(280)
+        card.setCursor(Qt.PointingHandCursor)
+
+        main_layout = QVBoxLayout()
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
+
+        # Upper section: 75% of card (with 80% content area)
+        upper_container = QFrame()
+        upper_container.setStyleSheet("background-color: transparent;")
+        upper_layout = QVBoxLayout()
+        upper_layout.setContentsMargins(16, 16, 16, 12)
+        upper_layout.setSpacing(0)
+        
+        # Title
+        title_label = QLabel(title)
+        title_label.setFont(QFont("Arial", 10, QFont.Bold))
+        title_label.setAlignment(Qt.AlignLeft)
+        title_label.setStyleSheet("color: white;")
+        upper_layout.addWidget(title_label)
+        
+        # Horizontal layout for indicator and value (80% of upper area)
+        h_layout = QHBoxLayout()
+        h_layout.setSpacing(12)
+        
+        # Indicator based on card type
+        icon_map = {
+            "Total Purchases": "P",
+            "Total Expenses": "E",
+            "Net Revenue": "R",
+            "Total Sales": "S"
+        }
+        icon_text = icon_map.get(title, "#")
+        icon_label = QLabel()
+        icon_pixmap = self.create_indicator_icon(icon_text, 36)
+        icon_label.setPixmap(icon_pixmap)
+        icon_label.setStyleSheet("background-color: transparent;")
+        h_layout.addWidget(icon_label, 0, Qt.AlignLeft | Qt.AlignVCenter)
+        
+        # Main value
+        value_label = QLabel(value)
+        value_label.setFont(QFont("Arial", 32, QFont.Bold))
+        value_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        value_label.setStyleSheet("color: white; background-color: transparent;")
+        h_layout.addWidget(value_label, 1, Qt.AlignRight)
+        
+        upper_layout.addLayout(h_layout, 1)
+        upper_container.setLayout(upper_layout)
+        main_layout.addWidget(upper_container, 3)  # 75% of space
+        
+        # Lower section: 25% of card - Horizontal 50%-50% split
+        lower_container = QFrame()
+        lower_container.setStyleSheet("background-color: rgba(0, 0, 0, 0.1);")
+        lower_layout = QHBoxLayout()
+        lower_layout.setContentsMargins(8, 4, 8, 4)
+        lower_layout.setSpacing(0)
+        
+        # Left side: Daily stats (50%)
+        daily_container = QFrame()
+        daily_container.setStyleSheet("background-color: transparent;")
+        daily_layout = QVBoxLayout()
+        daily_layout.setContentsMargins(0, 0, 4, 0)
+        daily_layout.setSpacing(2)
+        
+        daily_label_title = QLabel("Daily")
+        daily_label_title.setFont(QFont("Arial", 7, QFont.Bold))
+        daily_label_title.setAlignment(Qt.AlignCenter)
+        daily_label_title.setStyleSheet("color: rgba(255, 255, 255, 0.7);")
+        daily_layout.addWidget(daily_label_title)
+        
+        daily_value_label = QLabel("0")
+        daily_value_label.setFont(QFont("Arial", 9, QFont.Bold))
+        daily_value_label.setAlignment(Qt.AlignCenter)
+        daily_value_label.setStyleSheet("color: white; background-color: transparent;")
+        daily_layout.addWidget(daily_value_label)
+        
+        daily_container.setLayout(daily_layout)
+        lower_layout.addWidget(daily_container, 1)
+        
+        # Divider
+        divider = QFrame()
+        divider.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
+        divider.setMinimumWidth(1)
+        lower_layout.addWidget(divider)
+        
+        # Right side: Monthly stats (50%)
+        monthly_container = QFrame()
+        monthly_container.setStyleSheet("background-color: transparent;")
+        monthly_layout = QVBoxLayout()
+        monthly_layout.setContentsMargins(4, 0, 0, 0)
+        monthly_layout.setSpacing(2)
+        
+        monthly_label_title = QLabel("Monthly")
+        monthly_label_title.setFont(QFont("Arial", 7, QFont.Bold))
+        monthly_label_title.setAlignment(Qt.AlignCenter)
+        monthly_label_title.setStyleSheet("color: rgba(255, 255, 255, 0.7);")
+        monthly_layout.addWidget(monthly_label_title)
+        
+        monthly_value_label = QLabel("0")
+        monthly_value_label.setFont(QFont("Arial", 9, QFont.Bold))
+        monthly_value_label.setAlignment(Qt.AlignCenter)
+        monthly_value_label.setStyleSheet("color: white; background-color: transparent;")
+        monthly_layout.addWidget(monthly_value_label)
+        
+        monthly_container.setLayout(monthly_layout)
+        lower_layout.addWidget(monthly_container, 1)
+        
+        lower_container.setLayout(lower_layout)
+        main_layout.addWidget(lower_container, 1)  # 25% of space
+        
+        card.setLayout(main_layout)
+        return card, value_label, monthly_value_label, daily_value_label
 
     def create_kpi_card(self, title, value, meta_value, color, meta_label):
         """Create a clean professional KPI card with figure only."""
@@ -1614,18 +1865,27 @@ class DashboardScreen(QMainWindow):
         """View expenses."""
         try:
             expenses_data = self.db_service.list_documents('expenses')
-            columns = ["Date", "Category", "Description", "Amount (Rs)", "Payment Method", "Reference"]
+            # Build lookup map for account heads
+            account_heads = self.db_service.list_documents('account_heads')
+            account_head_map = {a.get('id'): a.get('name', '') for a in account_heads}
+            
+            columns = ["Date", "Category", "Description", "Amount (Rs)", "Account Head", "Reference"]
             data = []
             
             for expense in expenses_data:
                 # Get date from 'expense_date' or 'timestamp' field
                 date_str = expense.get('expense_date', expense.get('timestamp', expense.get('created_at', '')))[:10] if expense.get('expense_date') or expense.get('timestamp') or expense.get('created_at') else ''
+                
+                # Get account head name from map
+                account_head_id = expense.get('account_head_id', '')
+                account_head_name = account_head_map.get(account_head_id, expense.get('payment_method', ''))
+                
                 data.append([
                     date_str,
                     expense.get('category', ''),
                     expense.get('description', ''),
                     f"{expense.get('amount', 0):.2f}",
-                    expense.get('payment_method', ''),
+                    account_head_name,
                     expense.get('reference_number', '')
                 ])
             
@@ -1847,6 +2107,13 @@ class DashboardScreen(QMainWindow):
             table.setHorizontalHeaderLabels([
                 "Account Head", "Code", "Type", "Opening Balance (Rs)", "Transaction Impact (Rs)", "Outstanding Position (Rs)"
             ])
+            table.setStyleSheet(
+                "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+                "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+                "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: #333333; }"
+                "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+            )
+            table.setAlternatingRowColors(True)
             table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
             table.setRowCount(len(accounts))
             
@@ -2131,6 +2398,13 @@ class DashboardScreen(QMainWindow):
                 "Tank Name", "Fuel Type", "Capacity (L)", "Current Stock (L)", 
                 "Minimum Stock (L)", "Stock %", "Status"
             ])
+            table.setStyleSheet(
+                "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+                "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+                "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: #333333; }"
+                "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+            )
+            table.setAlternatingRowColors(True)
             table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
             
             table.setRowCount(len(tanks))
@@ -2644,6 +2918,37 @@ class DashboardScreen(QMainWindow):
 
         return card
 
+    def create_indicator_icon(self, icon_type: str, size: int = 40) -> QPixmap:
+        """Create a simple colored indicator icon."""
+        pixmap = QPixmap(size, size)
+        pixmap.fill(Qt.transparent)
+        
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.Antialiasing)
+        
+        # Icon colors based on type
+        icon_colors = {
+            "S": "#FFFFFF",  # Sales - White
+            "C": "#FFFFFF",  # Customers - White
+            "T": "#FFFFFF",  # Ticket - White
+            "R": "#FFFFFF"   # Revenue - White
+        }
+        
+        color = QColor(icon_colors.get(icon_type, "#FFFFFF"))
+        painter.setPen(QPen(color, 2))
+        painter.setBrush(QBrush(color))
+        
+        # Draw a rounded square
+        painter.drawRoundedRect(2, 2, size-4, size-4, 4, 4)
+        
+        # Draw letter
+        painter.setFont(QFont("Arial", size//2, QFont.Bold))
+        painter.setPen(QPen(QColor("#2196F3"), 0))  # Text color contrasting
+        painter.drawText(pixmap.rect(), Qt.AlignCenter, icon_type)
+        
+        painter.end()
+        return pixmap
+
     def create_action_button(self, text: str, color: str) -> QPushButton:
         """Create action button."""
         btn = QPushButton(text)
@@ -2691,6 +2996,17 @@ class DashboardScreen(QMainWindow):
             total_sales_units = 0
             total_sales_revenue = 0
             total_sales_count = 0
+            month_sales_units = 0
+            daily_sales_units = 0
+            month_revenue = 0
+            daily_revenue = 0
+            
+            from datetime import datetime, timedelta
+            today = datetime.now().date()
+            current_month_start = today.replace(day=1)
+            
+            print(f"[DEBUG] KPI Labels dict keys: {list(self.kpi_labels.keys())}")
+            print(f"[DEBUG] KPI Labels count: {len(self.kpi_labels)}")
             
             for sale in sales_data:
                 quantity = float(sale.get('quantity', 0))
@@ -2698,18 +3014,59 @@ class DashboardScreen(QMainWindow):
                 total_sales_units += quantity
                 total_sales_revenue += total_amount
                 total_sales_count += 1
+                
+                # Calculate month-wise sales
+                sale_date_str = sale.get('date', '')
+                if sale_date_str:
+                    try:
+                        # Parse ISO format date
+                        sale_date = datetime.fromisoformat(sale_date_str.replace('Z', '+00:00')).date()
+                        if sale_date >= current_month_start:
+                            month_sales_units += quantity
+                            month_revenue += total_amount
+                        if sale_date == today:
+                            daily_sales_units += quantity
+                            daily_revenue += total_amount
+                    except:
+                        pass
             
             # Calculate purchase costs
             total_purchase_cost = 0
+            month_purchase_cost = 0
+            daily_purchase_cost = 0
             for purchase in purchase_data:
                 total_cost = float(purchase.get('total_cost', 0))
                 total_purchase_cost += total_cost
+                # Calculate monthly/daily purchase
+                purchase_date_str = purchase.get('purchase_date', '')
+                if purchase_date_str:
+                    try:
+                        purchase_date = datetime.fromisoformat(purchase_date_str.replace('Z', '+00:00')).date()
+                        if purchase_date >= current_month_start:
+                            month_purchase_cost += total_cost
+                        if purchase_date == today:
+                            daily_purchase_cost += total_cost
+                    except:
+                        pass
             
             # Calculate total expenses
             total_expenses = 0
+            month_expenses = 0
+            daily_expenses = 0
             for expense in expenses_data:
                 amount = float(expense.get('amount', 0))
                 total_expenses += amount
+                # Calculate monthly/daily expense
+                expense_date_str = expense.get('expense_date', '')
+                if expense_date_str:
+                    try:
+                        expense_date = datetime.fromisoformat(expense_date_str.replace('Z', '+00:00')).date()
+                        if expense_date >= current_month_start:
+                            month_expenses += amount
+                        if expense_date == today:
+                            daily_expenses += amount
+                    except:
+                        pass
             
             # Net Revenue = Sales Revenue - Purchase Cost - Expenses
             net_revenue = total_sales_revenue - total_purchase_cost - total_expenses
@@ -2726,25 +3083,73 @@ class DashboardScreen(QMainWindow):
             # Inventory status (total current stock in all tanks)
             inventory_status = sum(float(tank.current_stock) for tank in tanks if hasattr(tank, 'current_stock'))
             
-            # Update KPI labels with calculated values
-            if 'total_sales' in self.kpi_labels:
-                self.kpi_labels['total_sales'].setText(f"{total_sales_units:,.2f}")
-            
-            # Now showing Net Revenue (Sales - Purchases - Expenses)
-            if 'total_revenue' in self.kpi_labels:
-                self.kpi_labels['total_revenue'].setText(f"Rs. {net_revenue:,.0f}")
-            
-            if 'average_ticket' in self.kpi_labels:
-                self.kpi_labels['average_ticket'].setText(f"Rs. {average_ticket:,.0f}")
-            
-            if 'daily_fuel' in self.kpi_labels:
-                self.kpi_labels['daily_fuel'].setText(f"{daily_fuel:,.2f}")
-            
-            if 'total_customers' in self.kpi_labels:
-                self.kpi_labels['total_customers'].setText(str(total_customers))
-            
-            if 'inventory_status' in self.kpi_labels:
-                self.kpi_labels['inventory_status'].setText(f"{inventory_status:,.0f}")
+            # Update KPI labels with calculated values - with defensive checks
+            try:
+                if 'total_sales' in self.kpi_labels:
+                    # Display total revenue
+                    sales_val = max(0, int(total_sales_revenue)) if not math.isnan(total_sales_revenue) else 0
+                    self.kpi_labels['total_sales'].setText(str(sales_val))
+                    print(f"[DEBUG] Total Sales: {sales_val}, Monthly: {int(month_revenue)}, Daily: {int(daily_revenue)}")
+                if 'total_sales_month' in self.kpi_labels:
+                    # Update monthly revenue
+                    month_val = max(0, int(month_revenue)) if not math.isnan(month_revenue) else 0
+                    self.kpi_labels['total_sales_month'].setText(str(month_val))
+                if 'total_sales_daily' in self.kpi_labels:
+                    # Update daily revenue
+                    daily_val = max(0, int(daily_revenue)) if not math.isnan(daily_revenue) else 0
+                    self.kpi_labels['total_sales_daily'].setText(str(daily_val))
+                    
+                # Total Purchases - Daily and Monthly
+                if 'total_customers' in self.kpi_labels:
+                    purchase_val = max(0, int(total_purchase_cost)) if not math.isnan(total_purchase_cost) else 0
+                    self.kpi_labels['total_customers'].setText(str(purchase_val))
+                    print(f"[DEBUG] Total Purchases: {purchase_val}, Monthly: {int(month_purchase_cost)}, Daily: {int(daily_purchase_cost)}")
+                if 'total_customers_daily' in self.kpi_labels:
+                    daily_purchase_val = max(0, int(daily_purchase_cost)) if not math.isnan(daily_purchase_cost) else 0
+                    self.kpi_labels['total_customers_daily'].setText(str(daily_purchase_val))
+                if 'total_customers_monthly' in self.kpi_labels:
+                    month_purchase_val = max(0, int(month_purchase_cost)) if not math.isnan(month_purchase_cost) else 0
+                    self.kpi_labels['total_customers_monthly'].setText(str(month_purchase_val))
+                    
+                # Total Expenses - Daily and Monthly
+                if 'average_ticket' in self.kpi_labels:
+                    expense_val = max(0, int(total_expenses)) if not math.isnan(total_expenses) else 0
+                    self.kpi_labels['average_ticket'].setText(str(expense_val))
+                    print(f"[DEBUG] Total Expenses: {expense_val}, Monthly: {int(month_expenses)}, Daily: {int(daily_expenses)}")
+                if 'average_ticket_daily' in self.kpi_labels:
+                    daily_expense_val = max(0, int(daily_expenses)) if not math.isnan(daily_expenses) else 0
+                    self.kpi_labels['average_ticket_daily'].setText(str(daily_expense_val))
+                if 'average_ticket_monthly' in self.kpi_labels:
+                    month_expense_val = max(0, int(month_expenses)) if not math.isnan(month_expenses) else 0
+                    self.kpi_labels['average_ticket_monthly'].setText(str(month_expense_val))
+                
+                # Net Revenue - Daily and Monthly
+                net_revenue = total_sales_revenue - total_purchase_cost - total_expenses
+                daily_net_revenue = daily_revenue - daily_purchase_cost - daily_expenses
+                monthly_net_revenue = month_revenue - month_purchase_cost - month_expenses
+                if 'total_revenue' in self.kpi_labels:
+                    rev_val = int(net_revenue) if not math.isnan(net_revenue) else 0
+                    self.kpi_labels['total_revenue'].setText(str(rev_val))
+                    print(f"[DEBUG] Net Revenue: {rev_val}, Monthly: {int(monthly_net_revenue)}, Daily: {int(daily_net_revenue)}")
+                if 'total_revenue_daily' in self.kpi_labels:
+                    daily_rev_val = int(daily_net_revenue) if not math.isnan(daily_net_revenue) else 0
+                    self.kpi_labels['total_revenue_daily'].setText(str(daily_rev_val))
+                if 'total_revenue_monthly' in self.kpi_labels:
+                    monthly_rev_val = int(monthly_net_revenue) if not math.isnan(monthly_net_revenue) else 0
+                    self.kpi_labels['total_revenue_monthly'].setText(str(monthly_rev_val))
+                
+                if 'daily_fuel' in self.kpi_labels:
+                    fuel_val = max(0, int(daily_fuel)) if not math.isnan(daily_fuel) else 0
+                    self.kpi_labels['daily_fuel'].setText(str(fuel_val))
+                if 'daily_fuel_meta' in self.kpi_labels:
+                    growth_fuel = max(0, int(daily_fuel * 0.04)) if not math.isnan(daily_fuel) else 0
+                    self.kpi_labels['daily_fuel_meta'].setText("+" + str(growth_fuel))
+                
+                if 'total_customers' in self.kpi_labels:
+                    purchase_val = max(0, int(total_purchase_cost)) if not math.isnan(total_purchase_cost) else 0
+                    self.kpi_labels['total_customers'].setText(str(purchase_val))
+            except Exception as label_error:
+                print(f"Error updating KPI labels: {str(label_error)}")
                 
         except Exception as e:
             print(f"Error loading dashboard data: {str(e)}")

@@ -258,6 +258,13 @@ class SettingsManagementScreen(QWidget):
         self.users_table.setHorizontalHeaderLabels([
             "Name", "Email", "Phone", "Role", "Status", "Actions"
         ])
+        self.users_table.setStyleSheet(
+            "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+            "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: #333333; }"
+            "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+        )
+        self.users_table.setAlternatingRowColors(True)
         self.users_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         users_layout.addWidget(self.users_table)
 
@@ -331,6 +338,13 @@ class SettingsManagementScreen(QWidget):
         self.audit_table.setHorizontalHeaderLabels([
             "Date/Time", "User", "Action", "Module", "Details"
         ])
+        self.audit_table.setStyleSheet(
+            "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+            "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: #333333; }"
+            "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+        )
+        self.audit_table.setAlternatingRowColors(True)
         self.audit_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.audit_table.setReadOnly(True)
         audit_layout.addWidget(self.audit_table)
@@ -355,6 +369,13 @@ class SettingsManagementScreen(QWidget):
         self.account_heads_table.setHorizontalHeaderLabels([
             "Name", "Description", "Status", "Actions"
         ])
+        self.account_heads_table.setStyleSheet(
+            "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
+            "QHeaderView::section { background-color: #2196F3; color: white; padding: 5px; border: none; font-weight: bold; }"
+            "QTableWidget::item { padding: 5px; border-bottom: 1px solid #e0e0e0; color: #333333; }"
+            "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+        )
+        self.account_heads_table.setAlternatingRowColors(True)
         self.account_heads_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         account_heads_layout.addWidget(self.account_heads_table)
 
