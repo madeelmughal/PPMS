@@ -224,7 +224,7 @@ class DailyTransactionsReportDialog(QDialog):
         table.setColumnCount(11)
         table.setHorizontalHeaderLabels([
             "Nozzle", "Fuel Type", "Open Reading", "Quantity (L)", "Close Reading",
-            "Unit Price (Rs)", "Total (Rs)", "Payment Method", "Customer", "Date", "Time"
+            "Unit Price (Rs)", "Total (Rs)", "Account Head", "Customer", "Date", "Time"
         ])
         table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
@@ -256,7 +256,7 @@ class DailyTransactionsReportDialog(QDialog):
                 QTableWidgetItem(f"{float(sale.get('closing_reading', 0)):,.2f}"),
                 QTableWidgetItem(f"{float(sale.get('unit_price', 0)):,.2f}"),
                 QTableWidgetItem(f"{float(sale.get('total_amount', 0)):,.2f}"),
-                QTableWidgetItem(sale.get('payment_method', 'Cash')),
+                QTableWidgetItem(sale.get('account_head_name', '')),
                 QTableWidgetItem(sale.get('customer_name', 'Walk-in')),
                 QTableWidgetItem(date_display),
                 QTableWidgetItem(time_str)
@@ -323,7 +323,7 @@ class DailyTransactionsReportDialog(QDialog):
         table = QTableWidget()
         table.setColumnCount(6)
         table.setHorizontalHeaderLabels([
-            "Description", "Category", "Amount (Rs)", "Payment Method", "Notes", "Date"
+            "Description", "Category", "Amount (Rs)", "Account Head", "Notes", "Date"
         ])
         table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"
@@ -343,7 +343,7 @@ class DailyTransactionsReportDialog(QDialog):
                 QTableWidgetItem(expense.get('description', '')),
                 QTableWidgetItem(expense.get('category', '')),
                 QTableWidgetItem(f"{float(expense.get('amount', 0)):,.2f}"),
-                QTableWidgetItem(expense.get('payment_method', '')),
+                QTableWidgetItem(expense.get('account_head_name', '')),
                 QTableWidgetItem(expense.get('notes', '')),
                 QTableWidgetItem(date_display)
             ]
@@ -750,22 +750,22 @@ class DashboardScreen(QMainWindow):
         charts_title.setStyleSheet("color: #1a2332; margin-top: 20px;")
         scroll_layout.addWidget(charts_title)
 
-        charts_layout = QGridLayout()
-        charts_layout.setSpacing(12)
+        self.charts_layout = QGridLayout()
+        self.charts_layout.setSpacing(12)
 
-        # Chart 1: Monthly Sales Trend (Bar Chart)
-        self.chart_1 = self.create_demo_bar_chart("📈 Monthly Sales Trend", 250)
-        charts_layout.addWidget(self.chart_1, 0, 0, 1, 2)
+        # Chart 1: Monthly Trends (Line Chart)
+        self.chart_1 = self.create_monthly_line_chart("📈 Monthly Trends", 250)
+        self.charts_layout.addWidget(self.chart_1, 0, 0, 1, 2)
 
         # Chart 2: Top 5 Customers (List)
         self.chart_2 = self.create_demo_customer_list("👥 Top 5 Customers", 220)
-        charts_layout.addWidget(self.chart_2, 1, 0)
+        self.charts_layout.addWidget(self.chart_2, 1, 0)
 
         # Chart 3: Fuel Type Distribution (Pie Chart)
         self.chart_3 = self.create_demo_fuel_chart("⛽ Fuel Type Distribution", 220)
-        charts_layout.addWidget(self.chart_3, 1, 1)
+        self.charts_layout.addWidget(self.chart_3, 1, 1)
 
-        scroll_layout.addLayout(charts_layout)
+        scroll_layout.addLayout(self.charts_layout)
 
         # ===== QUICK ACTIONS SECTION =====
         actions_title = QLabel("⚡ Quick Actions")
@@ -1007,6 +1007,196 @@ class DashboardScreen(QMainWindow):
         
         ax.legend(loc='upper center', fontsize=9, frameon=False, ncol=3, bbox_to_anchor=(0.5, 1.12))
         ax.grid(axis='y', alpha=0.3, linestyle='--')
+        ax.set_axisbelow(True)
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        fig.suptitle(title, fontsize=12, fontweight='bold', color='#1a2332', y=0.98)
+        fig.tight_layout(rect=[0, 0.05, 1, 0.92])
+        
+        # Create canvas
+        canvas = FigureCanvas(fig)
+        canvas.setMinimumHeight(height)
+        
+        return canvas
+
+    def create_monthly_line_chart(self, title, height):
+        """Create a professional line chart with real monthly sales, purchases, and expenses from database."""
+        from collections import defaultdict
+        from datetime import datetime, timedelta
+        
+        try:
+            # Get all sales, purchases, and expenses data
+            all_sales = self.sales_service.list_documents('sales')
+            all_purchases = self.sales_service.list_documents('purchases')
+            all_expenses = self.sales_service.list_documents('expenses')
+            
+            logger.info(f"[DEBUG] Total sales fetched for line chart: {len(all_sales)}, purchases: {len(all_purchases)}, expenses: {len(all_expenses)}")
+            
+            # Initialize months data for the last 12 months
+            months_map = {
+                0: "Jan", 1: "Feb", 2: "Mar", 3: "Apr", 4: "May", 5: "Jun",
+                6: "Jul", 7: "Aug", 8: "Sep", 9: "Oct", 10: "Nov", 11: "Dec"
+            }
+            
+            # Get last 12 months data
+            today = datetime.now()
+            monthly_sales = defaultdict(float)
+            monthly_purchases = defaultdict(float)
+            monthly_expenses = defaultdict(float)
+            
+            for i in range(12):
+                # Calculate date 12 months back
+                target_date = today - timedelta(days=i*30)
+                month_key = target_date.strftime("%m")  # "01", "02", etc
+                monthly_sales[month_key] = 0
+                monthly_purchases[month_key] = 0
+                monthly_expenses[month_key] = 0
+            
+            # Helper function to parse date
+            def parse_date_str(date_str):
+                """Parse date string in various formats."""
+                if not date_str:
+                    return None
+                try:
+                    if 'T' in date_str:
+                        date_part = date_str.split('T')[0]
+                        return datetime.strptime(date_part, "%Y-%m-%d")
+                    else:
+                        return datetime.strptime(date_str, "%Y-%m-%d")
+                except:
+                    try:
+                        return datetime.strptime(date_str, "%d/%m/%Y")
+                    except:
+                        return None
+            
+            # Aggregate sales by month
+            sales_count = 0
+            for sale in all_sales:
+                try:
+                    if isinstance(sale, dict):
+                        date_str = sale.get('date') or sale.get('sale_date', '')
+                        total_amount = float(sale.get('total_amount', 0))
+                        
+                        sale_date = parse_date_str(date_str)
+                        if sale_date:
+                            month_key = sale_date.strftime("%m")
+                            year_key = sale_date.strftime("%Y")
+                            current_year = today.year
+                            if int(year_key) >= current_year - 1:
+                                if month_key in monthly_sales:
+                                    monthly_sales[month_key] += total_amount
+                                    sales_count += 1
+                except Exception as e:
+                    logger.warning(f"Error processing sale: {e}")
+                    continue
+            
+            # Aggregate purchases by month
+            purchases_count = 0
+            for purchase in all_purchases:
+                try:
+                    if isinstance(purchase, dict):
+                        date_str = purchase.get('date') or purchase.get('purchase_date', '')
+                        total_cost = float(purchase.get('total_cost', 0))
+                        
+                        purchase_date = parse_date_str(date_str)
+                        if purchase_date:
+                            month_key = purchase_date.strftime("%m")
+                            year_key = purchase_date.strftime("%Y")
+                            current_year = today.year
+                            if int(year_key) >= current_year - 1:
+                                if month_key in monthly_purchases:
+                                    monthly_purchases[month_key] += total_cost
+                                    purchases_count += 1
+                except Exception as e:
+                    logger.warning(f"Error processing purchase: {e}")
+                    continue
+            
+            # Aggregate expenses by month
+            expenses_count = 0
+            for expense in all_expenses:
+                try:
+                    if isinstance(expense, dict):
+                        date_str = expense.get('date') or expense.get('expense_date', '')
+                        amount = float(expense.get('amount', 0))
+                        
+                        expense_date = parse_date_str(date_str)
+                        if expense_date:
+                            month_key = expense_date.strftime("%m")
+                            year_key = expense_date.strftime("%Y")
+                            current_year = today.year
+                            if int(year_key) >= current_year - 1:
+                                if month_key in monthly_expenses:
+                                    monthly_expenses[month_key] += amount
+                                    expenses_count += 1
+                except Exception as e:
+                    logger.warning(f"Error processing expense: {e}")
+                    continue
+            
+            logger.info(f"[DEBUG] Line Chart - Sales: {sales_count}, Purchases: {purchases_count}, Expenses: {expenses_count}")
+            
+            # Prepare data for chart (last 12 months in chronological order: Jan to Dec)
+            months = []
+            vendas = []
+            compras = []
+            despesas = []
+            
+            # Create sorted months from 01 to 12 for proper chronological display
+            for month_num in range(1, 13):
+                month_key = f"{month_num:02d}"  # "01", "02", ... "12"
+                month_name = months_map[month_num - 1]
+                months.append(month_name)
+                
+                vendas.append(monthly_sales.get(month_key, 0))
+                compras.append(monthly_purchases.get(month_key, 0))
+                despesas.append(monthly_expenses.get(month_key, 0))
+            
+        except Exception as e:
+            logger.error(f"Error fetching financial data for line chart: {e}")
+            # Fallback to empty data
+            months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            vendas = [0] * 12
+            compras = [0] * 12
+            despesas = [0] * 12
+        
+        # Create figure and axis for line chart
+        fig = Figure(figsize=(12, 3.5), dpi=100, facecolor='white')
+        ax = fig.add_subplot(111)
+        
+        # Position for lines
+        x = np.arange(len(months))
+        
+        # Create lines with markers
+        ax.plot(x, vendas, marker='o', linewidth=2.5, markersize=6, label='Sales (PKR)', color='#27AE60', markerfacecolor='#27AE60', markeredgecolor='white', markeredgewidth=2)
+        ax.plot(x, compras, marker='s', linewidth=2.5, markersize=6, label='Purchases (PKR)', color='#E67E22', markerfacecolor='#E67E22', markeredgecolor='white', markeredgewidth=2)
+        ax.plot(x, despesas, marker='^', linewidth=2.5, markersize=6, label='Expenses (PKR)', color='#E74C3C', markerfacecolor='#E74C3C', markeredgecolor='white', markeredgewidth=2)
+        
+        # Add value labels on data points
+        for i, (v_val, c_val, d_val) in enumerate(zip(vendas, compras, despesas)):
+            if v_val > 0:
+                ax.text(i, v_val, f'₨{v_val/100000:.1f}L', ha='center', va='bottom', fontsize=7, fontweight='bold', color='#27AE60')
+            if c_val > 0:
+                ax.text(i, c_val, f'₨{c_val/100000:.1f}L', ha='center', va='bottom', fontsize=7, fontweight='bold', color='#E67E22')
+            if d_val > 0:
+                ax.text(i, d_val, f'₨{d_val/100000:.1f}L', ha='center', va='bottom', fontsize=7, fontweight='bold', color='#E74C3C')
+        
+        # Customize chart
+        ax.set_ylabel('Amount (PKR)', fontsize=10)
+        ax.set_xticks(x)
+        ax.set_xticklabels(months, fontsize=10, fontweight='bold')
+        
+        # Set y-axis limit based on actual data (add extra space for labels)
+        max_val = max(
+            max(vendas) if vendas else 0, 
+            max(compras) if compras else 0,
+            max(despesas) if despesas else 0
+        )
+        ax.set_ylim(0, max_val * 1.25 if max_val > 0 else 1000000)
+        
+        ax.legend(loc='upper center', fontsize=9, frameon=False, ncol=3, bbox_to_anchor=(0.5, 1.12))
+        ax.grid(True, alpha=0.3, linestyle='--')
         ax.set_axisbelow(True)
         
         # Remove top and right spines
@@ -1525,8 +1715,8 @@ class DashboardScreen(QMainWindow):
         view_menu.addSeparator()
         #view_menu.addAction("View Exchange Rates", self.view_exchange_rates)
         view_menu.addAction("View Account Heads", self.view_account_heads)
-        view_menu.addAction("Account Position Report", self.view_account_position_report)
         view_menu.addAction("Account Head Balances", self.view_account_head_balances)
+        view_menu.addAction("Head-to-Head Movements", self.view_head_to_head_movements_report)
         view_menu.addSeparator()
         view_menu.addAction("View Daily Summary", self.view_daily_summary)
         view_menu.addAction("Daily Transactions Report", self.daily_transactions_report)
@@ -2652,6 +2842,183 @@ class DashboardScreen(QMainWindow):
             logger.error(f"Error viewing account head balances: {str(e)}")
             QMessageBox.critical(self, "Error", f"Failed to load account head balances: {str(e)}")
 
+    def view_head_to_head_movements_report(self):
+        """View all head-to-head movements with filtering and date range."""
+        try:
+            # Get all movements and account heads
+            movements = self.db_service.list_documents('head_to_head_movements')
+            accounts = self.db_service.list_documents('account_heads')
+            account_map = {acc.get('id', ''): acc.get('name', '') for acc in accounts}
+            
+            if not movements:
+                QMessageBox.information(self, "Head-to-Head Movements", "No movements recorded yet.")
+                return
+            
+            # Create dialog
+            dialog = QDialog(self)
+            dialog.setWindowTitle("Head-to-Head Movements - Report")
+            dialog.resize(1100, 650)
+            self._center_dialog_on_screen(dialog)
+            dialog.setStyleSheet(
+                "QDialog { background-color: #f5f5f5; }"
+                "QLabel { color: #333; }"
+                "QDateEdit { padding: 5px; border: 1px solid #ddd; border-radius: 3px; }"
+            )
+            
+            layout = QVBoxLayout()
+            
+            # Header
+            header = QLabel("Head-to-Head Movements - Settlement Report")
+            header.setFont(QFont("Arial", 14, QFont.Bold))
+            header.setStyleSheet("color: #1a2332; padding: 10px;")
+            layout.addWidget(header)
+            
+            # Date filter controls (same as Daily Transactions Report)
+            filter_layout = QHBoxLayout()
+            filter_layout.setSpacing(10)
+            filter_layout.addWidget(QLabel("Date Range:"))
+            
+            start_date_filter = QDateEdit()
+            start_date_filter.setDate(QDate.currentDate().addDays(-30))
+            start_date_filter.setCalendarPopup(True)
+            start_date_filter.setFixedWidth(120)
+            filter_layout.addWidget(start_date_filter)
+            
+            filter_layout.addWidget(QLabel("To:"))
+            end_date_filter = QDateEdit()
+            end_date_filter.setDate(QDate.currentDate())
+            end_date_filter.setCalendarPopup(True)
+            end_date_filter.setFixedWidth(120)
+            filter_layout.addWidget(end_date_filter)
+            
+            reset_btn_filter = QPushButton("Reset Filter")
+            reset_btn_filter.setMaximumWidth(100)
+            def reset_filters():
+                start_date_filter.setDate(QDate.currentDate().addDays(-30))
+                end_date_filter.setDate(QDate.currentDate())
+            reset_btn_filter.clicked.connect(reset_filters)
+            filter_layout.addWidget(reset_btn_filter)
+            
+            filter_layout.addStretch()
+            layout.addLayout(filter_layout)
+            
+            # Create table
+            table = QTableWidget()
+            table.setColumnCount(6)
+            table.setHorizontalHeaderLabels([
+                "Date & Time", "From Account", "To Account", "Amount (Rs)", "Status", "Description"
+            ])
+            table.setStyleSheet(
+                "QTableWidget { background-color: white; gridline-color: #ddd; }"
+                "QHeaderView::section { background-color: #2196F3; color: white; padding: 8px; border: none; font-weight: bold; }"
+                "QTableWidget::item { padding: 8px; border-bottom: 1px solid #f0f0f0; }"
+                "QTableWidget::item:selected { background-color: #2196F3; color: white; }"
+                "QTableWidget::item:alternate { background-color: #f9f9f9; }"
+            )
+            table.setAlternatingRowColors(True)
+            table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            
+            # Summary label
+            summary_label = QLabel()
+            summary_label.setFont(QFont("Arial", 10, QFont.Bold))
+            summary_label.setStyleSheet("color: #2196F3; padding: 10px; background-color: #f0f8ff; border-radius: 5px;")
+            
+            # Filter and populate table
+            def populate_table():
+                table.setRowCount(0)
+                from_dt = start_date_filter.date().toPyDate()
+                to_dt = end_date_filter.date().toPyDate()
+                filtered_movements = []
+                
+                for movement in movements:
+                    try:
+                        created_at_str = movement.get('created_at', '')
+                        if created_at_str:
+                            from datetime import datetime
+                            created_dt = datetime.fromisoformat(created_at_str.replace('Z', '+00:00')).date()
+                            if from_dt <= created_dt <= to_dt:
+                                filtered_movements.append(movement)
+                    except:
+                        filtered_movements.append(movement)
+                
+                table.setRowCount(len(filtered_movements))
+                total_amount = 0
+                
+                for row, movement in enumerate(filtered_movements):
+                    # Date & Time
+                    created_at = movement.get('created_at', 'N/A')
+                    date_item = QTableWidgetItem(str(created_at)[:19])
+                    date_item.setFont(QFont("Arial", 9))
+                    table.setItem(row, 0, date_item)
+                    
+                    # From Account
+                    from_acc_id = movement.get('from_account_head_id', '')
+                    from_acc_name = account_map.get(from_acc_id, 'Unknown')
+                    from_item = QTableWidgetItem(from_acc_name)
+                    from_item.setFont(QFont("Arial", 9))
+                    from_item.setForeground(QColor("#F44336"))  # Red for outgoing
+                    table.setItem(row, 1, from_item)
+                    
+                    # To Account
+                    to_acc_id = movement.get('to_account_head_id', '')
+                    to_acc_name = account_map.get(to_acc_id, 'Unknown')
+                    to_item = QTableWidgetItem(to_acc_name)
+                    to_item.setFont(QFont("Arial", 9))
+                    to_item.setForeground(QColor("#4CAF50"))  # Green for incoming
+                    table.setItem(row, 2, to_item)
+                    
+                    # Amount
+                    amount = float(movement.get('amount', 0))
+                    amount_item = QTableWidgetItem(f"Rs. {amount:,.2f}")
+                    amount_item.setFont(QFont("Arial", 9, QFont.Bold))
+                    amount_item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+                    table.setItem(row, 3, amount_item)
+                    total_amount += amount
+                    
+                    # Status
+                    status = "Completed"
+                    status_item = QTableWidgetItem(status)
+                    status_item.setFont(QFont("Arial", 9))
+                    status_item.setForeground(QColor("#4CAF50"))
+                    table.setItem(row, 4, status_item)
+                    
+                    # Description
+                    desc = f"{from_acc_name} → {to_acc_name}"
+                    desc_item = QTableWidgetItem(desc)
+                    desc_item.setFont(QFont("Arial", 9))
+                    table.setItem(row, 5, desc_item)
+                
+                # Update summary
+                summary_label.setText(f"Total Movements: {len(filtered_movements)} | Total Amount Settled: Rs. {total_amount:,.2f}")
+            
+            # Connect date filters to populate
+            start_date_filter.dateChanged.connect(populate_table)
+            end_date_filter.dateChanged.connect(populate_table)
+            
+            layout.addWidget(table)
+            layout.addWidget(summary_label)
+            
+            # Buttons (Close only)
+            button_layout = QHBoxLayout()
+            
+            button_layout.addStretch()
+            
+            close_btn = QPushButton("Close")
+            close_btn.clicked.connect(dialog.accept)
+            button_layout.addWidget(close_btn)
+            
+            layout.addLayout(button_layout)
+            
+            # Initial population
+            populate_table()
+            
+            dialog.setLayout(layout)
+            dialog.exec_()
+            
+        except Exception as e:
+            logger.error(f"Error viewing head-to-head movements: {str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to load movements report: {str(e)}")
+
     def view_inventory_report(self):
         """View inventory report."""
         try:
@@ -2784,18 +3151,38 @@ class DashboardScreen(QMainWindow):
             QMessageBox.critical(self, "Error", f"Failed to load inventory report: {str(e)}")
 
     def create_stat_card(self, label: str, value: str, color: str) -> QWidget:
-        """Create a stat card widget."""
+        """Create a stat card widget matching Daily Transactions Report styling."""
         card = QFrame()
-        card.setStyleSheet(f"background-color: {color}; border-radius: 5px; padding: 10px;")
-        layout = QVBoxLayout(card)
+        card.setStyleSheet(f"""
+            QFrame {{
+                background-color: {color};
+                border-radius: 12px;
+                padding: 0px;
+                border: none;
+            }}
+        """)
+        card.setMinimumHeight(50)
+        card.setMaximumHeight(55)
+        card.setMinimumWidth(150)
+        
+        layout = QVBoxLayout()
+        layout.setContentsMargins(12, 6, 12, 6)
+        layout.setSpacing(2)
         
         label_widget = QLabel(label)
-        label_widget.setStyleSheet("color: white; font-size: 11px;")
-        layout.addWidget(label_widget)
+        label_widget.setFont(QFont("Arial", 8, QFont.Bold))
+        label_widget.setStyleSheet("color: rgba(255, 255, 255, 0.8); font-weight: bold;")
+        label_widget.setWordWrap(True)
         
         value_widget = QLabel(value)
-        value_widget.setStyleSheet("color: white; font-size: 14px; font-weight: bold;")
+        value_widget.setFont(QFont("Arial", 12, QFont.Bold))
+        value_widget.setStyleSheet("color: white; font-weight: bold;")
+        value_widget.setWordWrap(True)
+        
+        layout.addWidget(label_widget)
         layout.addWidget(value_widget)
+        layout.addStretch()
+        card.setLayout(layout)
         
         return card
 
@@ -3449,6 +3836,40 @@ class DashboardScreen(QMainWindow):
                     self.kpi_labels['total_customers'].setText(str(purchase_val))
             except Exception as label_error:
                 print(f"Error updating KPI labels: {str(label_error)}")
+            
+            # Refresh charts with fresh data
+            try:
+                # Remove old chart_1 and create new line chart
+                old_chart = self.charts_layout.itemAtPosition(0, 0)
+                if old_chart and old_chart.widget():
+                    old_widget = old_chart.widget()
+                    self.charts_layout.removeWidget(old_widget)
+                    old_widget.deleteLater()
+                
+                self.chart_1 = self.create_monthly_line_chart("📈 Monthly Trends", 250)
+                self.charts_layout.addWidget(self.chart_1, 0, 0, 1, 2)
+                
+                # Remove old chart_2 and create new customer list
+                old_chart_2 = self.charts_layout.itemAtPosition(1, 0)
+                if old_chart_2 and old_chart_2.widget():
+                    old_widget_2 = old_chart_2.widget()
+                    self.charts_layout.removeWidget(old_widget_2)
+                    old_widget_2.deleteLater()
+                
+                self.chart_2 = self.create_demo_customer_list("👥 Top 5 Customers", 220)
+                self.charts_layout.addWidget(self.chart_2, 1, 0)
+                
+                # Remove old chart_3 and create new fuel chart
+                old_chart_3 = self.charts_layout.itemAtPosition(1, 1)
+                if old_chart_3 and old_chart_3.widget():
+                    old_widget_3 = old_chart_3.widget()
+                    self.charts_layout.removeWidget(old_widget_3)
+                    old_widget_3.deleteLater()
+                
+                self.chart_3 = self.create_demo_fuel_chart("⛽ Fuel Type Distribution", 220)
+                self.charts_layout.addWidget(self.chart_3, 1, 1)
+            except Exception as chart_error:
+                print(f"Error refreshing charts: {str(chart_error)}")
                 
         except Exception as e:
             print(f"Error loading dashboard data: {str(e)}")
@@ -3929,9 +4350,8 @@ class AddAccountHeadsDialog(QDialog):
 
         # Create table widget
         self.table = QTableWidget()
-        self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels(["Name", "Account Type", "Code", "Opening Balance (Rs)", "Outstanding (Rs)", "Description", "Actions"])
         self.table.setColumnCount(7)
+        self.table.setHorizontalHeaderLabels(["Name", "Account Type", "Code", "Opening Balance (Rs)", "Outstanding (Rs)", "Description", "Actions"])
         self.table.setAlternatingRowColors(True)
         self.table.setStyleSheet(
             "QTableWidget { background-color: white; alternate-background-color: #f9f9f9; border: 1px solid #ddd; }"

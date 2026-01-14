@@ -52,6 +52,18 @@
       "transaction_date": "2026-01-14T15:18:58.668515",
       "type": "head_to_head_transfer",
       "created_at": "2026-01-14T15:18:58.668515"
+    },
+    "694412e6-8671-4ba1-851e-476dd7b061e1": {
+      "transaction_id": "694412e6-8671-4ba1-851e-476dd7b061e1",
+      "from_account_head_id": "a5cfaa2e-556b-45d0-8bca-808d035cbab7",
+      "from_account_head_name": "Cash",
+      "to_account_head_id": "f61fbdf2-0f05-426a-aad8-5bd5ccb2ae17",
+      "to_account_head_name": "Expense",
+      "amount": 91000.0,
+      "reference": "",
+      "transaction_date": "2026-01-14T18:33:47.418116",
+      "type": "head_to_head_transfer",
+      "created_at": "2026-01-14T18:33:47.418116"
     }
   },
   "account_balances": {
@@ -124,6 +136,27 @@
       "balance": -90000.0,
       "created_at": "2026-01-14T15:51:37.063615",
       "last_updated": "2026-01-14T15:51:37.063615"
+    },
+    "37d211e8-e2c2-4a5c-9f76-ca509053986e": {
+      "account_head_id": "a5cfaa2e-556b-45d0-8bca-808d035cbab7",
+      "account_head_name": "Cash",
+      "balance": -91000.0,
+      "created_at": "2026-01-14T18:33:47.418116",
+      "last_updated": "2026-01-14T18:33:47.418116"
+    },
+    "b3b488d5-a4d3-4b84-9c05-1da9dc13151e": {
+      "account_head_id": "f61fbdf2-0f05-426a-aad8-5bd5ccb2ae17",
+      "account_head_name": "Expense",
+      "balance": 91000.0,
+      "created_at": "2026-01-14T18:33:47.427845",
+      "last_updated": "2026-01-14T18:33:47.427845"
+    },
+    "2b1cb589-dc95-484b-86fd-0bb5031202c5": {
+      "account_head_id": "f61fbdf2-0f05-426a-aad8-5bd5ccb2ae17",
+      "account_head_name": "Expense",
+      "balance": -10000000.0,
+      "created_at": "2026-01-14T19:14:33.021301",
+      "last_updated": "2026-01-14T19:14:33.021301"
     }
   },
   "sales": {
@@ -217,6 +250,19 @@
       "expense_date": "2026-01-14T15:51:37.060624",
       "status": "recorded",
       "created_at": "2026-01-14T15:51:37.060624"
+    },
+    "32f40c70-f3ba-4c81-b086-2166d3ccaca3": {
+      "id": "32f40c70-f3ba-4c81-b086-2166d3ccaca3",
+      "category": "Insurance",
+      "description": "insrance",
+      "amount": 10000000.0,
+      "account_head_id": "f61fbdf2-0f05-426a-aad8-5bd5ccb2ae17",
+      "account_head_name": "Expense",
+      "reference_number": "",
+      "notes": "",
+      "expense_date": "2026-01-14T19:14:33.005749",
+      "status": "recorded",
+      "created_at": "2026-01-14T19:14:33.005749"
     }
   },
   "fuel_types": {

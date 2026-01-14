@@ -511,3 +511,196 @@
 2026-01-14 15:52:01 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
 2026-01-14 15:52:31 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
 2026-01-14 15:52:51 - src.main - INFO - Application closing
+2026-01-14 18:11:08 - src.main - INFO - Firebase initialized successfully
+2026-01-14 18:11:09 - src.main - INFO - PPMS Application initialized
+2026-01-14 18:11:15 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-14 18:11:15 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-14 18:11:15 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 1, purchases: 2, expenses: 3
+2026-01-14 18:11:15 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 18:11:16 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:11:46 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:12:16 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:12:46 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:13:16 - src.main - INFO - Application closing
+2026-01-14 18:13:16 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:14:03 - src.main - INFO - Firebase initialized successfully
+2026-01-14 18:14:04 - src.main - INFO - PPMS Application initialized
+2026-01-14 18:14:14 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-14 18:14:14 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-14 18:14:14 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 1, purchases: 2, expenses: 3
+2026-01-14 18:14:14 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 18:14:14 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:14:44 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:15:14 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:15:44 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:15:52 - src.main - INFO - Application closing
+2026-01-14 18:16:05 - src.main - INFO - Firebase initialized successfully
+2026-01-14 18:16:06 - src.main - INFO - PPMS Application initialized
+2026-01-14 18:16:11 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-14 18:16:11 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-14 18:16:11 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 1, purchases: 2, expenses: 3
+2026-01-14 18:16:11 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 18:16:11 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:16:41 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:17:11 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:17:41 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:18:11 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:18:41 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:19:11 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:19:11 - src.main - INFO - Application closing
+2026-01-14 18:20:03 - src.main - INFO - Firebase initialized successfully
+2026-01-14 18:20:04 - src.main - INFO - PPMS Application initialized
+2026-01-14 18:20:10 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-14 18:20:10 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-14 18:20:10 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 1, purchases: 2, expenses: 3
+2026-01-14 18:20:10 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 18:20:10 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:20:40 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:21:10 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:21:40 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:21:50 - src.main - INFO - Application closing
+2026-01-14 18:25:32 - src.main - INFO - Firebase initialized successfully
+2026-01-14 18:25:32 - src.main - INFO - PPMS Application initialized
+2026-01-14 18:25:37 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-14 18:25:37 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-14 18:25:37 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 1, purchases: 2, expenses: 3
+2026-01-14 18:25:37 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 18:25:37 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:26:07 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:26:37 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:27:07 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:27:37 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:27:55 - src.main - INFO - Application closing
+2026-01-14 18:28:07 - src.main - INFO - Firebase initialized successfully
+2026-01-14 18:28:08 - src.main - INFO - PPMS Application initialized
+2026-01-14 18:28:14 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-14 18:28:14 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-14 18:28:14 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 1, purchases: 2, expenses: 3
+2026-01-14 18:28:14 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 18:28:15 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:28:45 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:29:15 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:29:45 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:30:15 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:30:45 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:31:05 - src.main - INFO - Application closing
+2026-01-14 18:31:45 - src.main - INFO - Firebase initialized successfully
+2026-01-14 18:31:46 - src.main - INFO - PPMS Application initialized
+2026-01-14 18:31:53 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-14 18:31:53 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-14 18:31:53 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 1, purchases: 2, expenses: 3
+2026-01-14 18:31:53 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 18:31:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:32:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:32:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:33:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:33:47 - src.services.database_service - INFO - Document created: head_to_head_movements/694412e6-8671-4ba1-851e-476dd7b061e1
+2026-01-14 18:33:47 - src.services.database_service - INFO - Document created: account_balances/37d211e8-e2c2-4a5c-9f76-ca509053986e
+2026-01-14 18:33:47 - src.services.database_service - INFO - Document created: account_balances/b3b488d5-a4d3-4b84-9c05-1da9dc13151e
+2026-01-14 18:33:47 - src.ui.screens.dashboard_screen - INFO - Head to Head Movement recorded with double-entry: Cash (DEBIT 91000.0) -> Expense (CREDIT 91000.0)
+2026-01-14 18:33:49 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:33:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:34:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:34:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:35:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:35:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:36:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:36:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:37:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:37:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:38:23 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:38:53 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:48:30 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:49:00 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:49:30 - src.main - INFO - Application closing
+2026-01-14 18:49:42 - src.main - INFO - Firebase initialized successfully
+2026-01-14 18:49:43 - src.main - INFO - PPMS Application initialized
+2026-01-14 18:49:49 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-14 18:49:49 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-14 18:49:49 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 1, purchases: 2, expenses: 3
+2026-01-14 18:49:49 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 18:49:49 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:50:19 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:50:49 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:51:19 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:51:49 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:52:19 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:52:49 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:53:19 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:53:42 - src.main - INFO - Application closing
+2026-01-14 18:59:08 - src.main - INFO - Firebase initialized successfully
+2026-01-14 18:59:09 - src.main - INFO - PPMS Application initialized
+2026-01-14 18:59:14 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-14 18:59:14 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-14 18:59:14 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched: 1, purchases: 2, expenses: 3
+2026-01-14 18:59:14 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Processed - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 18:59:14 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 18:59:44 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:00:14 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:00:44 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:01:14 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:01:44 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:02:14 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:02:44 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:03:06 - src.main - INFO - Application closing
+2026-01-14 19:12:19 - src.main - INFO - Firebase initialized successfully
+2026-01-14 19:12:20 - src.main - INFO - PPMS Application initialized
+2026-01-14 19:12:29 - src.services.auth_service - INFO - User logged in successfully: admin
+2026-01-14 19:12:29 - src.main - INFO - User logged in: admin@ppms.com
+2026-01-14 19:12:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 3
+2026-01-14 19:12:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 19:12:29 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:12:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 3
+2026-01-14 19:12:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 19:12:59 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:12:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 3
+2026-01-14 19:12:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 19:13:29 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:13:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 3
+2026-01-14 19:13:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 19:13:59 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:13:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 3
+2026-01-14 19:13:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 19:14:10 - src.services.database_service - INFO - Loaded 1 payment methods from account heads
+2026-01-14 19:14:29 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:14:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 3
+2026-01-14 19:14:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 3
+2026-01-14 19:14:33 - src.services.database_service - INFO - Document created: expenses/32f40c70-f3ba-4c81-b086-2166d3ccaca3
+2026-01-14 19:14:33 - src.services.database_service - INFO - Document created: account_balances/2b1cb589-dc95-484b-86fd-0bb5031202c5
+2026-01-14 19:14:59 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:14:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:14:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:15:29 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:15:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:15:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:15:59 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:15:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:15:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:16:29 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:16:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:16:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:16:59 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:16:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:16:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:17:29 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:17:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:17:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:17:59 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:17:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:17:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:18:29 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:18:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:18:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:18:59 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:18:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:18:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:19:29 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:19:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:19:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:19:59 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:19:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:19:59 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:20:29 - src.services.database_service - INFO - Loaded 3 payment methods from account heads
+2026-01-14 19:20:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Total sales fetched for line chart: 1, purchases: 2, expenses: 4
+2026-01-14 19:20:29 - src.ui.screens.dashboard_screen - INFO - [DEBUG] Line Chart - Sales: 1, Purchases: 2, Expenses: 4
+2026-01-14 19:20:54 - src.main - INFO - Application closing
